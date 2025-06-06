@@ -27,10 +27,6 @@ Thank you for considering contributing! We welcome all kinds of improvements:
 - Please open an issue and use the provided template.
 - Be clear and descriptive: include screenshots, platform details, and steps to reproduce if relevant.
 
-## Code of Conduct
-
-Please read our [Code of Conduct](CODE_OF_CONDUCT.md) before contributing.
-
 ---
 
 Thank you for helping make this project better!
