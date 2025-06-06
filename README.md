@@ -1,3 +1,9 @@
+![License: MIT](https://img.shields.io/github/license/sadhanasharma26/computer-vision-roadmap)
+![Last Commit](https://img.shields.io/github/last-commit/sadhanasharma26/computer-vision-roadmap)
+![Issues](https://img.shields.io/github/issues/sadhanasharma26/computer-vision-roadmap)
+![Pull Requests](https://img.shields.io/github/issues-pr/sadhanasharma26/computer-vision-roadmap)
+![Stars](https://img.shields.io/github/stars/sadhanasharma26/computer-vision-roadmap?style=social)
+
 # 🔍 Computer Vision Roadmap for Beginners
 
 Welcome! 👋 This repository is your step-by-step guide to starting a journey in Computer Vision, tailored for absolute beginners.
