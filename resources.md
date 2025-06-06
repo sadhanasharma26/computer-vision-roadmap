@@ -19,7 +19,7 @@
 
 ## CV Essentials
 <p align="center">
-  <img src="images/cv_pipeline_diagram.svg" alt="Computer Vision Pipeline Diagram" style="max-width:100%; height:auto;">
+  <img src="images/cv_pipeline_diagram.jpeg" alt="Computer Vision Pipeline Diagram" style="max-width:100%; height:auto;">
 </p>
 
 ## Communities
