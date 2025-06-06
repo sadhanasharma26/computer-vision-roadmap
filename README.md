@@ -11,7 +11,6 @@ Welcome! 👋 This repository is your step-by-step guide to starting a journey i
 - [Learning Roadmap](roadmap.md): A phase-wise, week-by-week learning path
 - [Resources](resources.md): Curated books, courses, tutorials, and datasets
 - [Projects](projects.md): Beginner project ideas with skill mapping
-- images/: Visual diagrams and sample outputs
 
 ---
 
