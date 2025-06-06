@@ -26,7 +26,13 @@ Anyone new to Computer Vision, students, or hobbyists looking to build a solid f
    See the [Development Setup](#-development-environment-setup) below.
 2. **Follow the [Learning Roadmap](roadmap.md)]**  
    Move through each phase, build projects, and refer to [Resources](resources.md) as needed.
-3. **Join the community:**  
+         <p align="center">
+        <a href="https://sadhanasharma26.github.io/computer-vision-roadmap/roadmap.html" target="_blank">
+          <img src="https://img.shields.io/badge/Explore%20Interactive%20Roadmap-Click%20Here-blueviolet?style=for-the-badge" alt="interactive roadmap">
+        </a>
+      </p>
+
+4. **Join the community:**  
    Start by exploring issues, discussions, or contributing!
 
 ---
