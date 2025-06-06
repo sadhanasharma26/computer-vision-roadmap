@@ -75,7 +75,7 @@ Have questions or suggestions?
 - Open an issue in this repository  
 - Connect with me on [LinkedIn](https://www.linkedin.com/in/sadhana-sharma-/)
 
-[💬 Have a question or idea? Join the Discussions!](https://github.com/sadhanasharma26/computer-vision-roadmap/discussions)
+[Have a question or idea? Join the Discussions!](https://github.com/sadhanasharma26/computer-vision-roadmap/discussions)
 
 **Happy Learning! 🚀**
 
