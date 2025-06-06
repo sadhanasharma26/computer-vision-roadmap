@@ -73,4 +73,4 @@ Have questions or suggestions?
 
 ---
 
-*Remember: Computer Vision is a journey, not a destination. Practice consistently, and don’t hesitate to ask for help when needed.*
+*Hope you like this:)*
