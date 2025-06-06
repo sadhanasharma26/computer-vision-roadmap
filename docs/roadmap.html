@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computer Vision Learning Roadmap</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        .title {
+            text-align: center;
+            color: white;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .roadmap {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            position: relative;
+        }
+
+        .phase {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 25px;
+            position: relative;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 3px solid transparent;
+        }
+
+        .phase:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            border-color: #4f46e5;
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .phase-number {
+            background: linear-gradient(45deg, #4f46e5, #7c3aed);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-right: 20px;
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
+        }
+
+        .phase-title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #1f2937;
+            margin: 0;
+        }
+
+        .phase-duration {
+            color: #6b7280;
+            font-size: 0.9em;
+            margin-left: auto;
+            background: #f3f4f6;
+            padding: 5px 12px;
+            border-radius: 20px;
+        }
+
+        .phase-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .topic-group {
+            background: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border-left: 4px solid #4f46e5;
+        }
+
+        .topic-title {
+            font-weight: bold;
+            color: #374151;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+        }
+
+        .topic-icon {
+            margin-right: 8px;
+            font-size: 1.2em;
+        }
+
+        .topic-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .topic-list li {
+            color: #6b7280;
+            margin-bottom: 5px;
+            padding-left: 15px;
+            position: relative;
+        }
+
+        .topic-list li:before {
+            content: "•";
+            color: #4f46e5;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .connector {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 3px;
+            height: 30px;
+            background: linear-gradient(to bottom, #4f46e5, #7c3aed);
+            margin: -15px 0;
+            z-index: 1;
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, #4f46e5, #7c3aed);
+            transition: width 0.3s ease;
+            z-index: 1000;
+        }
+
+        .skills-acquired {
+            background: rgba(34, 197, 94, 0.1);
+            border: 2px solid #22c55e;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 15px;
+        }
+
+        .skills-title {
+            color: #15803d;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: #22c55e;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .phase-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .title {
+                font-size: 2em;
+            }
+            
+            .container {
+                padding: 20px;
+            }
+        }
+
+        .legend {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <div class="container">
+        <h1 class="title">🔍 Computer Vision Learning Roadmap</h1>
+        
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-color" style="background: #4f46e5;"></div>
+                <span>Core Topics</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #22c55e;"></div>
+                <span>Skills Acquired</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-color" style="background: #f59e0b;"></div>
+                <span>Project Time</span>
+            </div>
+        </div>
+
+        <div class="roadmap" id="roadmap">
+            <!-- Phase 1 -->
+            <div class="phase" data-phase="1">
+                <div class="phase-header">
+                    <div class="phase-number">1</div>
+                    <h2 class="phase-title">Foundations</h2>
+                    <div class="phase-duration">4-6 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">📐</span>
+                            Mathematics Prerequisites
+                        </div>
+                        <ul class="topic-list">
+                            <li>Linear Algebra</li>
+                            <li>Statistics & Probability</li>
+                            <li>Basic Calculus</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🐍</span>
+                            Programming Fundamentals
+                        </div>
+                        <ul class="topic-list">
+                            <li>Python Essentials</li>
+                            <li>NumPy Arrays</li>
+                            <li>Data Structures</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python Programming</span>
+                        <span class="skill-tag">NumPy Operations</span>
+                        <span class="skill-tag">Mathematical Foundations</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Phase 2 -->
+            <div class="phase" data-phase="2">
+                <div class="phase-header">
+                    <div class="phase-number">2</div>
+                    <h2 class="phase-title">Image Processing Basics</h2>
+                    <div class="phase-duration">3-4 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🖼️</span>
+                            Digital Images
+                        </div>
+                        <ul class="topic-list">
+                            <li>Pixels & Color Spaces</li>
+                            <li>Image Formats</li>
+                            <li>Coordinate Systems</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🔧</span>
+                            OpenCV Introduction
+                        </div>
+                        <ul class="topic-list">
+                            <li>Basic Operations</li>
+                            <li>Image Transformations</li>
+                            <li>Drawing Functions</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">OpenCV Basics</span>
+                        <span class="skill-tag">Image Manipulation</span>
+                        <span class="skill-tag">Color Space Conversion</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Phase 3 -->
+            <div class="phase" data-phase="3">
+                <div class="phase-header">
+                    <div class="phase-number">3</div>
+                    <h2 class="phase-title">Image Processing Techniques</h2>
+                    <div class="phase-duration">4-5 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🎛️</span>
+                            Filtering & Enhancement
+                        </div>
+                        <ul class="topic-list">
+                            <li>Convolution Operations</li>
+                            <li>Gaussian & Median Filters</li>
+                            <li>Morphological Operations</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🔍</span>
+                            Feature Detection
+                        </div>
+                        <ul class="topic-list">
+                            <li>Edge Detection (Canny, Sobel)</li>
+                            <li>Corner Detection (Harris)</li>
+                            <li>Contour Analysis</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Image Filtering</span>
+                        <span class="skill-tag">Edge Detection</span>
+                        <span class="skill-tag">Feature Extraction</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Phase 4 -->
+            <div class="phase" data-phase="4">
+                <div class="phase-header">
+                    <div class="phase-number">4</div>
+                    <h2 class="phase-title">Machine Learning for CV</h2>
+                    <div class="phase-duration">5-6 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🧠</span>
+                            ML Foundations
+                        </div>
+                        <ul class="topic-list">
+                            <li>Supervised Learning</li>
+                            <li>k-NN, SVM, Random Forest</li>
+                            <li>Model Evaluation</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🎯</span>
+                            Classical CV Applications
+                        </div>
+                        <ul class="topic-list">
+                            <li>Object Detection (HOG)</li>
+                            <li>Image Classification</li>
+                            <li>Bag of Visual Words</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">Classification</span>
+                        <span class="skill-tag">Object Detection</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Phase 5 -->
+            <div class="phase" data-phase="5">
+                <div class="phase-header">
+                    <div class="phase-number">5</div>
+                    <h2 class="phase-title">Deep Learning & Neural Networks</h2>
+                    <div class="phase-duration">6-8 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🔗</span>
+                            Neural Networks
+                        </div>
+                        <ul class="topic-list">
+                            <li>Perceptrons & MLPs</li>
+                            <li>Backpropagation</li>
+                            <li>Activation Functions</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🌊</span>
+                            Convolutional Neural Networks
+                        </div>
+                        <ul class="topic-list">
+                            <li>CNN Architecture</li>
+                            <li>LeNet, AlexNet, ResNet</li>
+                            <li>TensorFlow/PyTorch</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Deep Learning</span>
+                        <span class="skill-tag">CNNs</span>
+                        <span class="skill-tag">TensorFlow/PyTorch</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="connector"></div>
+
+            <!-- Phase 6 -->
+            <div class="phase" data-phase="6">
+                <div class="phase-header">
+                    <div class="phase-number">6</div>
+                    <h2 class="phase-title">Advanced Topics & Applications</h2>
+                    <div class="phase-duration">4-6 weeks</div>
+                </div>
+                <div class="phase-content">
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">🚀</span>
+                            Specialized Domains
+                        </div>
+                        <ul class="topic-list">
+                            <li>YOLO, R-CNN (Object Detection)</li>
+                            <li>Semantic Segmentation</li>
+                            <li>Face Recognition Systems</li>
+                        </ul>
+                    </div>
+                    <div class="topic-group">
+                        <div class="topic-title">
+                            <span class="topic-icon">⚡</span>
+                            Production & Ethics
+                        </div>
+                        <ul class="topic-list">
+                            <li>Model Optimization</li>
+                            <li>Mobile Deployment</li>
+                            <li>Ethics & Bias</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="skills-acquired">
+                    <div class="skills-title">✅ Skills Acquired:</div>
+                    <div class="skill-tags">
+                        <span class="skill-tag">Advanced CV</span>
+                        <span class="skill-tag">Model Deployment</span>
+                        <span class="skill-tag">Ethical AI</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+            document.getElementById('progressBar').style.width = scrolled + '%';
+        });
+
+        // Phase hover effects and click interactions
+        document.querySelectorAll('.phase').forEach(phase => {
+            phase.addEventListener('click', () => {
+                // Add a subtle pulse animation
+                phase.style.animation = 'pulse 0.6s ease-in-out';
+                setTimeout(() => {
+                    phase.style.animation = '';
+                }, 600);
+            });
+        });
+
+        // Add pulse animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.02); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Intersection Observer for animation on scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Apply initial styles and observe phases
+        document.querySelectorAll('.phase').forEach(phase => {
+            phase.style.opacity = '0';
+            phase.style.transform = 'translateY(30px)';
+            phase.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(phase);
+        });
+    </script>
+</body>
+</html>
