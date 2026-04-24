@@ -1,0 +1,29 @@
+Redesign the website structure and curate the content to make it the "Gold Standard" for learners ranging from beginners to advanced researchers.
+
+### 1. UX & FEATURE OVERHAUL
+- **Progress Tracking:** Propose a way to implement local-storage based checklists so users can track their learning progress.
+- **Project-Centric Learning:** For every major milestone (e.g., Classical CV, Deep Learning, Generative AI), suggest a "Milestone Project" with a specific dataset and goal.
+- **Interactive Visuals:** Identify areas where interactive SVG diagrams or small JS-based demos (like a convolution kernel visualizer) would clarify hard concepts.
+
+### 2. CONTENT ARCHITECTURE (Tiered Learning)
+Reorganize the current roadmap into 4 distinct phases:
+- **Phase 1: The Foundations (Math & Pixels):** Linear Algebra, Calculus, Image Processing (Filters, Histograms, Morphology).
+- **Phase 2: Feature Engineering & Classical CV:** SIFT/SURF, HOG, Edge Detection, Camera Calibration.
+- **Phase 3: The Deep Learning Era:** CNN architectures, Object Detection (YOLO/R-CNN), Segmentation (U-Net).
+- **Phase 4: Modern Frontiers:** Vision Transformers (ViT), 3D Vision/NeRFs, Diffusion Models, and Edge AI deployment.
+
+### 3. CURATION CRITERIA
+For every resource suggested, please include:
+- **Difficulty Level:** (Easy, Intermediate, Hard)
+- **Time to Complete:** (Estimated hours)
+- **Resource Type:** (Video, Paper, GitHub Repo, Interactive Tutorial)
+- **"Why this?":** A one-sentence explanation of the specific value this resource adds.
+
+### 4. TECHNICAL ENHANCEMENTS
+- Suggest a modern tech stack for the website (e.g., Next.js with MDX) that allows me to write content in Markdown but render it with interactive React components.
+- Provide a template for a "Resource Card" that looks professional and contains all metadata from section 3.
+
+### 5. OUTPUT DELIVERABLES
+1. A new 'ultra-useful' `README.md` structure.
+2. A detailed `Navigation Sitemap` for the website.
+3. 3 specific suggestions for "unique value adds" that no other CV roadmap currently has (e.g., an 'Interview Prep' section or 'Edge Deployment' focus).

@@ -1,84 +1,133 @@
-# 🔍 Computer Vision Roadmap for Beginners
+# Computer Vision Roadmap — Gold Standard
 
-Welcome! 👋 This repository is your step-by-step guide to starting a journey in Computer Vision, tailored for absolute beginners.
+A structured, resource-rich learning path from pixels to production. Covers Classical CV, Deep Learning, Vision Transformers, and Edge AI deployment — with interactive tools built in.
 
-**I'm really enthusiastic about Computer Vision and AI! That's why I've created this repository—to help others start their own journey in this field.**
-
----
-
-## 📚 What You'll Find Here
-
-- [Learning Roadmap](roadmap.md): A phase-wise, week-by-week learning path
-- [Resources](resources.md): Curated books, courses, tutorials, and datasets
-- [Projects](projects.md): Beginner project ideas with skill mapping
+<p align="center">
+  <a href="https://sadhanasharma26.github.io/computer-vision-roadmap/roadmap.html" target="_blank">
+    <img src="https://img.shields.io/badge/Launch%20Interactive%20Roadmap-Click%20Here-blueviolet?style=for-the-badge" alt="interactive roadmap">
+  </a>
+</p>
 
 ---
 
-## 👥 Who is this for?
+## What Makes This Different
 
-Anyone new to Computer Vision, students, or hobbyists looking to build a solid foundation in this exciting field.
+Three features no other CV roadmap has:
 
----
+**1. Live Convolution Visualizer**
+Click pixels, pick a kernel (Blur / Sharpen / Sobel / Emboss), watch the output update in real time. Builds the intuition that textbooks can't.
 
-## 🏁 Quick Start
+**2. Interview Prep Bank**
+CV-specific theory, implementation, and system-design questions with targeted hints — covering ResNet skip connections, IoU from scratch, NMS implementation, and real-world system design.
 
-1. **Set up your environment:**  
-   See the [Development Setup](#-development-environment-setup) below.
-2. **Follow the [Learning Roadmap](roadmap.md)]**  
-   Move through each phase, build projects, and refer to [Resources](resources.md) as needed.
-         <p align="center">
-        <a href="https://sadhanasharma26.github.io/computer-vision-roadmap/roadmap.html" target="_blank">
-          <img src="https://img.shields.io/badge/Explore%20Interactive%20Roadmap-Click%20Here-blueviolet?style=for-the-badge" alt="interactive roadmap">
-        </a>
-      </p>
-
-4. **Join the community:**  
-   Start by exploring issues, discussions, or contributing!
+**3. Edge AI Deployment Track**
+A 5-step end-to-end pipeline: Train → Export (ONNX/TFLite INT8) → Benchmark → Deploy (Raspberry Pi / Jetson) → Monitor. Closes the gap between research model and shipping product.
 
 ---
 
-## 🛠️ Development Environment Setup
+## Navigation Sitemap
 
-```bash
-# Python Environment
-conda create -n cv_env python=3.9
-conda activate cv_env
-
-# Core Libraries
-pip install opencv-python numpy matplotlib
-pip install scikit-learn scikit-image
-pip install tensorflow  # or pytorch
-pip install jupyter notebook
-
-# Additional Utilities
-pip install pillow imageio tqdm
+```
+computer-vision-roadmap/
+├── docs/
+│   ├── index.html          Landing page → roadmap.html
+│   └── roadmap.html        Interactive roadmap (main experience)
+│       ├── Phase 1: The Foundations (Math & Pixels)
+│       ├── Phase 2: Feature Engineering & Classical CV
+│       ├── Phase 3: The Deep Learning Era
+│       ├── Phase 4: Modern Frontiers
+│       ├── 💼 Interview Prep Bank
+│       └── ⚡ Edge AI Deployment Track
+├── roadmap.md              Text outline of all 4 phases
+├── resources.md            Curated resource cards with metadata
+├── projects.md             Milestone project specs
+├── CONTRIBUTING.md         Contribution guidelines
+└── README.md               This file
 ```
 
 ---
 
-## 🤝 Contributing
+## The 4 Phases
 
-We welcome contributions!  
-See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+| Phase | Title | Duration | Milestone Project |
+|-------|-------|----------|-------------------|
+| 01 | The Foundations — Math & Pixels | 4–6 weeks | NumPy Image Filter Library |
+| 02 | Feature Engineering & Classical CV | 4–5 weeks | Panorama Stitcher (SIFT + RANSAC) |
+| 03 | The Deep Learning Era | 6–8 weeks | Custom Object Detector + Segmentation |
+| 04 | Modern Frontiers | 5–7 weeks | Real-Time Edge AI Detector |
 
 ---
 
-## 📞 Contact
+## Progress Tracking
 
-Have questions or suggestions?  
-- Open an issue in this repository  
-- Connect with me on [LinkedIn](https://www.linkedin.com/in/sadhana-sharma-/)
-
-[Have a question or idea? Join the Discussions!](https://github.com/sadhanasharma26/computer-vision-roadmap/discussions)
-
-**Happy Learning! 🚀**
+All progress saved to `localStorage` — no account needed. Check topics as you complete them; your progress persists across sessions. Hit **Reset** in the header to start over.
 
 ---
 
-*Hope you like this:)*
+## Resource Card Format
+
+Every resource in this roadmap includes:
+
+| Field | Values |
+|-------|--------|
+| **Difficulty** | Easy / Intermediate / Hard |
+| **Time** | Estimated hours |
+| **Type** | Video / Paper / Book / Tutorial / Course / Repo |
+| **Why this?** | One sentence on specific value |
+
+---
+
+## Suggested Tech Stack (for contributors)
+
+The current site is plain HTML/CSS/JS deployed via GitHub Pages — zero build step, works everywhere.
+
+To scale toward a full content platform:
+
+- **Next.js + MDX** — write phase content in Markdown, embed React components (resource cards, visualizers) inline
+- **Tailwind CSS** — utility-first, matches the card-heavy layout
+- **Framer Motion** — phase transitions and checklist animations
+- **Vercel** — free tier covers this traffic volume
+
+Until content volume justifies the migration, the current stack is the right call.
+
+---
+
+## Quick Start
+
+```bash
+# Clone
+git clone https://github.com/sadhanasharma26/computer-vision-roadmap.git
+
+# Python environment
+conda create -n cv_env python=3.9
+conda activate cv_env
+
+# Core libraries
+pip install opencv-python numpy matplotlib
+pip install scikit-learn scikit-image
+pip install torch torchvision          # or tensorflow
+pip install ultralytics                # YOLOv8
+pip install jupyter notebook
+```
+
+Open `docs/roadmap.html` in a browser, or visit the [live site](https://sadhanasharma26.github.io/computer-vision-roadmap/roadmap.html).
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). To add a resource, follow the card format above — include difficulty, time estimate, type, and a one-sentence "why this?" rationale.
+
+---
+
+## License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+## Contact
+
+- Open an [issue](https://github.com/sadhanasharma26/computer-vision-roadmap/issues) for bugs or suggestions
+- [LinkedIn](https://www.linkedin.com/in/sadhana-sharma-/)
+- [Discussions](https://github.com/sadhanasharma26/computer-vision-roadmap/discussions)

@@ -3,558 +3,717 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Vision Learning Roadmap</title>
+    <title>Computer Vision Roadmap</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+        :root {
+            --purple: #4f46e5;
+            --purple-mid: #7c3aed;
+            --purple-light: #a78bfa;
+            --cyan: #0891b2;
+            --red: #dc2626;
+            --amber: #d97706;
+            --green: #22c55e;
+            --gray-900: #111827;
+            --gray-800: #1f2937;
+            --gray-700: #374151;
+            --gray-600: #4b5563;
+            --gray-400: #9ca3af;
+            --gray-200: #e5e7eb;
+            --gray-100: #f3f4f6;
         }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f0f8; color: var(--gray-800); line-height: 1.6; }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
-        }
+        /* Scroll progress */
+        #scrollBar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, var(--purple), var(--purple-mid)); z-index: 1001; transition: width 0.15s; }
 
-        .title {
-            text-align: center;
-            color: white;
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-        }
+        /* Header */
+        header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(79,70,229,0.35); }
+        .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+        .header-title { font-size: 1.35em; font-weight: 700; }
+        .header-title span { opacity: 0.65; font-weight: 400; font-size: 0.8em; }
+        .header-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+        .progress-pill { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 0.88em; font-weight: 500; white-space: nowrap; }
+        .hbar-wrap { width: 140px; height: 7px; background: rgba(255,255,255,0.25); border-radius: 4px; overflow: hidden; }
+        .hbar-fill { height: 100%; background: #22c55e; border-radius: 4px; transition: width 0.4s ease; }
+        .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 12px; border-radius: 7px; cursor: pointer; font-size: 0.82em; transition: background 0.2s; }
+        .btn-reset:hover { background: rgba(255,255,255,0.28); }
 
-        .roadmap {
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            position: relative;
-        }
+        /* Layout */
+        main { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
 
-        .phase {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 25px;
-            position: relative;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 3px solid transparent;
-        }
+        /* Phase card */
+        .phase { background: white; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid var(--gray-200); overflow: hidden; }
+        .phase-header { padding: 24px 28px; display: flex; align-items: flex-start; gap: 18px; border-bottom: 2px solid var(--gray-100); }
+        .phase-num { width: 52px; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: 800; color: white; flex-shrink: 0; }
+        .p1 .phase-num { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
+        .p2 .phase-num { background: linear-gradient(135deg, #0891b2, #0e7490); }
+        .p3 .phase-num { background: linear-gradient(135deg, #dc2626, #b91c1c); }
+        .p4 .phase-num { background: linear-gradient(135deg, #d97706, #b45309); }
+        .phase-meta { flex: 1; }
+        .phase-meta h2 { font-size: 1.4em; font-weight: 700; color: var(--gray-900); }
+        .phase-meta p { color: var(--gray-600); font-size: 0.92em; margin-top: 2px; }
+        .phase-tag { display: inline-block; margin-top: 8px; background: var(--gray-100); color: var(--gray-600); padding: 3px 10px; border-radius: 10px; font-size: 0.78em; font-weight: 600; }
+        .phase-pp { text-align: right; flex-shrink: 0; min-width: 80px; }
+        .phase-pp-text { font-size: 0.82em; color: var(--gray-500); margin-bottom: 4px; }
+        .pp-bar { width: 80px; height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden; margin-left: auto; }
+        .pp-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
+        .p1 .pp-fill { background: var(--purple); }
+        .p2 .pp-fill { background: var(--cyan); }
+        .p3 .pp-fill { background: var(--red); }
+        .p4 .pp-fill { background: var(--amber); }
 
-        .phase:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            border-color: #4f46e5;
-        }
+        /* Phase body grid */
+        .phase-body { padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        @media (max-width: 860px) { .phase-body { grid-template-columns: 1fr; } }
+        .full-width { grid-column: 1 / -1; }
 
-        .phase-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-        }
+        /* Section titles */
+        .sec-title { font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray-600); margin-bottom: 12px; }
 
-        .phase-number {
-            background: linear-gradient(45deg, #4f46e5, #7c3aed);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-right: 20px;
-            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.4);
-        }
+        /* Checklist */
+        .checklist { list-style: none; }
+        .checklist li { display: flex; align-items: flex-start; gap: 9px; padding: 7px 8px; border-radius: 7px; margin-bottom: 2px; transition: background 0.15s; }
+        .checklist li:hover { background: var(--gray-100); }
+        .checklist input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px; accent-color: var(--purple); cursor: pointer; }
+        .checklist label { cursor: pointer; color: var(--gray-700); font-size: 0.92em; }
+        .checklist input:checked + label { text-decoration: line-through; color: var(--gray-400); }
 
-        .phase-title {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #1f2937;
-            margin: 0;
-        }
+        /* Resource cards */
+        .resource-card { border: 1px solid var(--gray-200); border-radius: 11px; padding: 14px; margin-bottom: 10px; transition: box-shadow 0.2s, border-color 0.2s; }
+        .resource-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); border-color: var(--purple-light); }
+        .card-badges { display: flex; gap: 5px; margin-bottom: 7px; flex-wrap: wrap; }
+        .badge { padding: 2px 7px; border-radius: 7px; font-size: 0.72em; font-weight: 700; }
+        .b-easy { background: #dcfce7; color: #15803d; }
+        .b-med  { background: #fef9c3; color: #854d0e; }
+        .b-hard { background: #fee2e2; color: #991b1b; }
+        .b-time { background: var(--gray-100); color: var(--gray-600); }
+        .b-video    { background: #ede9fe; color: #5b21b6; }
+        .b-paper    { background: #fce7f3; color: #9d174d; }
+        .b-repo     { background: #d1fae5; color: #065f46; }
+        .b-tutorial { background: #e0f2fe; color: #0369a1; }
+        .b-book     { background: #fff7ed; color: #c2410c; }
+        .b-course   { background: #ede9fe; color: #5b21b6; }
+        .resource-card h4 { font-size: 0.92em; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
+        .resource-why { font-size: 0.82em; color: var(--gray-600); font-style: italic; margin-bottom: 6px; }
+        .resource-link { font-size: 0.82em; color: var(--purple); font-weight: 600; text-decoration: none; }
+        .resource-link:hover { text-decoration: underline; }
 
-        .phase-duration {
-            color: #6b7280;
-            font-size: 0.9em;
-            margin-left: auto;
-            background: #f3f4f6;
-            padding: 5px 12px;
-            border-radius: 20px;
-        }
+        /* Milestone card */
+        .milestone { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #f59e0b; border-radius: 14px; padding: 20px; }
+        .milestone-label { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #d97706; margin-bottom: 4px; }
+        .milestone h3 { font-size: 1.1em; font-weight: 700; color: #92400e; margin-bottom: 8px; }
+        .milestone p { color: #78350f; font-size: 0.9em; margin-bottom: 12px; }
+        .milestone-meta { display: flex; gap: 14px; flex-wrap: wrap; }
+        .mm { font-size: 0.82em; color: #92400e; font-weight: 600; }
 
-        .phase-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
+        /* Convolution demo */
+        .demo-box { background: #f8f7ff; border: 2px solid #c4b5fd; border-radius: 14px; padding: 22px; }
+        .demo-box h3 { font-size: 1em; font-weight: 700; color: #5b21b6; margin-bottom: 6px; }
+        .demo-box .sub { font-size: 0.85em; color: #7c3aed; margin-bottom: 14px; }
+        .kernel-btns { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
+        .kbtn { padding: 5px 11px; border-radius: 7px; border: 2px solid var(--gray-200); background: white; cursor: pointer; font-size: 0.8em; font-weight: 600; color: var(--gray-700); transition: all 0.15s; }
+        .kbtn.active, .kbtn:hover { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
+        .demo-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+        .demo-col h4 { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: 8px; }
+        .pgrid { display: inline-grid; gap: 2px; background: #c4b5fd; padding: 2px; border-radius: 6px; }
+        .cell { width: 30px; height: 30px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0; transition: background 0.1s; }
+        .cell.clickable { cursor: pointer; }
+        .kgrid { display: inline-grid; grid-template-columns: repeat(3, 44px); gap: 2px; background: #c4b5fd; padding: 2px; border-radius: 6px; }
+        .kcell { width: 44px; height: 30px; background: white; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.72em; font-weight: 700; color: #5b21b6; }
+        .demo-op { font-size: 1.8em; color: #a78bfa; display: flex; align-items: center; padding-top: 26px; }
+        .kname { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #7c3aed; }
 
-        .topic-group {
-            background: #f8fafc;
-            border-radius: 10px;
-            padding: 15px;
-            border-left: 4px solid #4f46e5;
-        }
+        /* Phase connector */
+        .connector { display: flex; justify-content: center; height: 28px; margin: -14px 0; position: relative; z-index: 1; }
+        .connector::before { content: ''; width: 2px; background: linear-gradient(to bottom, #c4b5fd, #a78bfa); height: 100%; }
 
-        .topic-title {
-            font-weight: bold;
-            color: #374151;
-            margin-bottom: 8px;
-            display: flex;
-            align-items: center;
-        }
+        /* Unique sections */
+        .extra-section { background: white; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid var(--gray-200); overflow: hidden; }
+        .extra-header { padding: 22px 28px; border-bottom: 2px solid var(--gray-100); }
+        .extra-header.green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
+        .extra-header.orange { background: linear-gradient(135deg, #fff7ed, #fed7aa); }
+        .extra-header h2 { font-size: 1.2em; font-weight: 700; display: flex; align-items: center; gap: 9px; }
+        .extra-header.green h2 { color: #15803d; }
+        .extra-header.orange h2 { color: #c2410c; }
+        .extra-header p { font-size: 0.87em; margin-top: 3px; }
+        .extra-header.green p { color: #15803d; }
+        .extra-header.orange p { color: #c2410c; }
+        .extra-body { padding: 22px 28px; }
 
-        .topic-icon {
-            margin-right: 8px;
-            font-size: 1.2em;
-        }
+        /* Interview grid */
+        .iq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
+        .iq-card { border: 1px solid var(--gray-200); border-radius: 11px; padding: 14px; }
+        .iq-cat { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--purple); margin-bottom: 6px; }
+        .iq-card h4 { font-size: 0.9em; font-weight: 600; color: var(--gray-800); margin-bottom: 5px; }
+        .iq-card p { font-size: 0.82em; color: var(--gray-600); }
 
-        .topic-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
+        /* Edge AI pipeline */
+        .pipeline { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+        .pipe-step { background: white; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; flex: 1; min-width: 140px; text-align: center; }
+        .pipe-step .sn { font-size: 0.7em; font-weight: 700; color: var(--gray-400); text-transform: uppercase; margin-bottom: 3px; }
+        .pipe-step h4 { font-size: 0.9em; font-weight: 700; color: var(--gray-800); }
+        .pipe-step p { font-size: 0.78em; color: var(--gray-600); margin-top: 3px; }
+        .pipe-arrow { font-size: 1.4em; color: var(--gray-400); flex-shrink: 0; }
 
-        .topic-list li {
-            color: #6b7280;
-            margin-bottom: 5px;
-            padding-left: 15px;
-            position: relative;
-        }
+        footer { text-align: center; padding: 36px 24px; color: var(--gray-400); font-size: 0.88em; }
+        footer a { color: var(--purple); text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
 
-        .topic-list li:before {
-            content: "•";
-            color: #4f46e5;
-            font-weight: bold;
-            position: absolute;
-            left: 0;
-        }
-
-        .connector {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 3px;
-            height: 30px;
-            background: linear-gradient(to bottom, #4f46e5, #7c3aed);
-            margin: -15px 0;
-            z-index: 1;
-        }
-
-        .progress-bar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 4px;
-            background: linear-gradient(to right, #4f46e5, #7c3aed);
-            transition: width 0.3s ease;
-            z-index: 1000;
-        }
-
-        .skills-acquired {
-            background: rgba(34, 197, 94, 0.1);
-            border: 2px solid #22c55e;
-            border-radius: 10px;
-            padding: 15px;
-            margin-top: 15px;
-        }
-
-        .skills-title {
-            color: #15803d;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-        }
-
-        .skill-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .skill-tag {
-            background: #22c55e;
-            color: white;
-            padding: 4px 12px;
-            border-radius: 15px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-
-        @media (max-width: 768px) {
-            .phase-content {
-                grid-template-columns: 1fr;
-            }
-            
-            .title {
-                font-size: 2em;
-            }
-            
-            .container {
-                padding: 20px;
-            }
-        }
-
-        .legend {
-            background: rgba(255, 255, 255, 0.9);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 30px;
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border-radius: 4px;
+        @media (max-width: 600px) {
+            .phase-header { padding: 18px; }
+            .phase-body { padding: 18px; }
+            .extra-body { padding: 18px; }
+            main { padding: 20px 14px; }
         }
     </style>
 </head>
 <body>
-    <div class="progress-bar" id="progressBar"></div>
-    
-    <div class="container">
-        <h1 class="title">🔍 Computer Vision Learning Roadmap</h1>
-        
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-color" style="background: #4f46e5;"></div>
-                <span>Core Topics</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #22c55e;"></div>
-                <span>Skills Acquired</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background: #f59e0b;"></div>
-                <span>Project Time</span>
-            </div>
-        </div>
 
-        <div class="roadmap" id="roadmap">
-            <!-- Phase 1 -->
-            <div class="phase" data-phase="1">
-                <div class="phase-header">
-                    <div class="phase-number">1</div>
-                    <h2 class="phase-title">Foundations</h2>
-                    <div class="phase-duration">4-6 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">📐</span>
-                            Mathematics Prerequisites
-                        </div>
-                        <ul class="topic-list">
-                            <li>Linear Algebra</li>
-                            <li>Statistics & Probability</li>
-                            <li>Basic Calculus</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🐍</span>
-                            Programming Fundamentals
-                        </div>
-                        <ul class="topic-list">
-                            <li>Python Essentials</li>
-                            <li>NumPy Arrays</li>
-                            <li>Data Structures</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python Programming</span>
-                        <span class="skill-tag">NumPy Operations</span>
-                        <span class="skill-tag">Mathematical Foundations</span>
-                    </div>
-                </div>
-            </div>
+<div id="scrollBar" style="width:0"></div>
 
-            <div class="connector"></div>
-
-            <!-- Phase 2 -->
-            <div class="phase" data-phase="2">
-                <div class="phase-header">
-                    <div class="phase-number">2</div>
-                    <h2 class="phase-title">Image Processing Basics</h2>
-                    <div class="phase-duration">3-4 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🖼️</span>
-                            Digital Images
-                        </div>
-                        <ul class="topic-list">
-                            <li>Pixels & Color Spaces</li>
-                            <li>Image Formats</li>
-                            <li>Coordinate Systems</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🔧</span>
-                            OpenCV Introduction
-                        </div>
-                        <ul class="topic-list">
-                            <li>Basic Operations</li>
-                            <li>Image Transformations</li>
-                            <li>Drawing Functions</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">OpenCV Basics</span>
-                        <span class="skill-tag">Image Manipulation</span>
-                        <span class="skill-tag">Color Space Conversion</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="connector"></div>
-
-            <!-- Phase 3 -->
-            <div class="phase" data-phase="3">
-                <div class="phase-header">
-                    <div class="phase-number">3</div>
-                    <h2 class="phase-title">Image Processing Techniques</h2>
-                    <div class="phase-duration">4-5 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🎛️</span>
-                            Filtering & Enhancement
-                        </div>
-                        <ul class="topic-list">
-                            <li>Convolution Operations</li>
-                            <li>Gaussian & Median Filters</li>
-                            <li>Morphological Operations</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🔍</span>
-                            Feature Detection
-                        </div>
-                        <ul class="topic-list">
-                            <li>Edge Detection (Canny, Sobel)</li>
-                            <li>Corner Detection (Harris)</li>
-                            <li>Contour Analysis</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Image Filtering</span>
-                        <span class="skill-tag">Edge Detection</span>
-                        <span class="skill-tag">Feature Extraction</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="connector"></div>
-
-            <!-- Phase 4 -->
-            <div class="phase" data-phase="4">
-                <div class="phase-header">
-                    <div class="phase-number">4</div>
-                    <h2 class="phase-title">Machine Learning for CV</h2>
-                    <div class="phase-duration">5-6 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🧠</span>
-                            ML Foundations
-                        </div>
-                        <ul class="topic-list">
-                            <li>Supervised Learning</li>
-                            <li>k-NN, SVM, Random Forest</li>
-                            <li>Model Evaluation</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🎯</span>
-                            Classical CV Applications
-                        </div>
-                        <ul class="topic-list">
-                            <li>Object Detection (HOG)</li>
-                            <li>Image Classification</li>
-                            <li>Bag of Visual Words</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Machine Learning</span>
-                        <span class="skill-tag">Classification</span>
-                        <span class="skill-tag">Object Detection</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="connector"></div>
-
-            <!-- Phase 5 -->
-            <div class="phase" data-phase="5">
-                <div class="phase-header">
-                    <div class="phase-number">5</div>
-                    <h2 class="phase-title">Deep Learning & Neural Networks</h2>
-                    <div class="phase-duration">6-8 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🔗</span>
-                            Neural Networks
-                        </div>
-                        <ul class="topic-list">
-                            <li>Perceptrons & MLPs</li>
-                            <li>Backpropagation</li>
-                            <li>Activation Functions</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🌊</span>
-                            Convolutional Neural Networks
-                        </div>
-                        <ul class="topic-list">
-                            <li>CNN Architecture</li>
-                            <li>LeNet, AlexNet, ResNet</li>
-                            <li>TensorFlow/PyTorch</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">CNNs</span>
-                        <span class="skill-tag">TensorFlow/PyTorch</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="connector"></div>
-
-            <!-- Phase 6 -->
-            <div class="phase" data-phase="6">
-                <div class="phase-header">
-                    <div class="phase-number">6</div>
-                    <h2 class="phase-title">Advanced Topics & Applications</h2>
-                    <div class="phase-duration">4-6 weeks</div>
-                </div>
-                <div class="phase-content">
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">🚀</span>
-                            Specialized Domains
-                        </div>
-                        <ul class="topic-list">
-                            <li>YOLO, R-CNN (Object Detection)</li>
-                            <li>Semantic Segmentation</li>
-                            <li>Face Recognition Systems</li>
-                        </ul>
-                    </div>
-                    <div class="topic-group">
-                        <div class="topic-title">
-                            <span class="topic-icon">⚡</span>
-                            Production & Ethics
-                        </div>
-                        <ul class="topic-list">
-                            <li>Model Optimization</li>
-                            <li>Mobile Deployment</li>
-                            <li>Ethics & Bias</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="skills-acquired">
-                    <div class="skills-title">✅ Skills Acquired:</div>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Advanced CV</span>
-                        <span class="skill-tag">Model Deployment</span>
-                        <span class="skill-tag">Ethical AI</span>
-                    </div>
-                </div>
-            </div>
+<header>
+    <div class="header-inner">
+        <div class="header-title">🔍 CV Roadmap </div>
+        <div class="header-right">
+            <div class="progress-pill" id="progressText">0 / 40 topics</div>
+            <div class="hbar-wrap"><div class="hbar-fill" id="hbarFill" style="width:0%"></div></div>
+            <button class="btn-reset" onclick="resetAll()">Reset</button>
         </div>
     </div>
+</header>
 
-    <script>
-        // Smooth scrolling progress bar
-        window.addEventListener('scroll', () => {
-            const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
-            document.getElementById('progressBar').style.width = scrolled + '%';
-        });
+<main>
 
-        // Phase hover effects and click interactions
-        document.querySelectorAll('.phase').forEach(phase => {
-            phase.addEventListener('click', () => {
-                // Add a subtle pulse animation
-                phase.style.animation = 'pulse 0.6s ease-in-out';
-                setTimeout(() => {
-                    phase.style.animation = '';
-                }, 600);
-            });
-        });
+    <!-- ── PHASE 1 ── -->
+    <section class="phase p1" id="phase-1">
+        <div class="phase-header">
+            <div class="phase-num">01</div>
+            <div class="phase-meta">
+                <h2>The Foundations</h2>
+                <p>Math & Pixels — everything in CV reduces to these</p>
+                <span class="phase-tag">4–6 weeks</span>
+            </div>
+            <div class="phase-pp">
+                <div class="phase-pp-text" id="pp1-txt">0/10</div>
+                <div class="pp-bar"><div class="pp-fill" id="pp1-bar" style="width:0%"></div></div>
+            </div>
+        </div>
+        <div class="phase-body">
+            <div>
+                <div class="sec-title">📋 Topics</div>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li>
+                    <li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li>
+                    <li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li>
+                    <li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li>
+                    <li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li>
+                    <li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li>
+                    <li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li>
+                    <li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li>
+                    <li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li>
+                    <li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li>
+                </ul>
+            </div>
+            <div>
+                <div class="sec-title">📚 Resources</div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 6h</span><span class="badge b-video">Video</span></div>
+                    <h4>3Blue1Brown — Essence of Linear Algebra</h4>
+                    <div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div>
+                    <a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">Watch on YouTube →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div>
+                    <h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4>
+                    <div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div>
+                    <h4>Real Python — Image Processing with NumPy &amp; Pillow</h4>
+                    <div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div>
+                    <a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank">Read Tutorial →</a>
+                </div>
+            </div>
 
-        // Add pulse animation keyframes
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes pulse {
-                0% { transform: scale(1); }
-                50% { transform: scale(1.02); }
-                100% { transform: scale(1); }
-            }
-        `;
-        document.head.appendChild(style);
+            <!-- Convolution Visualizer — full width -->
+            <div class="full-width demo-box">
+                <h3>🧪 Interactive — Convolution Kernel Visualizer</h3>
+                <div class="sub">Click input cells to toggle pixels. Select a kernel. Output updates in real time.</div>
+                <div class="kernel-btns" id="kbtns">
+                    <button class="kbtn active" onclick="setKernel('blur',this)">Gaussian Blur</button>
+                    <button class="kbtn" onclick="setKernel('sharpen',this)">Sharpen</button>
+                    <button class="kbtn" onclick="setKernel('edgex',this)">Sobel X</button>
+                    <button class="kbtn" onclick="setKernel('edgey',this)">Sobel Y</button>
+                    <button class="kbtn" onclick="setKernel('emboss',this)">Emboss</button>
+                </div>
+                <div class="demo-row">
+                    <div class="demo-col">
+                        <h4>Input 7×7 — click to toggle</h4>
+                        <div class="pgrid" id="inputGrid" style="grid-template-columns:repeat(7,30px)"></div>
+                    </div>
+                    <div class="demo-op">⊛</div>
+                    <div class="demo-col">
+                        <h4>Kernel 3×3</h4>
+                        <div class="kgrid" id="kernelGrid"></div>
+                        <div class="kname" id="kname">Gaussian Blur</div>
+                    </div>
+                    <div class="demo-op">=</div>
+                    <div class="demo-col">
+                        <h4>Output 5×5</h4>
+                        <div class="pgrid" id="outputGrid" style="grid-template-columns:repeat(5,30px)"></div>
+                    </div>
+                </div>
+            </div>
 
-        // Intersection Observer for animation on scroll
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, { threshold: 0.1 });
+            <!-- Milestone -->
+            <div class="full-width milestone">
+                <div class="milestone-label">🏆 Milestone Project</div>
+                <h3>NumPy Image Filter Library</h3>
+                <p>Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.</p>
+                <div class="milestone-meta">
+                    <span class="mm">📦 Dataset: BSDS500</span>
+                    <span class="mm">🎯 Goal: 5 filters from scratch</span>
+                    <span class="mm">⏱ 6–8 hours</span>
+                </div>
+            </div>
+        </div>
+    </section>
 
-        // Apply initial styles and observe phases
-        document.querySelectorAll('.phase').forEach(phase => {
-            phase.style.opacity = '0';
-            phase.style.transform = 'translateY(30px)';
-            phase.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(phase);
-        });
-    </script>
+    <div class="connector"></div>
+
+    <!-- ── PHASE 2 ── -->
+    <section class="phase p2" id="phase-2">
+        <div class="phase-header">
+            <div class="phase-num">02</div>
+            <div class="phase-meta">
+                <h2>Feature Engineering &amp; Classical CV</h2>
+                <p>The pre-deep-learning toolkit — still runs in every production pipeline</p>
+                <span class="phase-tag">4–5 weeks</span>
+            </div>
+            <div class="phase-pp">
+                <div class="phase-pp-text" id="pp2-txt">0/10</div>
+                <div class="pp-bar"><div class="pp-fill" id="pp2-bar" style="width:0%"></div></div>
+            </div>
+        </div>
+        <div class="phase-body">
+            <div>
+                <div class="sec-title">📋 Topics</div>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li>
+                    <li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li>
+                    <li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li>
+                    <li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li>
+                    <li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li>
+                    <li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li>
+                    <li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li>
+                    <li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li>
+                    <li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li>
+                    <li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li>
+                </ul>
+            </div>
+            <div>
+                <div class="sec-title">📚 Resources</div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-video">Video</span></div>
+                    <h4>First Principles of CV — Camera Calibration Series (Columbia/Shree Nayar)</h4>
+                    <div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div>
+                    <a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank">Watch on YouTube →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div>
+                    <h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4>
+                    <div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div>
+                    <a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank">Read Docs →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div>
+                    <h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4>
+                    <div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div>
+                </div>
+            </div>
+            <div class="full-width milestone">
+                <div class="milestone-label">🏆 Milestone Project</div>
+                <h3>Image Panorama Stitcher</h3>
+                <p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p>
+                <div class="milestone-meta">
+                    <span class="mm">📦 Dataset: Your own phone photos</span>
+                    <span class="mm">🎯 Goal: Seamless 3-image panorama</span>
+                    <span class="mm">⏱ 8–12 hours</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="connector"></div>
+
+    <!-- ── PHASE 3 ── -->
+    <section class="phase p3" id="phase-3">
+        <div class="phase-header">
+            <div class="phase-num">03</div>
+            <div class="phase-meta">
+                <h2>The Deep Learning Era</h2>
+                <p>CNNs, detection, segmentation — the industry-standard stack</p>
+                <span class="phase-tag">6–8 weeks</span>
+            </div>
+            <div class="phase-pp">
+                <div class="phase-pp-text" id="pp3-txt">0/10</div>
+                <div class="pp-bar"><div class="pp-fill" id="pp3-bar" style="width:0%"></div></div>
+            </div>
+        </div>
+        <div class="phase-body">
+            <div>
+                <div class="sec-title">📋 Topics</div>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">CNN: Convolution, Pooling, Padding, Stride</label></li>
+                    <li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Backpropagation &amp; Gradient Descent variants</label></li>
+                    <li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">LeNet → AlexNet → VGG → ResNet evolution</label></li>
+                    <li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Transfer Learning &amp; Fine-Tuning</label></li>
+                    <li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">Data Augmentation strategies</label></li>
+                    <li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Object Detection: Faster R-CNN &amp; SSD</label></li>
+                    <li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">YOLO family (v3 → v8) — architecture &amp; training</label></li>
+                    <li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Semantic Segmentation: FCN, DeepLab</label></li>
+                    <li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Instance Segmentation: U-Net, Mask R-CNN</label></li>
+                    <li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">mAP, IoU, Precision-Recall for CV evaluation</label></li>
+                </ul>
+            </div>
+            <div>
+                <div class="sec-title">📚 Resources</div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 30h</span><span class="badge b-course">Course</span></div>
+                    <h4>CS231n — Convolutional Neural Networks (Stanford)</h4>
+                    <div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div>
+                    <a class="resource-link" href="https://cs231n.github.io" target="_blank">Course Notes →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div>
+                    <h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4>
+                    <div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div>
+                    <a class="resource-link" href="https://docs.ultralytics.com" target="_blank">Read Docs →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-paper">Paper</span></div>
+                    <h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4>
+                    <div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div>
+                </div>
+            </div>
+            <div class="full-width milestone">
+                <div class="milestone-label">🏆 Milestone Project</div>
+                <h3>Custom Object Detector + Segmentation</h3>
+                <p>Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights &amp; Biases.</p>
+                <div class="milestone-meta">
+                    <span class="mm">📦 Dataset: Custom via Roboflow</span>
+                    <span class="mm">🎯 Goal: &gt;0.5 mAP@50</span>
+                    <span class="mm">⏱ 15–20 hours</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="connector"></div>
+
+    <!-- ── PHASE 4 ── -->
+    <section class="phase p4" id="phase-4">
+        <div class="phase-header">
+            <div class="phase-num">04</div>
+            <div class="phase-meta">
+                <h2>Modern Frontiers</h2>
+                <p>Vision Transformers, 3D Vision, Generative AI, Edge Deployment</p>
+                <span class="phase-tag">5–7 weeks</span>
+            </div>
+            <div class="phase-pp">
+                <div class="phase-pp-text" id="pp4-txt">0/10</div>
+                <div class="pp-bar"><div class="pp-fill" id="pp4-bar" style="width:0%"></div></div>
+            </div>
+        </div>
+        <div class="phase-body">
+            <div>
+                <div class="sec-title">📋 Topics</div>
+                <ul class="checklist">
+                    <li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">Self-Attention mechanism — from scratch</label></li>
+                    <li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Vision Transformer (ViT) — patch embeddings</label></li>
+                    <li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">CLIP — contrastive language-image pre-training</label></li>
+                    <li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">SAM — Segment Anything Model</label></li>
+                    <li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">3D Vision: stereo, depth estimation, point clouds</label></li>
+                    <li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">NeRF — Neural Radiance Fields</label></li>
+                    <li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">Diffusion Models — DDPM, Stable Diffusion</label></li>
+                    <li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Model Quantization: INT8, FP16</label></li>
+                    <li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">TFLite &amp; ONNX export + runtime</label></li>
+                    <li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li>
+                </ul>
+            </div>
+            <div>
+                <div class="sec-title">📚 Resources</div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div>
+                    <h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4>
+                    <div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div>
+                    <h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4>
+                    <div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div>
+                    <a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank">Read Docs →</a>
+                </div>
+                <div class="resource-card">
+                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div>
+                    <h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4>
+                    <div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div>
+                    <a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank">Read Guide →</a>
+                </div>
+            </div>
+            <div class="full-width milestone">
+                <div class="milestone-label">🏆 Milestone Project</div>
+                <h3>Real-Time Edge AI Detector</h3>
+                <p>Export your Phase 3 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with &lt;5% mAP drop from quantization.</p>
+                <div class="milestone-meta">
+                    <span class="mm">📦 Hardware: RPi 4 or webcam</span>
+                    <span class="mm">🎯 Goal: ≥10 FPS real-time</span>
+                    <span class="mm">⏱ 10–14 hours</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── INTERVIEW PREP ── -->
+    <section class="extra-section">
+        <div class="extra-header green">
+            <h2>💼 Interview Prep Bank</h2>
+            <p>CV-specific theory, implementation, and system-design questions with hints</p>
+        </div>
+        <div class="extra-body">
+            <div class="iq-grid">
+                <div class="iq-card">
+                    <div class="iq-cat">Theory</div>
+                    <h4>Why does ResNet use skip connections?</h4>
+                    <p>Hint: Vanishing gradients + identity shortcuts let very deep networks train without degradation.</p>
+                </div>
+                <div class="iq-card">
+                    <div class="iq-cat">Implementation</div>
+                    <h4>Implement IoU from scratch in NumPy</h4>
+                    <p>Hint: intersection = max(0, x2−x1) × max(0, y2−y1). Union = A + B − intersection.</p>
+                </div>
+                <div class="iq-card">
+                    <div class="iq-cat">System Design</div>
+                    <h4>Design a real-time pedestrian detector for a city intersection camera</h4>
+                    <p>Hint: Consider latency SLA, edge vs. cloud, model selection, failure modes, and demographic bias.</p>
+                </div>
+                <div class="iq-card">
+                    <div class="iq-cat">Theory</div>
+                    <h4>How does attention differ from convolution?</h4>
+                    <p>Hint: Conv = local fixed receptive field. Attention = global, dynamic weight per token pair.</p>
+                </div>
+                <div class="iq-card">
+                    <div class="iq-cat">Debugging</div>
+                    <h4>Your detector has high precision but low recall. What's wrong?</h4>
+                    <p>Hint: Confidence threshold too high. Lower it and re-examine the precision-recall curve.</p>
+                </div>
+                <div class="iq-card">
+                    <div class="iq-cat">Implementation</div>
+                    <h4>Explain NMS and implement it in Python</h4>
+                    <p>Hint: Sort by confidence, suppress overlapping boxes (IoU &gt; threshold), keep highest-confidence box.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ── EDGE AI TRACK ── -->
+    <section class="extra-section">
+        <div class="extra-header orange">
+            <h2>⚡ Edge AI Deployment Track</h2>
+            <p>From trained model to hardware in 5 steps — end-to-end path no other CV roadmap covers</p>
+        </div>
+        <div class="extra-body">
+            <div class="pipeline">
+                <div class="pipe-step">
+                    <div class="sn">Step 1</div>
+                    <h4>Train</h4>
+                    <p>YOLOv8 / PyTorch on GPU (Colab or local)</p>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="sn">Step 2</div>
+                    <h4>Export</h4>
+                    <p>ONNX or TFLite with INT8 quantization</p>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="sn">Step 3</div>
+                    <h4>Benchmark</h4>
+                    <p>Measure latency, throughput, mAP delta</p>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="sn">Step 4</div>
+                    <h4>Deploy</h4>
+                    <p>Raspberry Pi 4 or Jetson Nano runtime</p>
+                </div>
+                <div class="pipe-arrow">→</div>
+                <div class="pipe-step">
+                    <div class="sn">Step 5</div>
+                    <h4>Monitor</h4>
+                    <p>Drift detection &amp; retraining triggers</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    <p>Built by <a href="https://github.com/sadhanasharma26">sadhanasharma26</a> ·
+    <a href="https://github.com/sadhanasharma26/computer-vision-roadmap">GitHub</a> ·
+    MIT License</p>
+</footer>
+
+<script>
+// ── KERNELS ──────────────────────────────────────────────
+const K = {
+    blur:    { name:'Gaussian Blur',  v:[[1/16,2/16,1/16],[2/16,4/16,2/16],[1/16,2/16,1/16]] },
+    sharpen: { name:'Sharpen',        v:[[0,-1,0],[-1,5,-1],[0,-1,0]] },
+    edgex:   { name:'Sobel X',        v:[[-1,0,1],[-2,0,2],[-1,0,1]] },
+    edgey:   { name:'Sobel Y',        v:[[-1,-2,-1],[0,0,0],[1,2,1]] },
+    emboss:  { name:'Emboss',         v:[[-2,-1,0],[-1,1,1],[0,1,2]] }
+};
+let curK = 'blur';
+let px = Array.from({length:7}, () => Array(7).fill(0));
+// default pattern: diamond
+[[2,3],[3,2],[3,3],[3,4],[4,3]].forEach(([r,c]) => px[r][c] = 255);
+[[1,3],[3,1],[5,3],[3,5]].forEach(([r,c]) => px[r][c] = 180);
+
+function fmtK(v) {
+    if (v === 0) return '0';
+    if (Number.isInteger(v)) return String(v);
+    const pairs = [[1,16],[1,8],[3,16],[1,4],[3,8],[1,2]];
+    for (const [n,d] of pairs) {
+        if (Math.abs(v - n/d) < 0.001) return `${n}/${d}`;
+        if (Math.abs(v + n/d) < 0.001) return `-${n}/${d}`;
+    }
+    return v.toFixed(2);
+}
+
+function renderInput() {
+    const g = document.getElementById('inputGrid');
+    g.innerHTML = '';
+    for (let r = 0; r < 7; r++) {
+        for (let c = 0; c < 7; c++) {
+            const el = document.createElement('div');
+            el.className = 'cell clickable';
+            const v = px[r][c];
+            el.style.background = `rgb(${v},${v},${v})`;
+            el.onclick = () => { px[r][c] = px[r][c] ? 0 : 255; renderInput(); renderOutput(); };
+            g.appendChild(el);
+        }
+    }
+}
+
+function renderKernel() {
+    const g = document.getElementById('kernelGrid');
+    const k = K[curK];
+    document.getElementById('kname').textContent = k.name;
+    g.innerHTML = '';
+    for (let r = 0; r < 3; r++) {
+        for (let c = 0; c < 3; c++) {
+            const v = k.v[r][c];
+            const el = document.createElement('div');
+            el.className = 'kcell';
+            el.textContent = fmtK(v);
+            el.style.background = v > 0 ? '#ede9fe' : v < 0 ? '#fee2e2' : 'white';
+            g.appendChild(el);
+        }
+    }
+}
+
+function renderOutput() {
+    const kv = K[curK].v;
+    const out = [];
+    for (let r = 0; r < 5; r++) {
+        out[r] = [];
+        for (let c = 0; c < 5; c++) {
+            let s = 0;
+            for (let kr = 0; kr < 3; kr++)
+                for (let kc = 0; kc < 3; kc++)
+                    s += px[r+kr][c+kc] * kv[kr][kc];
+            out[r][c] = Math.max(0, Math.min(255, Math.round(s)));
+        }
+    }
+    const g = document.getElementById('outputGrid');
+    g.innerHTML = '';
+    let mx = 1;
+    out.forEach(row => row.forEach(v => mx = Math.max(mx, Math.abs(v))));
+    for (let r = 0; r < 5; r++) {
+        for (let c = 0; c < 5; c++) {
+            const el = document.createElement('div');
+            el.className = 'cell';
+            const d = Math.round(Math.abs(out[r][c]) / mx * 255);
+            el.style.background = `rgb(${d},${d},${d})`;
+            g.appendChild(el);
+        }
+    }
+}
+
+function setKernel(name, btn) {
+    curK = name;
+    document.querySelectorAll('.kbtn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderKernel();
+    renderOutput();
+}
+
+// ── PROGRESS ─────────────────────────────────────────────
+const SKEY = 'cv-roadmap-v1';
+
+function save() {
+    const state = {};
+    document.querySelectorAll('.checklist input').forEach(cb => state[cb.id] = cb.checked);
+    localStorage.setItem(SKEY, JSON.stringify(state));
+    updateUI();
+}
+
+function load() {
+    const raw = localStorage.getItem(SKEY);
+    if (!raw) return;
+    const state = JSON.parse(raw);
+    document.querySelectorAll('.checklist input').forEach(cb => {
+        if (state[cb.id] != null) cb.checked = state[cb.id];
+    });
+    updateUI();
+}
+
+function updateUI() {
+    const all = document.querySelectorAll('.checklist input');
+    const done = document.querySelectorAll('.checklist input:checked');
+    const pct = all.length ? Math.round(done.length / all.length * 100) : 0;
+    document.getElementById('progressText').textContent = `${done.length} / ${all.length} topics`;
+    document.getElementById('hbarFill').style.width = pct + '%';
+
+    [1,2,3,4].forEach(p => {
+        const pa = document.querySelectorAll(`#phase-${p} .checklist input`);
+        const pd = document.querySelectorAll(`#phase-${p} .checklist input:checked`);
+        const pp = pa.length ? Math.round(pd.length / pa.length * 100) : 0;
+        document.getElementById(`pp${p}-txt`).textContent = `${pd.length}/${pa.length}`;
+        document.getElementById(`pp${p}-bar`).style.width = pp + '%';
+    });
+}
+
+function resetAll() {
+    if (!confirm('Reset all progress?')) return;
+    localStorage.removeItem(SKEY);
+    document.querySelectorAll('.checklist input').forEach(cb => cb.checked = false);
+    updateUI();
+}
+
+// ── SCROLL BAR ───────────────────────────────────────────
+window.addEventListener('scroll', () => {
+    const pct = window.scrollY / (document.documentElement.scrollHeight - innerHeight) * 100;
+    document.getElementById('scrollBar').style.width = pct + '%';
+});
+
+// ── INIT ─────────────────────────────────────────────────
+renderInput();
+renderKernel();
+renderOutput();
+load();
+</script>
 </body>
 </html>
