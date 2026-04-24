@@ -9,21 +9,6 @@ A structured, resource-rich learning path from pixels to production. Covers Clas
 
 ---
 
-## What Makes This Different
-
-Three features no other CV roadmap has:
-
-**1. Live Convolution Visualizer**
-Click pixels, pick a kernel (Blur / Sharpen / Sobel / Emboss), watch the output update in real time. Builds the intuition that textbooks can't.
-
-**2. Interview Prep Bank**
-CV-specific theory, implementation, and system-design questions with targeted hints — covering ResNet skip connections, IoU from scratch, NMS implementation, and real-world system design.
-
-**3. Edge AI Deployment Track**
-A 5-step end-to-end pipeline: Train → Export (ONNX/TFLite INT8) → Benchmark → Deploy (Raspberry Pi / Jetson) → Monitor. Closes the gap between research model and shipping product.
-
----
-
 ## Navigation Sitemap
 
 ```
