@@ -1,5 +1,4 @@
-# Computer Vision Roadmap — Gold Standard
-
+# Computer Vision Roadmap 
 A structured, resource-rich learning path from pixels to production. Covers Classical CV, Deep Learning, Vision Transformers, and Edge AI deployment — with interactive tools built in.
 
 <p align="center">
