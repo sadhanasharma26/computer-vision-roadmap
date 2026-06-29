@@ -1,5 +1,5 @@
-# Computer Vision Roadmap 
-A structured, resource-rich learning path from pixels to production. Covers Classical CV, Deep Learning, Vision Transformers, and Edge AI deployment — with interactive tools built in.
+# Computer Vision Roadmap
+A **free**, structured learning path from pixels to production — Classical CV, **Multi-View Geometry & 3D Vision**, Deep Learning, Vision Transformers, and Edge AI deployment — with interactive demos, per-phase quizzes, and a searchable free-resource library built in.
 
 <p align="center">
   <a href="https://sadhanasharma26.github.io/computer-vision-roadmap/roadmap.html" target="_blank">
@@ -18,27 +18,46 @@ computer-vision-roadmap/
 │   └── roadmap.html        Interactive roadmap (main experience)
 │       ├── Phase 1: The Foundations (Math & Pixels)
 │       ├── Phase 2: Feature Engineering & Classical CV
-│       ├── Phase 3: The Deep Learning Era
-│       ├── Phase 4: Modern Frontiers
-│       ├── 💼 Interview Prep Bank
+│       ├── Phase 3: Multi-View Geometry & 3D Vision
+│       ├── Phase 4: The Deep Learning Era
+│       ├── Phase 5: Modern Frontiers
+│       ├── 🧪 4 interactive demos (convolution, epipolar geometry, attention, IoU/NMS)
+│       ├── 🧠 Per-phase knowledge-check quizzes
+│       ├── 💼 Interview Prep Bank (searchable, 18 questions)
+│       ├── 📚 Free Resource Library (searchable, filterable)
+│       ├── 📖 Glossary (52 terms) + ❓ FAQ
 │       └── ⚡ Edge AI Deployment Track
-├── roadmap.md              Text outline of all 4 phases
-├── resources.md            Curated resource cards with metadata
-├── projects.md             Milestone project specs
+├── roadmap.md              Text outline of all 5 phases
+├── resources.md            Curated free-resource cards with metadata
+├── projects.md             Milestone & practice project specs
 ├── CONTRIBUTING.md         Contribution guidelines
 └── README.md               This file
 ```
 
 ---
 
-## The 4 Phases
+## The 5 Phases
 
 | Phase | Title | Duration | Milestone Project |
 |-------|-------|----------|-------------------|
 | 01 | The Foundations — Math & Pixels | 4–6 weeks | NumPy Image Filter Library |
 | 02 | Feature Engineering & Classical CV | 4–5 weeks | Panorama Stitcher (SIFT + RANSAC) |
-| 03 | The Deep Learning Era | 6–8 weeks | Custom Object Detector + Segmentation |
-| 04 | Modern Frontiers | 5–7 weeks | Real-Time Edge AI Detector |
+| 03 | Multi-View Geometry & 3D Vision | 4–5 weeks | Two-View Structure-from-Motion |
+| 04 | The Deep Learning Era | 6–8 weeks | Custom Object Detector + Segmentation |
+| 05 | Modern Frontiers | 5–7 weeks | Real-Time Edge AI Detector |
+
+> **Why a dedicated geometry phase?** Classical multi-view geometry — epipolar constraints, the fundamental & essential matrices, triangulation, stereo, and structure-from-motion — is the bridge between single-image features and learning-based vision. It powers SLAM, AR/VR, robotics, and photogrammetry, and it's where deep-learning-only learners (and interviewees) most often have gaps.
+
+---
+
+## What's Inside
+
+- **50 topics across 5 phases**, each with a checkable progress tracker and a gated milestone project.
+- **4 interactive demos** (no install, runs in the browser): a convolution kernel visualizer, an **epipolar-geometry explorer** (drag a point, watch its epipolar line appear), an **attention-vs-convolution** receptive-field visualizer, and an **IoU + Non-Max-Suppression playground**.
+- **Per-phase knowledge-check quizzes** with instant explanations.
+- **Searchable, filterable Free Resource Library** — every resource is free.
+- **52-term glossary**, a beginner **FAQ**, and an 18-question **interview prep bank**.
+- **Dark mode**, sticky section navigation, and `localStorage` progress — no account, no build step.
 
 ---
 
@@ -56,7 +75,7 @@ Every resource in this roadmap includes:
 |-------|--------|
 | **Difficulty** | Easy / Intermediate / Hard |
 | **Time** | Estimated hours |
-| **Type** | Video / Paper / Book / Tutorial / Course / Repo |
+| **Type** | Video / Paper / Book / Tutorial / Course / Repo / Interactive |
 | **Why this?** | One sentence on specific value |
 
 ---
@@ -89,6 +108,7 @@ conda activate cv_env
 # Core libraries
 pip install opencv-python numpy matplotlib
 pip install scikit-learn scikit-image
+pip install open3d                     # 3D point clouds (Phase 3)
 pip install torch torchvision          # or tensorflow
 pip install ultralytics                # YOLOv8
 pip install jupyter notebook

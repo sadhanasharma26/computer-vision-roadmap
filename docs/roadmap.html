@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Vision Roadmap</title>
-    <style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Vision Roadmap — free, interactive, pixels to production</title>
+<meta name="description" content="A free, interactive computer-vision learning roadmap: foundations, classical CV, multi-view geometry, deep learning, and modern frontiers — with hands-on demos, quizzes, a glossary, and curated free resources.">
+<script>(function(){try{var t=localStorage.getItem('cv-theme');if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<style>
         :root {
             --purple: #4f46e5;
             --purple-mid: #7c3aed;
@@ -166,77 +168,291 @@
             .extra-body { padding: 18px; }
             main { padding: 20px 14px; }
         }
-    </style>
+    
+/* ── theme variables & dark mode ───────────────────────── */
+:root{ --page-bg:#f0f0f8; }
+html[data-theme="dark"] body{ background:#0f1320; color:#e5e7eb; }
+html[data-theme="dark"] .phase, html[data-theme="dark"] .extra-section{ background:#1b2233; border-color:#2b3346; }
+html[data-theme="dark"] .phase-header{ border-bottom-color:#2b3346; }
+html[data-theme="dark"] .phase-meta h2{ color:#f3f4f6; }
+html[data-theme="dark"] .phase-meta p, html[data-theme="dark"] .phase-pp-text{ color:#9ca3af; }
+html[data-theme="dark"] .phase-tag{ background:#2b3346; color:#cbd5e1; }
+html[data-theme="dark"] .sec-title{ color:#9ca3af; }
+html[data-theme="dark"] .checklist label{ color:#cbd5e1; }
+html[data-theme="dark"] .checklist input:checked + label{ color:#6b7280; }
+html[data-theme="dark"] .checklist li:hover{ background:#222b3d; }
+html[data-theme="dark"] .resource-card{ background:#161c2b; border-color:#2b3346; }
+html[data-theme="dark"] .resource-card h4{ color:#e5e7eb; }
+html[data-theme="dark"] .resource-why{ color:#9ca3af; }
+html[data-theme="dark"] .iq-card{ background:#161c2b; border-color:#2b3346; }
+html[data-theme="dark"] .iq-card h4{ color:#e5e7eb; }
+html[data-theme="dark"] .iq-card p{ color:#9ca3af; }
+html[data-theme="dark"] .pp-bar{ background:#2b3346; }
+html[data-theme="dark"] .pipe-step{ background:#161c2b; border-color:#2b3346; }
+html[data-theme="dark"] .pipe-step h4{ color:#e5e7eb; }
+html[data-theme="dark"] .pipe-step p{ color:#9ca3af; }
+html[data-theme="dark"] footer{ color:#6b7280; }
+html[data-theme="dark"] .intro-card{ background:#1b2233; border-color:#2b3346; }
+html[data-theme="dark"] .intro-card h1{ color:#f3f4f6; }
+html[data-theme="dark"] .intro-card p{ color:#cbd5e1; }
+html[data-theme="dark"] .gloss-item{ background:#161c2b; border-color:#2b3346; }
+html[data-theme="dark"] .gloss-term{ color:#e5e7eb; }
+html[data-theme="dark"] .gloss-def{ color:#9ca3af; }
+html[data-theme="dark"] .faq-item{ background:#161c2b; border-color:#2b3346; }
+html[data-theme="dark"] .faq-item summary{ color:#e5e7eb; }
+html[data-theme="dark"] .faq-item p{ color:#9ca3af; }
+html[data-theme="dark"] .filter-input{ background:#161c2b; border-color:#2b3346; color:#e5e7eb; }
+html[data-theme="dark"] .chip{ background:#161c2b; border-color:#2b3346; color:#cbd5e1; }
+html[data-theme="dark"] .quiz-box, html[data-theme="dark"] .quiz-details{ background:#161c2b; border-color:#3b3066; }
+html[data-theme="dark"] .quiz-qtext{ color:#e5e7eb; }
+html[data-theme="dark"] .quiz-q{ border-color:#2b3346; }
+html[data-theme="dark"] .quiz-choice{ background:#1b2233; border-color:#2b3346; color:#cbd5e1; }
+html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
+
+/* ── phase 5 accent + interactive badge ─────────────────── */
+.p5 .phase-num{ background:linear-gradient(135deg,#16a34a,#15803d); }
+.p5 .pp-fill{ background:#16a34a; }
+.b-interactive{ background:#fae8ff; color:#86198f; }
+
+/* ── sticky section nav (inside header) ─────────────────── */
+.topnav{ max-width:1200px; margin:12px auto 0; padding:0; display:flex; gap:6px; flex-wrap:wrap; }
+.topnav a{ font-size:0.78em; font-weight:600; color:rgba(255,255,255,0.92); text-decoration:none;
+  padding:5px 10px; border-radius:8px; background:rgba(255,255,255,0.13); white-space:nowrap; transition:background .15s; }
+.topnav a:hover{ background:rgba(255,255,255,0.30); }
+.phase, .extra-section, .intro-card{ scroll-margin-top:150px; }
+
+/* ── intro card ─────────────────────────────────────────── */
+.intro-card{ background:#fff; border:1px solid var(--gray-200); border-radius:20px; padding:26px 30px;
+  margin-bottom:18px; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
+.intro-card h1{ font-size:1.55em; color:var(--gray-900); margin-bottom:8px; }
+.intro-card p{ color:var(--gray-600); font-size:0.95em; max-width:880px; }
+.intro-tags{ display:flex; gap:9px; flex-wrap:wrap; margin-top:15px; }
+.intro-tag{ background:#ede9fe; color:#5b21b6; font-weight:700; font-size:0.76em; padding:5px 11px; border-radius:20px; }
+.intro-tag.free{ background:#dcfce7; color:#15803d; }
+
+/* ── extra-header colour variants ───────────────────────── */
+.extra-header.purple{ background:linear-gradient(135deg,#eef2ff,#e0e7ff); }
+.extra-header.purple h2, .extra-header.purple p{ color:#4338ca; }
+.extra-header.blue{ background:linear-gradient(135deg,#ecfeff,#cffafe); }
+.extra-header.blue h2, .extra-header.blue p{ color:#0e7490; }
+.extra-header.teal{ background:linear-gradient(135deg,#f0fdfa,#ccfbf1); }
+.extra-header.teal h2, .extra-header.teal p{ color:#0f766e; }
+
+/* ── filters ────────────────────────────────────────────── */
+.filter-bar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
+.filter-input{ flex:1; min-width:220px; padding:9px 14px; border:1px solid var(--gray-200); border-radius:10px;
+  font-size:0.9em; font-family:inherit; color:var(--gray-800); }
+.chips{ display:flex; gap:6px; flex-wrap:wrap; }
+.chip{ padding:5px 11px; border-radius:20px; border:1px solid var(--gray-200); background:#fff; cursor:pointer;
+  font-size:0.78em; font-weight:600; color:var(--gray-600); }
+.chip.active{ background:var(--purple); border-color:var(--purple); color:#fff; }
+.lib-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
+.no-results{ color:var(--gray-500); font-size:0.9em; padding:8px 2px; display:none; }
+
+/* ── glossary ───────────────────────────────────────────── */
+.gloss-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:12px; }
+.gloss-item{ border:1px solid var(--gray-200); border-radius:11px; padding:13px 15px; background:#fff; }
+.gloss-term{ font-weight:700; color:var(--gray-800); font-size:0.92em; margin-bottom:5px; display:flex;
+  justify-content:space-between; gap:8px; align-items:flex-start; }
+.gloss-def{ color:var(--gray-600); font-size:0.84em; }
+.gloss-phase{ font-size:0.64em; font-weight:700; color:var(--purple); background:#ede9fe; border-radius:6px;
+  padding:2px 6px; white-space:nowrap; }
+
+/* ── faq ────────────────────────────────────────────────── */
+.faq-item{ border:1px solid var(--gray-200); border-radius:11px; margin-bottom:10px; background:#fff; overflow:hidden; }
+.faq-item summary{ padding:14px 16px; cursor:pointer; font-weight:600; color:var(--gray-800); font-size:0.92em; list-style:none; }
+.faq-item summary::-webkit-details-marker{ display:none; }
+.faq-item summary::before{ content:'＋'; color:var(--purple); font-weight:700; margin-right:9px; }
+.faq-item[open] summary::before{ content:'－'; }
+.faq-item p{ padding:0 16px 15px; margin:0; color:var(--gray-600); font-size:0.88em; }
+
+/* ── quizzes ────────────────────────────────────────────── */
+.quiz-details{ border:1px dashed #c4b5fd; border-radius:14px; background:#faf9ff; }
+.quiz-details summary{ padding:14px 18px; cursor:pointer; font-weight:700; color:#5b21b6; list-style:none; }
+.quiz-details summary::-webkit-details-marker{ display:none; }
+.quiz-details summary::before{ content:'▸'; margin-right:9px; }
+.quiz-details[open] summary::before{ content:'▾'; }
+.quiz-body{ padding:2px 18px 18px; }
+.quiz-q{ padding:13px 0; border-top:1px solid var(--gray-200); }
+.quiz-q:first-child{ border-top:none; }
+.quiz-qtext{ font-weight:600; color:var(--gray-800); margin-bottom:9px; font-size:0.92em; }
+.quiz-choices{ display:flex; flex-direction:column; gap:6px; }
+.quiz-choice{ text-align:left; padding:8px 12px; border:1px solid var(--gray-200); border-radius:8px; background:#fff;
+  cursor:pointer; font-size:0.87em; font-family:inherit; color:var(--gray-700); transition:all .12s; }
+.quiz-choice:hover:not(:disabled){ border-color:var(--purple-light); }
+.quiz-choice:disabled{ cursor:default; }
+.quiz-correct{ background:#dcfce7; border-color:#22c55e; color:#15803d; font-weight:600; }
+.quiz-wrong{ background:#fee2e2; border-color:#ef4444; color:#991b1b; }
+.quiz-exp{ display:none; margin-top:9px; font-size:0.84em; color:var(--gray-600); background:var(--gray-100);
+  border-radius:8px; padding:9px 11px; }
+#epi-wrap { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--gray-900, #1f2937); }
+#epi-panels { display: flex; flex-wrap: wrap; gap: 16px; }
+.epi-panel-col { flex: 1 1 280px; min-width: 0; }
+.epi-panel-label { font-size: 0.8em; font-weight: 700; color: #5b21b6; margin-bottom: 6px; text-align: center; }
+.epi-svg { width: 100%; height: auto; aspect-ratio: 320 / 240; display: block;
+  background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 12px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.07); touch-action: none; }
+#epi-svgL { cursor: crosshair; }
+.epi-bg { fill: #fbfaff; }
+.epi-grid line { stroke: #ece9fb; stroke-width: 1; }
+.epi-baseline { stroke: #c4b5fd; stroke-width: 1; stroke-dasharray: 4 4; }
+.epi-line { stroke: #dc2626; stroke-width: 2.5; stroke-linecap: round; }
+.epi-query { fill: #4f46e5; stroke: #fff; stroke-width: 2.5; cursor: grab; }
+.epi-query:active { cursor: grabbing; }
+.epi-query:focus { outline: none; stroke: #7c3aed; stroke-width: 3.5; }
+.epi-epipole { fill: #d97706; stroke: #fff; stroke-width: 1.5; }
+.epi-scenedot { stroke: #fff; stroke-width: 1.5; }
+.epi-scenedot.epi-active-match { stroke: #1f2937; stroke-width: 2; }
+.epi-epi-arrow { fill: #d97706; }
+.epi-epi-txt { fill: #d97706; font: 700 11px 'Segoe UI', sans-serif; }
+#epi-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 4px; }
+.epi-kbtn { padding: 5px 11px; border-radius: 7px; border: 2px solid var(--gray-200, #e5e7eb);
+  background: #fff; cursor: pointer; font-size: 0.8em; font-weight: 600; color: var(--gray-700, #374151);
+  transition: all 0.15s; }
+.epi-kbtn.epi-active, .epi-kbtn:hover { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
+.epi-kbtn:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
+#epi-readout { font-size: 0.8em; color: #7c3aed; font-weight: 600; margin-left: auto; }
+#epi-explain { margin-top: 14px; font-size: 0.88em; line-height: 1.6; color: var(--gray-700, #374151); }
+#epi-explain p { margin: 0 0 10px; }
+.epi-em-line { color: #dc2626; font-weight: 700; }
+.epi-em-epi { color: #d97706; font-weight: 700; }
+#epi-explain code { background: #ede9fe; color: #5b21b6; padding: 1px 5px; border-radius: 5px;
+  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 0.92em; }
+#epi-math { background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 12px;
+  padding: 14px 16px; margin-top: 4px; }
+.epi-math-row { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; }
+.epi-mat-block { flex: 1 1 240px; min-width: 0; }
+.epi-mat-cap { font-size: 0.8em; color: var(--gray-700, #374151); margin-bottom: 8px; }
+#epi-Fmat { border-collapse: collapse; font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+  font-size: 0.82em; }
+#epi-Fmat td { padding: 3px 10px; text-align: right; color: #5b21b6;
+  border-left: 2px solid #c4b5fd; }
+#epi-Fmat td:last-child { border-right: 2px solid #c4b5fd; }
+.epi-params { font-size: 0.76em; color: #7c3aed; margin-top: 12px; padding-top: 10px;
+  border-top: 1px dashed #c4b5fd; }
+@media (max-width: 420px) { #epi-readout { margin-left: 0; width: 100%; } }
+#attn-box { max-width: 100%; }
+.attn-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+.attn-modebtns { display: flex; gap: 7px; flex-wrap: wrap; }
+.attn-modehint { font-size: 0.8em; color: var(--gray-600); }
+.attn-layout { display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap; }
+.attn-gridwrap { flex: 0 0 auto; }
+.attn-gridwrap h4 { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: 8px; }
+.attn-grid { display: grid; gap: 3px; background: #c4b5fd; padding: 3px; border-radius: 8px; width: min(308px, 78vw); }
+.attn-cell { aspect-ratio: 1 / 1; width: 100%; border: 0; padding: 0; border-radius: 4px; background: #fff; font-family: inherit; font-size: clamp(8px, 2.4vw, 12px); font-weight: 700; color: transparent; cursor: pointer; transition: background 0.12s, box-shadow 0.12s, transform 0.08s; display: flex; align-items: center; justify-content: center; }
+.attn-cell:hover { transform: scale(1.08); }
+.attn-cell:focus-visible { outline: 3px solid var(--cyan); outline-offset: 1px; z-index: 2; }
+.attn-cell.attn-query { box-shadow: 0 0 0 3px var(--amber), 0 2px 6px rgba(0,0,0,0.25); transform: scale(1.06); }
+.attn-cell.attn-field { box-shadow: inset 0 0 0 1px #a78bfa; }
+.attn-side { flex: 1 1 230px; min-width: 200px; }
+.attn-caption { font-size: 0.86em; color: var(--gray-700); background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+.attn-caption b { color: #5b21b6; }
+.attn-top { font-size: 0.84em; }
+.attn-toptitle { font-weight: 700; color: #5b21b6; margin-bottom: 8px; font-size: 0.92em; }
+.attn-topnote { color: var(--gray-600); font-size: 0.92em; }
+.attn-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+.attn-barlbl { width: 44px; font-variant-numeric: tabular-nums; color: var(--gray-700); font-weight: 600; }
+.attn-bartrack { flex: 1; height: 12px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
+.attn-barfill { display: block; height: 100%; background: linear-gradient(to right, var(--purple), var(--purple-mid)); border-radius: 6px; transition: width 0.18s; }
+.attn-barpct { width: 42px; text-align: right; font-variant-numeric: tabular-nums; color: #5b21b6; font-weight: 700; }
+.attn-legend { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 0.78em; color: var(--gray-600); }
+.attn-legbar { flex: 1; max-width: 160px; height: 10px; border-radius: 5px; background: linear-gradient(to right, #f8f7ff, #4f46e5); border: 1px solid var(--gray-200); }
+@media (max-width: 520px) { .attn-layout { gap: 16px; } .attn-side { flex-basis: 100%; } }
+.iou-wrap{display:flex;flex-direction:column;gap:26px}
+.iou-part{background:#fff;border:1px solid var(--gray-200);border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.07);padding:18px}
+.iou-part-title{font-size:.95em;font-weight:700;color:#5b21b6;margin-bottom:2px}
+.iou-part-hint{font-size:.8em;color:var(--gray-600);margin-bottom:14px}
+.iou-stage{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
+.iou-svg-holder{flex:1 1 360px;min-width:280px}
+.iou-svg{width:100%;height:auto;display:block;background:#faf9ff;border:1px solid var(--gray-200);border-radius:10px;touch-action:none}
+.iou-side{flex:1 1 220px;min-width:200px;display:flex;flex-direction:column;gap:12px}
+.iou-metric{background:#f8f7ff;border:1px solid #e9e3ff;border-radius:10px;padding:12px 14px}
+.iou-metric-label{font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:4px}
+.iou-metric-val{font-size:1.7em;font-weight:800;color:var(--gray-900);font-variant-numeric:tabular-nums;line-height:1.1}
+.iou-bar-track{height:9px;background:var(--gray-200);border-radius:5px;overflow:hidden;margin-top:8px}
+.iou-bar-fill{height:100%;width:0;background:linear-gradient(to right,var(--purple),var(--purple-mid));border-radius:5px;transition:width .08s linear}
+.iou-rows{display:flex;flex-direction:column;gap:5px;font-size:.82em}
+.iou-row{display:flex;justify-content:space-between;gap:10px}
+.iou-row span:first-child{color:var(--gray-600)}
+.iou-row span:last-child{font-weight:700;font-variant-numeric:tabular-nums;color:var(--gray-800)}
+.iou-controls{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px;align-items:center}
+.iou-handle{cursor:grab}
+.iou-handle:active{cursor:grabbing}
+.iou-slider-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.iou-slider-wrap label{font-size:.82em;font-weight:600;color:var(--gray-700)}
+.iou-range{flex:1 1 180px;min-width:160px;accent-color:var(--purple);height:6px}
+.iou-thr-val{font-weight:800;font-variant-numeric:tabular-nums;color:#5b21b6;min-width:46px;text-align:right}
+.iou-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78em;margin-bottom:12px}
+.iou-legend span{display:inline-flex;align-items:center;gap:6px;color:var(--gray-700)}
+.iou-dot{width:13px;height:13px;border-radius:3px;display:inline-block}
+.iou-dot-keep{background:var(--green)}
+.iou-dot-supp{background:var(--red)}
+.iou-result{flex:1 1 240px;min-width:220px;display:flex;flex-direction:column;gap:10px}
+.iou-result-block{background:#f8f7ff;border:1px solid #e9e3ff;border-radius:10px;padding:10px 12px}
+.iou-result-block h5{font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.iou-result-keep h5{color:var(--green)}
+.iou-result-supp h5{color:var(--red)}
+.iou-chip{display:inline-block;font-size:.76em;font-weight:700;padding:3px 8px;border-radius:6px;margin:2px 3px 2px 0;font-variant-numeric:tabular-nums}
+.iou-chip-keep{background:#dcfce7;color:#15803d;border:1px solid #86efac}
+.iou-chip-supp{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
+.iou-empty{font-size:.78em;color:var(--gray-400);font-style:italic}
+.iou-focusring:focus-visible{outline:3px solid var(--purple-light);outline-offset:2px}
+@media (max-width:480px){.iou-metric-val{font-size:1.4em}}</style>
 </head>
 <body>
 
 <div id="scrollBar" style="width:0"></div>
 
 <header>
-    <div class="header-inner">
-        <div class="header-title">🔍 CV Roadmap </div>
-        <div class="header-right">
-            <div class="progress-pill" id="progressText">0 / 40 topics</div>
-            <div class="hbar-wrap"><div class="hbar-fill" id="hbarFill" style="width:0%"></div></div>
-            <button class="btn-reset" onclick="resetAll()">Reset</button>
-        </div>
+  <div class="header-inner">
+    <div class="header-title">🔍 CV Roadmap <span>· pixels → production</span></div>
+    <div class="header-right">
+      <div class="progress-pill" id="progressText">0 / 50 topics</div>
+      <div class="hbar-wrap"><div class="hbar-fill" id="hbarFill" style="width:0%"></div></div>
+      <button class="btn-reset" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <button class="btn-reset" onclick="resetAll()">Reset</button>
     </div>
+  </div>
+  <nav class="topnav" aria-label="Jump to section">
+    <a href="#phase-1">1 · Foundations</a>
+    <a href="#phase-2">2 · Classical CV</a>
+    <a href="#phase-3">3 · Geometry &amp; 3D</a>
+    <a href="#phase-4">4 · Deep Learning</a>
+    <a href="#phase-5">5 · Frontiers</a>
+    <a href="#interview">💼 Interview</a>
+    <a href="#library">📚 Resources</a>
+    <a href="#glossary">📖 Glossary</a>
+    <a href="#faq">❓ FAQ</a>
+  </nav>
 </header>
 
 <main>
-
-    <!-- ── PHASE 1 ── -->
-    <section class="phase p1" id="phase-1">
-        <div class="phase-header">
-            <div class="phase-num">01</div>
-            <div class="phase-meta">
-                <h2>The Foundations</h2>
-                <p>Math & Pixels — everything in CV reduces to these</p>
-                <span class="phase-tag">4–6 weeks</span>
-            </div>
-            <div class="phase-pp">
-                <div class="phase-pp-text" id="pp1-txt">0/10</div>
-                <div class="pp-bar"><div class="pp-fill" id="pp1-bar" style="width:0%"></div></div>
-            </div>
-        </div>
-        <div class="phase-body">
-            <div>
-                <div class="sec-title">📋 Topics</div>
-                <ul class="checklist">
-                    <li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li>
-                    <li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li>
-                    <li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li>
-                    <li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li>
-                    <li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li>
-                    <li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li>
-                    <li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li>
-                    <li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li>
-                    <li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li>
-                    <li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li>
-                </ul>
-            </div>
-            <div>
-                <div class="sec-title">📚 Resources</div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 6h</span><span class="badge b-video">Video</span></div>
-                    <h4>3Blue1Brown — Essence of Linear Algebra</h4>
-                    <div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div>
-                    <a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank">Watch on YouTube →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div>
-                    <h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4>
-                    <div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div>
-                    <h4>Real Python — Image Processing with NumPy &amp; Pillow</h4>
-                    <div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div>
-                    <a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank">Read Tutorial →</a>
-                </div>
-            </div>
-
-            <!-- Convolution Visualizer — full width -->
+<section class="intro-card">
+  <h1>🔍 Computer Vision Roadmap</h1>
+  <p>A free, structured path from raw pixels to production across five phases:
+  <strong>Foundations → Classical CV → Multi-View Geometry → Deep Learning → Modern Frontiers</strong>.
+  Every resource here is free. Check topics off as you learn — your progress saves in this browser (no account).
+  Try the interactive demos, test yourself with the per-phase quizzes, and use the interview bank when you're job-hunting.</p>
+  <div class="intro-tags">
+    <span class="intro-tag free">100% free</span>
+    <span class="intro-tag">5 phases · 50 topics</span>
+    <span class="intro-tag">5 milestone projects</span>
+    <span class="intro-tag">4 interactive demos</span>
+    <span class="intro-tag">25+ curated resources</span>
+    <span class="intro-tag">52 glossary terms</span>
+  </div>
+</section>
+<section class="phase p1" id="phase-1">
+  <div class="phase-header">
+    <div class="phase-num">01</div>
+    <div class="phase-meta"><h2>The Foundations</h2><p>Math &amp; Pixels — everything in CV reduces to these</p><span class="phase-tag">4–6 weeks</span></div>
+    <div class="phase-pp"><div class="phase-pp-text" id="pp1-txt">0/10</div>
+      <div class="pp-bar"><div class="pp-fill" id="pp1-bar" style="width:0%"></div></div></div>
+  </div>
+  <div class="phase-body">
+    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li><li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li><li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li><li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li><li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li><li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li><li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li><li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li><li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li><li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li></ul></div>
+    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 6h</span><span class="badge b-video">Video</span></div><h4>3Blue1Brown — Essence of Linear Algebra</h4><div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div><h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4><div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Real Python — Image Processing with NumPy &amp; Pillow</h4><div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div><a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <!-- Convolution Visualizer — full width -->
             <div class="full-width demo-box">
                 <h3>🧪 Interactive — Convolution Kernel Visualizer</h3>
                 <div class="sub">Click input cells to toggle pixels. Select a kernel. Output updates in real time.</div>
@@ -265,260 +481,217 @@
                     </div>
                 </div>
             </div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. What is the main difference between convolution and cross-correlation?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Convolution flips the kernel before sliding; cross-correlation does not</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They operate on different color spaces</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Cross-correlation only works on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convolution cannot be used for blurring</button></div><div class="quiz-exp">✅ Convolution flips (rotates 180 degrees) the kernel before the sliding dot product, whereas cross-correlation applies the kernel as-is; for symmetric kernels the results are identical.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Histogram equalization is primarily used to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Detect edges in an image</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Improve contrast by spreading intensities across the full range</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convert RGB to grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Compress the image file size</button></div><div class="quiz-exp">✅ It remaps intensities so the output histogram is roughly uniform, stretching contrast across the available range.</div></div><div class="quiz-q"><div class="quiz-qtext">3. In PCA, the principal directions of the data correspond to the:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Rows of the image with the most pixels</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Eigenvectors of the covariance matrix</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Highest-frequency FFT components</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Largest gradients in the Sobel map</button></div><div class="quiz-exp">✅ PCA finds the eigenvectors of the data's covariance matrix, ordered by eigenvalue (variance explained).</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>NumPy Image Filter Library</h3><p>Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.</p><div class="milestone-meta"><span class="mm">📦 Dataset: BSDS500</span><span class="mm">🎯 Goal: 5 filters from scratch</span><span class="mm">⏱ 6–8 hours</span></div></div>
+  </div>
+</section><div class="connector"></div><section class="phase p2" id="phase-2">
+  <div class="phase-header">
+    <div class="phase-num">02</div>
+    <div class="phase-meta"><h2>Feature Engineering &amp; Classical CV</h2><p>The pre-deep-learning toolkit — still runs in every production pipeline</p><span class="phase-tag">4–5 weeks</span></div>
+    <div class="phase-pp"><div class="phase-pp-text" id="pp2-txt">0/10</div>
+      <div class="pp-bar"><div class="pp-fill" id="pp2-bar" style="width:0%"></div></div></div>
+  </div>
+  <div class="phase-body">
+    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li><li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li><li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li><li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li><li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li><li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li><li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li><li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li><li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li><li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li></ul></div>
+    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-video">Video</span></div><h4>First Principles of CV — Camera Calibration (Columbia / Shree Nayar)</h4><div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div><a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4><div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div><a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4><div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div></div></div>
+    
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. Why is RANSAC used when estimating a homography from matched features?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It speeds up SIFT descriptor computation</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">It robustly fits the model despite many outlier (wrong) matches</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It converts the image to the frequency domain</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It guarantees the globally optimal least-squares fit</button></div><div class="quiz-exp">✅ Feature matches contain many wrong correspondences; RANSAC repeatedly fits from minimal samples and keeps the hypothesis with the most inliers, ignoring outliers.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Which property makes SIFT descriptors useful across different photos of the same scene?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They are invariant to scale and rotation</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They require a GPU to compute</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They only work on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They encode absolute pixel colors</button></div><div class="quiz-exp">✅ SIFT detects keypoints across scales and assigns a dominant orientation, making its descriptors robust to scale and in-plane rotation.</div></div><div class="quiz-q"><div class="quiz-qtext">3. A homography can exactly map between two images when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The camera never moves</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">The scene is planar or the camera only rotates about its center</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The images are grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The focal length is unknown</button></div><div class="quiz-exp">✅ A homography is a planar projective transform, valid for planar scenes or pure-rotation camera motion; general 3D scenes with translation need epipolar geometry.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Image Panorama Stitcher</h3><p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Your own phone photos</span><span class="mm">🎯 Goal: Seamless 3-image panorama</span><span class="mm">⏱ 8–12 hours</span></div></div>
+  </div>
+</section><div class="connector"></div><section class="phase p3" id="phase-3">
+  <div class="phase-header">
+    <div class="phase-num">03</div>
+    <div class="phase-meta"><h2>Multi-View Geometry &amp; 3D Vision</h2><p>From two flat images to metric 3D — the geometry deep learning skips over</p><span class="phase-tag">4–5 weeks</span></div>
+    <div class="phase-pp"><div class="phase-pp-text" id="pp3-txt">0/10</div>
+      <div class="pp-bar"><div class="pp-fill" id="pp3-bar" style="width:0%"></div></div></div>
+  </div>
+  <div class="phase-body">
+    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">Epipolar geometry &amp; the epipolar constraint (x′ᵀ F x = 0)</label></li><li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Fundamental matrix F &amp; the normalized 8-point algorithm (uncalibrated)</label></li><li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">Essential matrix E &amp; decomposition into R, t (calibrated)</label></li><li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Triangulation — back-projecting matches to 3D points</label></li><li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">PnP — camera pose from 2D–3D correspondences</label></li><li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Stereo rectification — aligning epipolar lines to scanlines</label></li><li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">Disparity matching &amp; depth from a stereo pair</label></li><li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Dense depth maps &amp; point-cloud reconstruction</label></li><li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Structure-from-Motion (incremental SfM)</label></li><li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">Bundle adjustment &amp; intro to visual odometry / SLAM</label></li></ul></div>
+    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms &amp; Applications (2nd ed.) — Ch. 11 SfM, Ch. 12 Depth &amp; Stereo</h4><div class="resource-why">"The free, canonical text tying epipolar geometry, triangulation, stereo, and bundle adjustment together."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry and the fundamental/essential matrices — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 6h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry &amp; Computer Vision Lectures (Univ. Bonn)</h4><div class="resource-why">"The clearest lecture series on the fundamental/essential matrices, the 8-point algorithm, and bundle adjustment."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRsi5vzy9PiQpNWHjq-bKN1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines)</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code — turns the epipolar constraint into a picture you can see."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="full-width demo-box"><h3>🧪 Interactive — Epipolar Geometry Explorer</h3><div class="sub">Drag the point in the LEFT view. Its match in the RIGHT view must lie on the drawn epipolar line.</div><div id="epi-wrap">
+  <div id="epi-panels">
+    <div class="epi-panel-col">
+      <div class="epi-panel-label">Left camera view</div>
+      <svg id="epi-svgL" class="epi-svg" viewBox="0 0 320 240" role="img"
+           aria-label="Left camera view. Drag the highlighted query point.">
+        <rect x="0" y="0" width="320" height="240" class="epi-bg"/>
+        <g id="epi-gridL" class="epi-grid"></g>
+        <g id="epi-dotsL"></g>
+        <line id="epi-baseL" class="epi-baseline" x1="0" y1="0" x2="0" y2="0"/>
+        <circle id="epi-leftEpipole" class="epi-epipole" r="5" cx="-99" cy="-99"/>
+        <circle id="epi-query" class="epi-query" cx="110" cy="150" r="8"
+                tabindex="0" role="slider" aria-label="Query point in left image"
+                aria-valuemin="0" aria-valuemax="320" aria-valuenow="110"/>
+      </svg>
+    </div>
+    <div class="epi-panel-col">
+      <div class="epi-panel-label">Right camera view</div>
+      <svg id="epi-svgR" class="epi-svg" viewBox="0 0 320 240" role="img"
+           aria-label="Right camera view. The epipolar line constrains where the match can be.">
+        <rect x="0" y="0" width="320" height="240" class="epi-bg"/>
+        <g id="epi-gridR" class="epi-grid"></g>
+        <line id="epi-epiline" class="epi-line" x1="0" y1="0" x2="0" y2="0"/>
+        <g id="epi-dotsR"></g>
+        <g id="epi-epiMarker"></g>
+      </svg>
+    </div>
+  </div>
 
-            <!-- Milestone -->
-            <div class="full-width milestone">
-                <div class="milestone-label">🏆 Milestone Project</div>
-                <h3>NumPy Image Filter Library</h3>
-                <p>Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.</p>
-                <div class="milestone-meta">
-                    <span class="mm">📦 Dataset: BSDS500</span>
-                    <span class="mm">🎯 Goal: 5 filters from scratch</span>
-                    <span class="mm">⏱ 6–8 hours</span>
-                </div>
-            </div>
-        </div>
-    </section>
+  <div id="epi-controls">
+    <button class="epi-kbtn epi-active" id="epi-btnScene" type="button" aria-pressed="true">Show scene matches</button>
+    <button class="epi-kbtn" id="epi-btnSnap" type="button" aria-pressed="false">Snap to nearest scene point</button>
+    <span id="epi-readout" aria-live="polite"></span>
+  </div>
 
-    <div class="connector"></div>
+  <div id="epi-explain">
+    <p><strong>The big idea:</strong> a single point in one image does <em>not</em> pin down its match in the
+    other image &mdash; it constrains the match to lie on a whole <strong>line</strong>, the
+    <span class="epi-em-line">epipolar line</span>. Drag the dot on the left; the matching feature in the
+    right view (the corresponding colored dot, when matches are shown) always sits on the line.</p>
+    <p>Every epipolar line in the right view passes through one special point, the
+    <span class="epi-em-epi">epipole</span> <code>e&prime;</code> &mdash; the image of the left camera&rsquo;s
+    center. Here it lands just off the right edge, so the lines visibly fan out toward it.</p>
 
-    <!-- ── PHASE 2 ── -->
-    <section class="phase p2" id="phase-2">
-        <div class="phase-header">
-            <div class="phase-num">02</div>
-            <div class="phase-meta">
-                <h2>Feature Engineering &amp; Classical CV</h2>
-                <p>The pre-deep-learning toolkit — still runs in every production pipeline</p>
-                <span class="phase-tag">4–5 weeks</span>
-            </div>
-            <div class="phase-pp">
-                <div class="phase-pp-text" id="pp2-txt">0/10</div>
-                <div class="pp-bar"><div class="pp-fill" id="pp2-bar" style="width:0%"></div></div>
-            </div>
+    <div id="epi-math">
+      <div class="epi-math-row">
+        <div class="epi-mat-block">
+          <div class="epi-mat-cap">Right epipolar line&nbsp;&nbsp;<code>l&prime; = F&middot;p</code>, with <code>p=[x,y,1]</code> from the left click</div>
+          <div class="epi-mat-cap">Constraint&nbsp;&nbsp;<code>a&middot;X + b&middot;Y + c = 0</code> drawn in the right panel</div>
         </div>
-        <div class="phase-body">
-            <div>
-                <div class="sec-title">📋 Topics</div>
-                <ul class="checklist">
-                    <li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li>
-                    <li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li>
-                    <li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li>
-                    <li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li>
-                    <li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li>
-                    <li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li>
-                    <li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li>
-                    <li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li>
-                    <li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li>
-                    <li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li>
-                </ul>
-            </div>
-            <div>
-                <div class="sec-title">📚 Resources</div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-video">Video</span></div>
-                    <h4>First Principles of CV — Camera Calibration Series (Columbia/Shree Nayar)</h4>
-                    <div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div>
-                    <a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank">Watch on YouTube →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div>
-                    <h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4>
-                    <div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div>
-                    <a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank">Read Docs →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div>
-                    <h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4>
-                    <div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div>
-                </div>
-            </div>
-            <div class="full-width milestone">
-                <div class="milestone-label">🏆 Milestone Project</div>
-                <h3>Image Panorama Stitcher</h3>
-                <p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p>
-                <div class="milestone-meta">
-                    <span class="mm">📦 Dataset: Your own phone photos</span>
-                    <span class="mm">🎯 Goal: Seamless 3-image panorama</span>
-                    <span class="mm">⏱ 8–12 hours</span>
-                </div>
-            </div>
+        <div class="epi-mat-block">
+          <div class="epi-mat-cap">Fundamental matrix <code>F = K<sup>&minus;T</sup> [t]<sub>&times;</sub> R K<sup>&minus;1</sup></code> (scaled, scale-invariant)</div>
+          <table id="epi-Fmat" aria-label="Fundamental matrix F"></table>
         </div>
-    </section>
+      </div>
+      <div class="epi-params">
+        K: fx=fy=400, cx=160, cy=120 &nbsp;&bull;&nbsp; R: 12&deg; yaw about Y &nbsp;&bull;&nbsp;
+        t &prop; [&minus;1, 0, &minus;2] &nbsp;&bull;&nbsp; right epipole e&prime; &asymp; (360, 120)
+      </div>
+    </div>
+  </div>
+</div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. The epipolar constraint x'^T F x = 0 means that:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Every pixel has the same depth</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">A point's match in the other view lies on a known line, not anywhere</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The two cameras must be identical</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity times baseline</button></div><div class="quiz-exp">✅ The fundamental matrix maps a point in one image to its epipolar line in the other, reducing the correspondence search from 2D to 1D.</div></div><div class="quiz-q"><div class="quiz-qtext">2. In a rectified stereo pair, depth is related to disparity how?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth is proportional to disparity</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Depth is inversely proportional to disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Disparity is independent of depth</button></div><div class="quiz-exp">✅ Depth = (focal length x baseline) / disparity, so larger disparity (more shift) means a closer, smaller-depth point.</div></div><div class="quiz-q"><div class="quiz-qtext">3. What does bundle adjustment optimize?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the camera intrinsics</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the 3D point colors</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Camera poses and 3D points jointly to minimize total reprojection error</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The order in which images were captured</button></div><div class="quiz-exp">✅ Bundle adjustment is a joint nonlinear refinement of all poses and structure that minimizes the sum of reprojection errors across all observations.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Two-View Structure-from-Motion (Sparse 3D Reconstruction)</h3><p>Take two photos of a static scene and get the intrinsics K from calibration (Phase 2) or image EXIF. Match SIFT/ORB features, estimate the fundamental matrix with the normalized 8-point algorithm inside RANSAC, convert it to the essential matrix (E = K′ᵀ F K), and decompose E into its four candidate (R, t) solutions. Use the cheirality check — reconstructed points must lie in front of both cameras — to pick the correct pose, then triangulate the matches into a sparse 3D point cloud and visualize it. No high-level SfM pipelines (e.g. COLMAP) for the core estimation.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Your two-view phone photos (calibrate or use EXIF focal length)</span><span class="mm">🎯 Goal: Recover (R, t) + sparse 3D point cloud</span><span class="mm">⏱ 10–15 hours</span></div></div>
+  </div>
+</section><div class="connector"></div><section class="phase p4" id="phase-4">
+  <div class="phase-header">
+    <div class="phase-num">04</div>
+    <div class="phase-meta"><h2>The Deep Learning Era</h2><p>CNNs, detection, segmentation — the industry-standard stack</p><span class="phase-tag">6–8 weeks</span></div>
+    <div class="phase-pp"><div class="phase-pp-text" id="pp4-txt">0/10</div>
+      <div class="pp-bar"><div class="pp-fill" id="pp4-bar" style="width:0%"></div></div></div>
+  </div>
+  <div class="phase-body">
+    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">CNN: Convolution, Pooling, Padding, Stride</label></li><li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Backpropagation &amp; Gradient Descent variants</label></li><li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">LeNet → AlexNet → VGG → ResNet evolution</label></li><li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">Transfer Learning &amp; Fine-Tuning</label></li><li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">Data Augmentation strategies</label></li><li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">Object Detection: Faster R-CNN &amp; SSD</label></li><li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">YOLO family (v3 → v8) — architecture &amp; training</label></li><li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Semantic Segmentation: FCN, DeepLab</label></li><li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">Instance Segmentation: U-Net, Mask R-CNN</label></li><li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">mAP, IoU, Precision-Recall for CV evaluation</label></li></ul></div>
+    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 30h</span><span class="badge b-course">Course</span></div><h4>CS231n — Convolutional Neural Networks (Stanford)</h4><div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div><a class="resource-link" href="https://cs231n.github.io" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4><div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div><a class="resource-link" href="https://docs.ultralytics.com" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-paper">Paper</span></div><h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4><div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div></div></div>
+    <div class="full-width demo-box"><h3>🧪 Interactive — IoU &amp; Non-Max Suppression Playground</h3><div class="sub">Drag two boxes to feel IoU, then tune the NMS threshold to watch duplicate detections get suppressed.</div><div class="iou-wrap">
 
-    <div class="connector"></div>
+  <!-- ===== PART A : IoU explorer ===== -->
+  <section class="iou-part" aria-labelledby="iou-titleA">
+    <div class="iou-part-title" id="iou-titleA">A · Intersection-over-Union</div>
+    <div class="iou-part-hint">Drag a box body to move it; drag its bottom-right corner to resize. Keyboard: Tab to a box, arrow keys to move, hold Shift+arrows to resize.</div>
+    <div class="iou-controls">
+      <button class="kbtn iou-btn-reset" type="button" id="iou-resetA">Reset boxes</button>
+    </div>
+    <div class="iou-stage">
+      <div class="iou-svg-holder">
+        <svg class="iou-svg" id="iou-svgA" viewBox="0 0 440 300" role="img" aria-label="Two overlapping boxes; drag to change their overlap"></svg>
+      </div>
+      <div class="iou-side">
+        <div class="iou-metric">
+          <div class="iou-metric-label">IoU</div>
+          <div class="iou-metric-val" id="iou-iouVal" aria-live="polite">0.000</div>
+          <div class="iou-bar-track"><div class="iou-bar-fill" id="iou-iouBar"></div></div>
+        </div>
+        <div class="iou-rows">
+          <div class="iou-row"><span>Area A</span><span id="iou-areaA">0</span></div>
+          <div class="iou-row"><span>Area B</span><span id="iou-areaB">0</span></div>
+          <div class="iou-row"><span>&#8745; Intersection</span><span id="iou-areaI">0</span></div>
+          <div class="iou-row"><span>&#8746; Union</span><span id="iou-areaU">0</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <!-- ── PHASE 3 ── -->
-    <section class="phase p3" id="phase-3">
-        <div class="phase-header">
-            <div class="phase-num">03</div>
-            <div class="phase-meta">
-                <h2>The Deep Learning Era</h2>
-                <p>CNNs, detection, segmentation — the industry-standard stack</p>
-                <span class="phase-tag">6–8 weeks</span>
-            </div>
-            <div class="phase-pp">
-                <div class="phase-pp-text" id="pp3-txt">0/10</div>
-                <div class="pp-bar"><div class="pp-fill" id="pp3-bar" style="width:0%"></div></div>
-            </div>
+  <!-- ===== PART B : NMS ===== -->
+  <section class="iou-part" aria-labelledby="iou-titleB">
+    <div class="iou-part-title" id="iou-titleB">B · Non-Max Suppression on 6 detections</div>
+    <div class="iou-part-hint">Sort boxes by confidence (desc), greedily keep the top box, then suppress any remaining box whose IoU with a kept box exceeds the threshold.</div>
+    <div class="iou-slider-wrap">
+      <label for="iou-thr">IoU threshold</label>
+      <input class="iou-range" type="range" id="iou-thr" min="0" max="1" step="0.01" value="0.5" aria-describedby="iou-thrVal">
+      <span class="iou-thr-val" id="iou-thrVal">0.50</span>
+    </div>
+    <div class="iou-legend">
+      <span><i class="iou-dot iou-dot-keep"></i> Kept</span>
+      <span><i class="iou-dot iou-dot-supp"></i> Suppressed</span>
+    </div>
+    <div class="iou-stage">
+      <div class="iou-svg-holder">
+        <svg class="iou-svg" id="iou-svgB" viewBox="0 0 440 300" role="img" aria-label="Six detection boxes; kept boxes are green, suppressed boxes are red"></svg>
+      </div>
+      <div class="iou-result">
+        <div class="iou-result-block iou-result-keep">
+          <h5>Kept</h5>
+          <div id="iou-keepList" aria-live="polite"></div>
         </div>
-        <div class="phase-body">
-            <div>
-                <div class="sec-title">📋 Topics</div>
-                <ul class="checklist">
-                    <li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">CNN: Convolution, Pooling, Padding, Stride</label></li>
-                    <li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Backpropagation &amp; Gradient Descent variants</label></li>
-                    <li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">LeNet → AlexNet → VGG → ResNet evolution</label></li>
-                    <li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Transfer Learning &amp; Fine-Tuning</label></li>
-                    <li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">Data Augmentation strategies</label></li>
-                    <li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Object Detection: Faster R-CNN &amp; SSD</label></li>
-                    <li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">YOLO family (v3 → v8) — architecture &amp; training</label></li>
-                    <li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Semantic Segmentation: FCN, DeepLab</label></li>
-                    <li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Instance Segmentation: U-Net, Mask R-CNN</label></li>
-                    <li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">mAP, IoU, Precision-Recall for CV evaluation</label></li>
-                </ul>
-            </div>
-            <div>
-                <div class="sec-title">📚 Resources</div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 30h</span><span class="badge b-course">Course</span></div>
-                    <h4>CS231n — Convolutional Neural Networks (Stanford)</h4>
-                    <div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div>
-                    <a class="resource-link" href="https://cs231n.github.io" target="_blank">Course Notes →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div>
-                    <h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4>
-                    <div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div>
-                    <a class="resource-link" href="https://docs.ultralytics.com" target="_blank">Read Docs →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-paper">Paper</span></div>
-                    <h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4>
-                    <div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div>
-                </div>
-            </div>
-            <div class="full-width milestone">
-                <div class="milestone-label">🏆 Milestone Project</div>
-                <h3>Custom Object Detector + Segmentation</h3>
-                <p>Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights &amp; Biases.</p>
-                <div class="milestone-meta">
-                    <span class="mm">📦 Dataset: Custom via Roboflow</span>
-                    <span class="mm">🎯 Goal: &gt;0.5 mAP@50</span>
-                    <span class="mm">⏱ 15–20 hours</span>
-                </div>
-            </div>
+        <div class="iou-result-block iou-result-supp">
+          <h5>Suppressed</h5>
+          <div id="iou-suppList" aria-live="polite"></div>
         </div>
-    </section>
+      </div>
+    </div>
+  </section>
 
-    <div class="connector"></div>
+</div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. At an IoU threshold of 0.5, a predicted box counts as a true positive when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its confidence score exceeds 0.5</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Its intersection-over-union with a ground-truth box is at least 0.5 (and class matches)</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It covers the entire image</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its center is inside any ground-truth box</button></div><div class="quiz-exp">✅ A detection is a true positive when its IoU with a same-class ground-truth box meets the threshold (here 0.5).</div></div><div class="quiz-q"><div class="quiz-qtext">2. What problem does Non-Maximum Suppression solve?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Vanishing gradients in deep networks</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Multiple overlapping boxes for the same object</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Class imbalance during training</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Low image resolution</button></div><div class="quiz-exp">✅ NMS keeps the highest-scoring box and removes others with high IoU overlap, collapsing duplicate detections of one object.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Why do ResNet skip connections help train very deep networks?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They reduce the number of parameters to zero</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They let gradients flow through identity shortcuts, easing optimization</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They replace convolutions with attention</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They eliminate the need for any activation function</button></div><div class="quiz-exp">✅ Residual shortcuts add the input to the output, providing an identity path that mitigates vanishing gradients and degradation in deep nets.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Custom Object Detector + Segmentation</h3><p>Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights &amp; Biases.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Custom via Roboflow</span><span class="mm">🎯 Goal: &gt;0.5 mAP@50</span><span class="mm">⏱ 15–20 hours</span></div></div>
+  </div>
+</section><div class="connector"></div><section class="phase p5" id="phase-5">
+  <div class="phase-header">
+    <div class="phase-num">05</div>
+    <div class="phase-meta"><h2>Modern Frontiers</h2><p>Vision Transformers, generative models, and edge deployment</p><span class="phase-tag">5–7 weeks</span></div>
+    <div class="phase-pp"><div class="phase-pp-text" id="pp5-txt">0/10</div>
+      <div class="pp-bar"><div class="pp-fill" id="pp5-bar" style="width:0%"></div></div></div>
+  </div>
+  <div class="phase-body">
+    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p5t1" onchange="save()"><label for="p5t1">Self-Attention mechanism — from scratch</label></li><li><input type="checkbox" id="p5t2" onchange="save()"><label for="p5t2">Vision Transformer (ViT) — patch embeddings</label></li><li><input type="checkbox" id="p5t3" onchange="save()"><label for="p5t3">CLIP — contrastive language-image pre-training</label></li><li><input type="checkbox" id="p5t4" onchange="save()"><label for="p5t4">SAM — Segment Anything Model</label></li><li><input type="checkbox" id="p5t5" onchange="save()"><label for="p5t5">NeRF — Neural Radiance Fields</label></li><li><input type="checkbox" id="p5t6" onchange="save()"><label for="p5t6">3D Gaussian Splatting — real-time radiance fields</label></li><li><input type="checkbox" id="p5t7" onchange="save()"><label for="p5t7">Diffusion Models — DDPM, Stable Diffusion</label></li><li><input type="checkbox" id="p5t8" onchange="save()"><label for="p5t8">Model Quantization: INT8, FP16</label></li><li><input type="checkbox" id="p5t9" onchange="save()"><label for="p5t9">TFLite &amp; ONNX export + runtime</label></li><li><input type="checkbox" id="p5t10" onchange="save()"><label for="p5t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li></ul></div>
+    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4><div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div><a class="resource-link" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4><div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div><a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4><div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div><a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="full-width demo-box"><h3>🧪 Interactive — Attention vs. Convolution Receptive Field</h3><div class="sub">Hover or click a query cell, then toggle the mode to compare a fixed local kernel against global self-attention.</div><div class="full-width demo-box" id="attn-box" data-mode="attn">
+  <div class="attn-controls">
+    <div class="attn-modebtns" id="attn-modebtns" role="group" aria-label="Receptive field mode">
+      <button type="button" class="kbtn active" data-attn-mode="attn">Self-Attention</button>
+      <button type="button" class="kbtn" data-attn-mode="conv">Convolution 3×3</button>
+    </div>
+    <span class="attn-modehint">Query is outlined in amber. Click a cell or use arrow keys to move it.</span>
+  </div>
+  <div class="attn-layout">
+    <div class="attn-gridwrap">
+      <h4>7×7 token grid</h4>
+      <div class="attn-grid" id="attn-grid" role="grid" aria-label="7 by 7 token grid"></div>
+      <div class="attn-legend"><span>low</span><span class="attn-legbar" aria-hidden="true"></span><span>high weight</span></div>
+    </div>
+    <div class="attn-side">
+      <div class="attn-caption" id="attn-caption" aria-live="polite"></div>
+      <div class="attn-top" id="attn-top" aria-live="polite"></div>
+    </div>
+  </div>
+</div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. How does a Vision Transformer first turn an image into tokens?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By running a Canny edge detector</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">By splitting it into fixed-size patches and linearly projecting each</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By computing its FFT</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By applying max pooling until one pixel remains</button></div><div class="quiz-exp">✅ ViT divides the image into fixed-size patches and linearly embeds each into a token vector, then adds positional encodings.</div></div><div class="quiz-q"><div class="quiz-qtext">2. What is the core training objective of CLIP?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Predict the next word in a caption</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Align matching image-text pairs in a shared embedding space via contrastive loss</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Reconstruct images from noise</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Segment every object in an image</button></div><div class="quiz-exp">✅ CLIP contrastively trains image and text encoders so true image-caption pairs have high similarity and mismatched pairs low, enabling zero-shot classification.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Quantizing a model to INT8 primarily aims to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Increase model accuracy beyond FP32</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Reduce model size and speed up inference, especially on edge devices</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Add more layers automatically</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Enable training without labels</button></div><div class="quiz-exp">✅ INT8 quantization lowers numeric precision to shrink memory and accelerate inference on edge hardware, usually with minor accuracy loss.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Real-Time Edge AI Detector</h3><p>Export your Phase 4 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with &lt;5% mAP drop from quantization.</p><div class="milestone-meta"><span class="mm">📦 Hardware: RPi 4 or webcam</span><span class="mm">🎯 Goal: ≥10 FPS real-time</span><span class="mm">⏱ 10–14 hours</span></div></div>
+  </div>
+</section>
 
-    <!-- ── PHASE 4 ── -->
-    <section class="phase p4" id="phase-4">
-        <div class="phase-header">
-            <div class="phase-num">04</div>
-            <div class="phase-meta">
-                <h2>Modern Frontiers</h2>
-                <p>Vision Transformers, 3D Vision, Generative AI, Edge Deployment</p>
-                <span class="phase-tag">5–7 weeks</span>
-            </div>
-            <div class="phase-pp">
-                <div class="phase-pp-text" id="pp4-txt">0/10</div>
-                <div class="pp-bar"><div class="pp-fill" id="pp4-bar" style="width:0%"></div></div>
-            </div>
-        </div>
-        <div class="phase-body">
-            <div>
-                <div class="sec-title">📋 Topics</div>
-                <ul class="checklist">
-                    <li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">Self-Attention mechanism — from scratch</label></li>
-                    <li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Vision Transformer (ViT) — patch embeddings</label></li>
-                    <li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">CLIP — contrastive language-image pre-training</label></li>
-                    <li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">SAM — Segment Anything Model</label></li>
-                    <li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">3D Vision: stereo, depth estimation, point clouds</label></li>
-                    <li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">NeRF — Neural Radiance Fields</label></li>
-                    <li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">Diffusion Models — DDPM, Stable Diffusion</label></li>
-                    <li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Model Quantization: INT8, FP16</label></li>
-                    <li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">TFLite &amp; ONNX export + runtime</label></li>
-                    <li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li>
-                </ul>
-            </div>
-            <div>
-                <div class="sec-title">📚 Resources</div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div>
-                    <h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4>
-                    <div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div>
-                    <h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4>
-                    <div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div>
-                    <a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank">Read Docs →</a>
-                </div>
-                <div class="resource-card">
-                    <div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div>
-                    <h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4>
-                    <div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div>
-                    <a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank">Read Guide →</a>
-                </div>
-            </div>
-            <div class="full-width milestone">
-                <div class="milestone-label">🏆 Milestone Project</div>
-                <h3>Real-Time Edge AI Detector</h3>
-                <p>Export your Phase 3 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with &lt;5% mAP drop from quantization.</p>
-                <div class="milestone-meta">
-                    <span class="mm">📦 Hardware: RPi 4 or webcam</span>
-                    <span class="mm">🎯 Goal: ≥10 FPS real-time</span>
-                    <span class="mm">⏱ 10–14 hours</span>
-                </div>
-            </div>
-        </div>
-    </section>
+<section class="extra-section" id="interview">
+  <div class="extra-header green"><h2>💼 Interview Prep Bank</h2>
+    <p>CV-specific theory, implementation, math, and system-design questions with hints</p></div>
+  <div class="extra-body">
+    <div class="filter-bar"><div class="chips" id="iqChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="Theory">Theory</span><span class="chip" data-key="Implementation">Implementation</span><span class="chip" data-key="System Design">System Design</span><span class="chip" data-key="Debugging">Debugging</span><span class="chip" data-key="Math">Math</span></div></div>
+    <div class="iq-grid"><div class="iq-card" data-cat="Theory" data-text="why does resnet use skip connections? vanishing gradients + identity shortcuts let very deep networks train without degradation."><div class="iq-cat">Theory</div><h4>Why does ResNet use skip connections?</h4><p>Hint: Vanishing gradients + identity shortcuts let very deep networks train without degradation.</p></div><div class="iq-card" data-cat="Implementation" data-text="implement iou from scratch in numpy intersection = max(0, x2−x1) × max(0, y2−y1). union = a + b − intersection."><div class="iq-cat">Implementation</div><h4>Implement IoU from scratch in NumPy</h4><p>Hint: intersection = max(0, x2−x1) × max(0, y2−y1). Union = A + B − intersection.</p></div><div class="iq-card" data-cat="System Design" data-text="design a real-time pedestrian detector for a city intersection camera consider latency sla, edge vs. cloud, model selection, failure modes, and demographic bias."><div class="iq-cat">System Design</div><h4>Design a real-time pedestrian detector for a city intersection camera</h4><p>Hint: Consider latency SLA, edge vs. cloud, model selection, failure modes, and demographic bias.</p></div><div class="iq-card" data-cat="Theory" data-text="how does attention differ from convolution? conv = local fixed receptive field. attention = global, dynamic weight per token pair."><div class="iq-cat">Theory</div><h4>How does attention differ from convolution?</h4><p>Hint: Conv = local fixed receptive field. Attention = global, dynamic weight per token pair.</p></div><div class="iq-card" data-cat="Debugging" data-text="your detector has high precision but low recall. what&#x27;s wrong? confidence threshold too high. lower it and re-examine the precision-recall curve."><div class="iq-cat">Debugging</div><h4>Your detector has high precision but low recall. What's wrong?</h4><p>Hint: Confidence threshold too high. Lower it and re-examine the precision-recall curve.</p></div><div class="iq-card" data-cat="Implementation" data-text="explain nms and implement it in python sort by confidence, suppress overlapping boxes (iou &gt; threshold), keep highest-confidence box."><div class="iq-cat">Implementation</div><h4>Explain NMS and implement it in Python</h4><p>Hint: Sort by confidence, suppress overlapping boxes (IoU &gt; threshold), keep highest-confidence box.</p></div><div class="iq-card" data-cat="Math" data-text="derive the epipolar constraint and explain why the fundamental matrix has rank 2. start from x&#x27;^t f x = 0. f maps a point to a line; the epipole is the right null-vector (fe = 0), which forces det(f)=0, hence rank 2 (7 dof)."><div class="iq-cat">Math</div><h4>Derive the epipolar constraint and explain why the fundamental matrix has rank 2.</h4><p>Hint: Start from x'^T F x = 0. F maps a point to a line; the epipole is the right null-vector (Fe = 0), which forces det(F)=0, hence rank 2 (7 DoF).</p></div><div class="iq-card" data-cat="Theory" data-text="what is the difference between the fundamental matrix and the essential matrix, and when would you use each? e operates on calibrated (normalized) coordinates and relates to relative r and t (e = [t]_x r, 5 dof); f works on uncalibrated pixel coordinates (e = k&#x27;^t f k). use f when intrinsics are unknown, e to recover pose."><div class="iq-cat">Theory</div><h4>What is the difference between the fundamental matrix and the essential matrix, and when would you use each?</h4><p>Hint: E operates on calibrated (normalized) coordinates and relates to relative R and t (E = [t]_x R, 5 DoF); F works on uncalibrated pixel coordinates (E = K'^T F K). Use F when intrinsics are unknown, E to recover pose.</p></div><div class="iq-card" data-cat="Implementation" data-text="walk through estimating a fundamental matrix from point correspondences with ransac, including how you normalize points and count inliers. hartley normalization (translate/scale points), 8-point (or 7-point) algorithm inside ransac, score inliers by sampson distance to the epipolar line, then re-fit on the consensus set."><div class="iq-cat">Implementation</div><h4>Walk through estimating a fundamental matrix from point correspondences with RANSAC, including how you normalize points and count inliers.</h4><p>Hint: Hartley normalization (translate/scale points), 8-point (or 7-point) algorithm inside RANSAC, score inliers by Sampson distance to the epipolar line, then re-fit on the consensus set.</p></div><div class="iq-card" data-cat="Math" data-text="given a rectified stereo pair with focal length f, baseline b, and disparity d at a pixel, compute the depth z and discuss the precision implications of baseline choice. z = f*b/d. depth error grows with z^2 and shrinks with larger b; but a wider baseline reduces image overlap and makes matching harder, so it is a trade-off."><div class="iq-cat">Math</div><h4>Given a rectified stereo pair with focal length f, baseline B, and disparity d at a pixel, compute the depth Z and discuss the precision implications of baseline choice.</h4><p>Hint: Z = f*B/d. Depth error grows with Z^2 and shrinks with larger B; but a wider baseline reduces image overlap and makes matching harder, so it is a trade-off.</p></div><div class="iq-card" data-cat="Theory" data-text="explain triangulation for a 3d point seen in two calibrated views and why the linear dlt solution is only approximate. back-project rays from both cameras; ideally they intersect, but noise means they don&#x27;t, so dlt solves a homogeneous least-squares (svd) system. the optimal estimate minimizes reprojection error, often refined nonlinearly."><div class="iq-cat">Theory</div><h4>Explain triangulation for a 3D point seen in two calibrated views and why the linear DLT solution is only approximate.</h4><p>Hint: Back-project rays from both cameras; ideally they intersect, but noise means they don't, so DLT solves a homogeneous least-squares (SVD) system. The optimal estimate minimizes reprojection error, often refined nonlinearly.</p></div><div class="iq-card" data-cat="System Design" data-text="design a visual slam system for an indoor delivery robot using a single camera. what are the main modules and failure modes? front-end (feature/optical-flow tracking, pose via pnp), back-end (local bundle adjustment / pose graph), keyframing, loop closure, relocalization. failure modes: scale drift (monocular), low-texture walls, motion blur, dynamic objects."><div class="iq-cat">System Design</div><h4>Design a visual SLAM system for an indoor delivery robot using a single camera. What are the main modules and failure modes?</h4><p>Hint: Front-end (feature/optical-flow tracking, pose via PnP), back-end (local bundle adjustment / pose graph), keyframing, loop closure, relocalization. Failure modes: scale drift (monocular), low-texture walls, motion blur, dynamic objects.</p></div><div class="iq-card" data-cat="Debugging" data-text="your sfm reconstruction produces a warped, scale-inconsistent point cloud. how do you diagnose and fix it? check feature match outliers and geometric verification, inspect reprojection error per camera, verify calibration/intrinsics, ensure enough baseline between views (degenerate pure-rotation), and run/tune bundle adjustment; fix scale with a known reference or loop closure."><div class="iq-cat">Debugging</div><h4>Your SfM reconstruction produces a warped, scale-inconsistent point cloud. How do you diagnose and fix it?</h4><p>Hint: Check feature match outliers and geometric verification, inspect reprojection error per camera, verify calibration/intrinsics, ensure enough baseline between views (degenerate pure-rotation), and run/tune bundle adjustment; fix scale with a known reference or loop closure.</p></div><div class="iq-card" data-cat="Implementation" data-text="implement bilinear interpolation for image warping and explain where it is needed in a homography-based panorama stitcher. for each output pixel, inverse-map through h^-1 to a fractional source location, then blend the four neighboring pixels by their distances. needed because warped coordinates rarely land on integer pixel grid positions."><div class="iq-cat">Implementation</div><h4>Implement bilinear interpolation for image warping and explain where it is needed in a homography-based panorama stitcher.</h4><p>Hint: For each output pixel, inverse-map through H^-1 to a fractional source location, then blend the four neighboring pixels by their distances. Needed because warped coordinates rarely land on integer pixel grid positions.</p></div><div class="iq-card" data-cat="Theory" data-text="compare anchor-based detectors (faster r-cnn, ssd) with anchor-free approaches. what problems do anchors introduce? anchors add hyperparameters (scales/ratios), cause foreground-background imbalance, and complicate matching. anchor-free methods (e.g. center/keypoint-based) predict boxes directly, simplifying the pipeline at some cost to certain shapes."><div class="iq-cat">Theory</div><h4>Compare anchor-based detectors (Faster R-CNN, SSD) with anchor-free approaches. What problems do anchors introduce?</h4><p>Hint: Anchors add hyperparameters (scales/ratios), cause foreground-background imbalance, and complicate matching. Anchor-free methods (e.g. center/keypoint-based) predict boxes directly, simplifying the pipeline at some cost to certain shapes.</p></div><div class="iq-card" data-cat="Debugging" data-text="a semantic segmentation model scores high mean iou on validation but produces noisy, fragmented masks at inference. what would you check? train/inference preprocessing mismatch (normalization, input size), class imbalance inflating miou via easy classes, missing crf/post-processing, domain shift, and whether miou is dominated by background; visualize per-class iou and raw logits."><div class="iq-cat">Debugging</div><h4>A semantic segmentation model scores high mean IoU on validation but produces noisy, fragmented masks at inference. What would you check?</h4><p>Hint: Train/inference preprocessing mismatch (normalization, input size), class imbalance inflating mIoU via easy classes, missing CRF/post-processing, domain shift, and whether mIoU is dominated by background; visualize per-class IoU and raw logits.</p></div><div class="iq-card" data-cat="Math" data-text="explain why self-attention is o(n^2) in sequence length and what that means for high-resolution images in a vit. each of n tokens attends to all n tokens, giving an n x n score matrix. for images, n scales with the number of patches, so high resolution explodes compute/memory; mitigations include windowed attention (swin) or fewer/larger patches."><div class="iq-cat">Math</div><h4>Explain why self-attention is O(n^2) in sequence length and what that means for high-resolution images in a ViT.</h4><p>Hint: Each of n tokens attends to all n tokens, giving an n x n score matrix. For images, n scales with the number of patches, so high resolution explodes compute/memory; mitigations include windowed attention (Swin) or fewer/larger patches.</p></div><div class="iq-card" data-cat="System Design" data-text="design a stereo-camera depth perception pipeline for an autonomous drone running on an embedded gpu. cover calibration, runtime, and edge constraints. offline stereo calibration + rectification maps, real-time matching (sgbm or a quantized stereo net), disparity-to-depth, temporal filtering; constraints: int8/fp16 quantization, fixed resolution, latency budget, and graceful degradation in low texture or glare."><div class="iq-cat">System Design</div><h4>Design a stereo-camera depth perception pipeline for an autonomous drone running on an embedded GPU. Cover calibration, runtime, and edge constraints.</h4><p>Hint: Offline stereo calibration + rectification maps, real-time matching (SGBM or a quantized stereo net), disparity-to-depth, temporal filtering; constraints: INT8/FP16 quantization, fixed resolution, latency budget, and graceful degradation in low texture or glare.</p></div></div>
+    <div class="no-results" id="iqEmpty">No questions in this category.</div>
+  </div>
+</section>
 
-    <!-- ── INTERVIEW PREP ── -->
-    <section class="extra-section">
-        <div class="extra-header green">
-            <h2>💼 Interview Prep Bank</h2>
-            <p>CV-specific theory, implementation, and system-design questions with hints</p>
-        </div>
-        <div class="extra-body">
-            <div class="iq-grid">
-                <div class="iq-card">
-                    <div class="iq-cat">Theory</div>
-                    <h4>Why does ResNet use skip connections?</h4>
-                    <p>Hint: Vanishing gradients + identity shortcuts let very deep networks train without degradation.</p>
-                </div>
-                <div class="iq-card">
-                    <div class="iq-cat">Implementation</div>
-                    <h4>Implement IoU from scratch in NumPy</h4>
-                    <p>Hint: intersection = max(0, x2−x1) × max(0, y2−y1). Union = A + B − intersection.</p>
-                </div>
-                <div class="iq-card">
-                    <div class="iq-cat">System Design</div>
-                    <h4>Design a real-time pedestrian detector for a city intersection camera</h4>
-                    <p>Hint: Consider latency SLA, edge vs. cloud, model selection, failure modes, and demographic bias.</p>
-                </div>
-                <div class="iq-card">
-                    <div class="iq-cat">Theory</div>
-                    <h4>How does attention differ from convolution?</h4>
-                    <p>Hint: Conv = local fixed receptive field. Attention = global, dynamic weight per token pair.</p>
-                </div>
-                <div class="iq-card">
-                    <div class="iq-cat">Debugging</div>
-                    <h4>Your detector has high precision but low recall. What's wrong?</h4>
-                    <p>Hint: Confidence threshold too high. Lower it and re-examine the precision-recall curve.</p>
-                </div>
-                <div class="iq-card">
-                    <div class="iq-cat">Implementation</div>
-                    <h4>Explain NMS and implement it in Python</h4>
-                    <p>Hint: Sort by confidence, suppress overlapping boxes (IoU &gt; threshold), keep highest-confidence box.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- ── EDGE AI TRACK ── -->
-    <section class="extra-section">
+<section class="extra-section">
         <div class="extra-header orange">
             <h2>⚡ Edge AI Deployment Track</h2>
             <p>From trained model to hardware in 5 steps — end-to-end path no other CV roadmap covers</p>
@@ -558,15 +731,47 @@
         </div>
     </section>
 
+<section class="extra-section" id="library">
+  <div class="extra-header purple"><h2>📚 Free Resource Library</h2>
+    <p>25 hand-picked, 100% free resources — search or filter by phase</p></div>
+  <div class="extra-body">
+    <div class="filter-bar">
+      <input class="filter-input" id="libSearch" type="search" placeholder="Search resources… (e.g. epipolar, YOLO, diffusion)" aria-label="Search resources">
+      <div class="chips" id="libChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="1">1 · Foundations</span><span class="chip" data-key="2">2 · Classical CV</span><span class="chip" data-key="3">3 · Geometry & 3D</span><span class="chip" data-key="4">4 · Deep Learning</span><span class="chip" data-key="5">5 · Frontiers</span></div>
+    </div>
+    <div class="lib-grid"><div class="resource-card lib-item" data-phase="1" data-text="khan academy — multivariable calculus: partial derivatives &amp; the gradient free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 4h</span><span class="badge b-course">Course</span></div><h4>Khan Academy — Multivariable Calculus: Partial Derivatives &amp; The Gradient</h4><div class="resource-why">"Free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."</div><a class="resource-link" href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="setosa — image kernels explained visually drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of numpy."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.5h</span><span class="badge b-interactive">Interactive</span></div><h4>Setosa — Image Kernels Explained Visually</h4><div class="resource-why">"Drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of NumPy."</div><a class="resource-link" href="https://setosa.io/ev/image-kernels/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="1" data-text="computerphile — how blurs &amp; filters work / convolution dr mike pound walks through spatial filtering on real images, giving intuition for the gaussian/sobel kernels you&#x27;ll implement in the milestone project."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.5h</span><span class="badge b-video">Video</span></div><h4>Computerphile — How Blurs &amp; Filters Work / Convolution</h4><div class="resource-why">"Dr Mike Pound walks through spatial filtering on real images, giving intuition for the Gaussian/Sobel kernels you'll implement in the milestone project."</div><a class="resource-link" href="https://www.youtube.com/watch?v=C_zFhWdM4ic" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="szeliski — computer vision: algorithms and applications (2nd ed.), ch. 3 image processing author-hosted free pdf; ch. 3 is the modern, rigorous companion to gonzalez &amp; woods covering filtering, pyramids, and the fourier domain."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 5h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms and Applications (2nd ed.), Ch. 3 Image Processing</h4><div class="resource-why">"Author-hosted free PDF; Ch. 3 is the modern, rigorous companion to Gonzalez &amp; Woods covering filtering, pyramids, and the Fourier domain."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="first principles of computer vision — detectors &amp; descriptors monographs (nayar, columbia) free sift-detector monograph (pdf) plus the companion lecture videos for harris and hog — re-derive the feature math at your own pace."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-book">Book</span></div><h4>First Principles of Computer Vision — Detectors &amp; Descriptors Monographs (Nayar, Columbia)</h4><div class="resource-why">"Free SIFT-detector monograph (PDF) plus the companion lecture videos for Harris and HOG — re-derive the feature math at your own pace."</div><a class="resource-link" href="https://fpcv.cs.columbia.edu/Monographs" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="computerphile — canny edge detector (mike pound) the clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing canny."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.3h</span><span class="badge b-video">Video</span></div><h4>Computerphile — Canny Edge Detector (Mike Pound)</h4><div class="resource-why">"The clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing Canny."</div><a class="resource-link" href="https://www.youtube.com/watch?v=sRFM5IEqR2w" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="szeliski cv 2nd ed., ch. 7 — feature detection &amp; matching free pdf chapter unifying harris, sift, orb, ransac and feature matching with the geometry you&#x27;ll use in the panorama stitcher."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-book">Book</span></div><h4>Szeliski CV 2nd ed., Ch. 7 — Feature Detection &amp; Matching</h4><div class="resource-why">"Free PDF chapter unifying Harris, SIFT, ORB, RANSAC and feature matching with the geometry you'll use in the panorama stitcher."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="opencv — optical flow (lucas-kanade &amp; dense) official tutorial working calcopticalflowpyrlk code with the math behind it — the canonical reference for the optical-flow item in the roadmap."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Optical Flow (Lucas-Kanade &amp; Dense) Official Tutorial</h4><div class="resource-why">"Working calcOpticalFlowPyrLK code with the math behind it — the canonical reference for the optical-flow item in the roadmap."</div><a class="resource-link" href="https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="hartley &amp; zisserman — multiple view geometry in computer vision (2nd ed.) the definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the internet archive."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="cyrill stachniss — photogrammetry i &amp; ii (uni bonn, full lecture playlist) university-grade derivations of camera models, epipolar geometry, bundle adjustment, and sfm from a photogrammetry expert, all free on youtube."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 20h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry I &amp; II (Uni Bonn, full lecture playlist)</h4><div class="resource-why">"University-grade derivations of camera models, epipolar geometry, bundle adjustment, and SfM from a photogrammetry expert, all free on YouTube."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRYjqjdZxTEQPZuFHQa7O7Y" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — epipolar geometry (fundamental matrix &amp; epilines) official tutorial runnable findfundamentalmat + computecorrespondepilines code that turns the epipolar theory into a visualizable result."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines) Official Tutorial</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code that turns the epipolar theory into a visualizable result."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — depth map from stereo images official tutorial goes from rectified pairs to a disparity/depth map with stereobm — the practical follow-on to epipolar geometry for 3d reconstruction."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Depth Map from Stereo Images Official Tutorial</h4><div class="resource-why">"Goes from rectified pairs to a disparity/depth map with StereoBM — the practical follow-on to epipolar geometry for 3D reconstruction."</div><a class="resource-link" href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="colmap — structure-from-motion official tutorial the de-facto open-source sfm/mvs pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>COLMAP — Structure-from-Motion Official Tutorial</h4><div class="resource-why">"The de-facto open-source SfM/MVS pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."</div><a class="resource-link" href="https://colmap.github.io/tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="orb-slam2 — official open-source implementation (raulmur) real-time monocular/stereo/rgb-d slam with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 4h</span><span class="badge b-repo">Repo</span></div><h4>ORB-SLAM2 — Official Open-Source Implementation (raulmur)</h4><div class="resource-why">"Real-time monocular/stereo/RGB-D SLAM with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."</div><a class="resource-link" href="https://github.com/raulmur/ORB_SLAM2" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="4" data-text="andrej karpathy — neural networks: zero to hero build autograd and backprop from scratch in code so the cnn training loop is never a black box — the best free &#x27;why it works&#x27; companion to cs231n."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 12h</span><span class="badge b-course">Course</span></div><h4>Andrej Karpathy — Neural Networks: Zero to Hero</h4><div class="resource-why">"Build autograd and backprop from scratch in code so the CNN training loop is never a black box — the best free 'why it works' companion to CS231n."</div><a class="resource-link" href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="fast.ai — practical deep learning for coders top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 14h</span><span class="badge b-course">Course</span></div><h4>fast.ai — Practical Deep Learning for Coders</h4><div class="resource-why">"Top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."</div><a class="resource-link" href="https://course.fast.ai/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="pytorch — transfer learning for computer vision official tutorial canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on resnet — the exact pattern for the custom-detector milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>PyTorch — Transfer Learning for Computer Vision Official Tutorial</h4><div class="resource-why">"Canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on ResNet — the exact pattern for the custom-detector milestone."</div><a class="resource-link" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="cnn explainer — interactive visualization (georgia tech polo club) click through every conv/pool/relu activation of a live cnn to see how an image becomes a class score — best intuition tool for the deep-learning phase."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 1h</span><span class="badge b-interactive">Interactive</span></div><h4>CNN Explainer — Interactive Visualization (Georgia Tech Polo Club)</h4><div class="resource-why">"Click through every conv/pool/ReLU activation of a live CNN to see how an image becomes a class score — best intuition tool for the deep-learning phase."</div><a class="resource-link" href="https://poloclub.github.io/cnn-explainer/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="4" data-text="distill — feature visualization (olah, mordvintsev, schubert) shows what cnn filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Distill — Feature Visualization (Olah, Mordvintsev, Schubert)</h4><div class="resource-why">"Shows what CNN filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."</div><a class="resource-link" href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="hugging face — community computer vision course free, hands-on course spanning cnns, detection, and segmentation with transformers/datasets code you can run for the segmentation milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 15h</span><span class="badge b-course">Course</span></div><h4>Hugging Face — Community Computer Vision Course</h4><div class="resource-why">"Free, hands-on course spanning CNNs, detection, and segmentation with Transformers/Datasets code you can run for the segmentation milestone."</div><a class="resource-link" href="https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="openai — clip: connecting text and images (official blog) authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenAI — CLIP: Connecting Text and Images (Official Blog)</h4><div class="resource-why">"Authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."</div><a class="resource-link" href="https://openai.com/index/clip/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kirillov et al. (2023) — segment anything (sam) paper introduces promptable segmentation and the sa-1b data engine; understanding the mask decoder is key to using sam as a labeling/foundation tool."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Kirillov et al. (2023) — Segment Anything (SAM) Paper</h4><div class="resource-why">"Introduces promptable segmentation and the SA-1B data engine; understanding the mask decoder is key to using SAM as a labeling/foundation tool."</div><a class="resource-link" href="https://arxiv.org/abs/2304.02643" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="lilian weng — what are diffusion models? (lil&#x27;log) the clearest free derivation of ddpm forward/reverse processes and classifier-free guidance — the theory the hf diffusers tutorial assumes."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Lilian Weng — What Are Diffusion Models? (Lil'Log)</h4><div class="resource-why">"The clearest free derivation of DDPM forward/reverse processes and classifier-free guidance — the theory the HF Diffusers tutorial assumes."</div><a class="resource-link" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kerbl et al. (2023) — 3d gaussian splatting project page (inria graphdeco) the real-time successor to nerf; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-interactive">Interactive</span></div><h4>Kerbl et al. (2023) — 3D Gaussian Splatting Project Page (Inria GraphDeco)</h4><div class="resource-why">"The real-time successor to NeRF; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."</div><a class="resource-link" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="5" data-text="onnx runtime — quantize onnx models (official docs) complements the tflite guide with the onnx path: static vs. dynamic int8 quantization apis for the real-time edge-ai deployment milestone."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>ONNX Runtime — Quantize ONNX Models (Official Docs)</h4><div class="resource-why">"Complements the TFLite guide with the ONNX path: static vs. dynamic INT8 quantization APIs for the real-time edge-AI deployment milestone."</div><a class="resource-link" href="https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="no-results" id="libEmpty">No resources match your search.</div>
+  </div>
+</section>
+
+<section class="extra-section" id="glossary">
+  <div class="extra-header blue"><h2>📖 Glossary</h2>
+    <p>52 key terms across all five phases, in plain English</p></div>
+  <div class="extra-body">
+    <div class="filter-bar">
+      <input class="filter-input" id="glossSearch" type="search" placeholder="Search terms… (e.g. fundamental matrix, IoU)" aria-label="Search glossary">
+      <div class="chips" id="glossChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="1">1 · Foundations</span><span class="chip" data-key="2">2 · Classical CV</span><span class="chip" data-key="3">3 · Geometry & 3D</span><span class="chip" data-key="4">4 · Deep Learning</span><span class="chip" data-key="5">5 · Frontiers</span></div>
+    </div>
+    <div class="gloss-grid"><div class="gloss-item" data-phase="1" data-text="color space a coordinate system describing colors numerically; rgb stores additive channels, hsv separates hue/saturation/value, and lab approximates perceptual differences."><div class="gloss-term">Color space <span class="gloss-phase">P1</span></div><div class="gloss-def">A coordinate system describing colors numerically; RGB stores additive channels, HSV separates hue/saturation/value, and LAB approximates perceptual differences.</div></div><div class="gloss-item" data-phase="1" data-text="convolution sliding a small kernel over an image and computing a weighted sum at each position; the core operation behind blurring, edge detection, and cnns."><div class="gloss-term">Convolution <span class="gloss-phase">P1</span></div><div class="gloss-def">Sliding a small kernel over an image and computing a weighted sum at each position; the core operation behind blurring, edge detection, and CNNs.</div></div><div class="gloss-item" data-phase="1" data-text="cross-correlation same sliding-window dot product as convolution but without flipping the kernel; what deep learning libraries actually compute and loosely call &#x27;convolution&#x27;."><div class="gloss-term">Cross-correlation <span class="gloss-phase">P1</span></div><div class="gloss-def">Same sliding-window dot product as convolution but without flipping the kernel; what deep learning libraries actually compute and loosely call 'convolution'.</div></div><div class="gloss-item" data-phase="1" data-text="eigenvector / eigenvalue a vector whose direction is unchanged by a matrix (only scaled by the eigenvalue); the basis of pca and of corner-response analysis."><div class="gloss-term">Eigenvector / Eigenvalue <span class="gloss-phase">P1</span></div><div class="gloss-def">A vector whose direction is unchanged by a matrix (only scaled by the eigenvalue); the basis of PCA and of corner-response analysis.</div></div><div class="gloss-item" data-phase="1" data-text="fft (fast fourier transform) an efficient algorithm to convert an image into its frequency components, exposing periodic patterns and enabling frequency-domain filtering."><div class="gloss-term">FFT (Fast Fourier Transform) <span class="gloss-phase">P1</span></div><div class="gloss-def">An efficient algorithm to convert an image into its frequency components, exposing periodic patterns and enabling frequency-domain filtering.</div></div><div class="gloss-item" data-phase="1" data-text="gradient the vector of partial derivatives of intensity (or a loss) with respect to its inputs; points in the direction of steepest increase and underlies edge detection and backprop."><div class="gloss-term">Gradient <span class="gloss-phase">P1</span></div><div class="gloss-def">The vector of partial derivatives of intensity (or a loss) with respect to its inputs; points in the direction of steepest increase and underlies edge detection and backprop.</div></div><div class="gloss-item" data-phase="1" data-text="histogram equalization a contrast-enhancement technique that remaps pixel intensities so the output histogram is roughly uniform, spreading values across the full range."><div class="gloss-term">Histogram equalization <span class="gloss-phase">P1</span></div><div class="gloss-def">A contrast-enhancement technique that remaps pixel intensities so the output histogram is roughly uniform, spreading values across the full range.</div></div><div class="gloss-item" data-phase="1" data-text="kernel (filter) a small matrix of weights (e.g. 3x3) convolved with an image to produce effects like smoothing, sharpening, or gradient estimation."><div class="gloss-term">Kernel (filter) <span class="gloss-phase">P1</span></div><div class="gloss-def">A small matrix of weights (e.g. 3x3) convolved with an image to produce effects like smoothing, sharpening, or gradient estimation.</div></div><div class="gloss-item" data-phase="1" data-text="morphological operations shape-based operations on binary/grayscale images using a structuring element; erosion shrinks regions, dilation grows them, and openings/closings clean up noise."><div class="gloss-term">Morphological operations <span class="gloss-phase">P1</span></div><div class="gloss-def">Shape-based operations on binary/grayscale images using a structuring element; erosion shrinks regions, dilation grows them, and openings/closings clean up noise.</div></div><div class="gloss-item" data-phase="1" data-text="pixel the smallest addressable element of a digital image, holding one intensity value (grayscale) or several channel values (e.g. r, g, b)."><div class="gloss-term">Pixel <span class="gloss-phase">P1</span></div><div class="gloss-def">The smallest addressable element of a digital image, holding one intensity value (grayscale) or several channel values (e.g. R, G, B).</div></div><div class="gloss-item" data-phase="2" data-text="bag of visual words represents an image as a histogram of quantized local descriptors (visual &#x27;words&#x27;) from a learned codebook, enabling classic image retrieval/classification."><div class="gloss-term">Bag of Visual Words <span class="gloss-phase">P2</span></div><div class="gloss-def">Represents an image as a histogram of quantized local descriptors (visual 'words') from a learned codebook, enabling classic image retrieval/classification.</div></div><div class="gloss-item" data-phase="2" data-text="camera calibration estimating a camera&#x27;s intrinsics (focal length, principal point) and lens distortion, typically via zhang&#x27;s method using multiple views of a checkerboard."><div class="gloss-term">Camera calibration <span class="gloss-phase">P2</span></div><div class="gloss-def">Estimating a camera's intrinsics (focal length, principal point) and lens distortion, typically via Zhang's method using multiple views of a checkerboard.</div></div><div class="gloss-item" data-phase="2" data-text="canny edge detector a multi-stage edge pipeline: gaussian smoothing, gradient computation, non-maximum suppression, then hysteresis thresholding for clean thin edges."><div class="gloss-term">Canny edge detector <span class="gloss-phase">P2</span></div><div class="gloss-def">A multi-stage edge pipeline: Gaussian smoothing, gradient computation, non-maximum suppression, then hysteresis thresholding for clean thin edges.</div></div><div class="gloss-item" data-phase="2" data-text="harris corner detector finds corners by analyzing the eigenvalues of the local gradient (structure) tensor; large in two directions means a stable corner."><div class="gloss-term">Harris corner detector <span class="gloss-phase">P2</span></div><div class="gloss-def">Finds corners by analyzing the eigenvalues of the local gradient (structure) tensor; large in two directions means a stable corner.</div></div><div class="gloss-item" data-phase="2" data-text="hog histogram of oriented gradients: describes local shape by binning gradient directions over a grid of cells; classic input to pedestrian detectors."><div class="gloss-term">HOG <span class="gloss-phase">P2</span></div><div class="gloss-def">Histogram of Oriented Gradients: describes local shape by binning gradient directions over a grid of cells; classic input to pedestrian detectors.</div></div><div class="gloss-item" data-phase="2" data-text="homography a 3x3 projective transform mapping one plane to another between two images; used for panorama warping, document rectification, and planar ar."><div class="gloss-term">Homography <span class="gloss-phase">P2</span></div><div class="gloss-def">A 3x3 projective transform mapping one plane to another between two images; used for panorama warping, document rectification, and planar AR.</div></div><div class="gloss-item" data-phase="2" data-text="optical flow the per-pixel apparent motion between consecutive frames; lucas-kanade solves it locally assuming brightness constancy and small motion."><div class="gloss-term">Optical flow <span class="gloss-phase">P2</span></div><div class="gloss-def">The per-pixel apparent motion between consecutive frames; Lucas-Kanade solves it locally assuming brightness constancy and small motion.</div></div><div class="gloss-item" data-phase="2" data-text="orb oriented fast and rotated brief: a fast, patent-free binary feature detector/descriptor matched with hamming distance, popular for real-time and slam use."><div class="gloss-term">ORB <span class="gloss-phase">P2</span></div><div class="gloss-def">Oriented FAST and Rotated BRIEF: a fast, patent-free binary feature detector/descriptor matched with Hamming distance, popular for real-time and SLAM use.</div></div><div class="gloss-item" data-phase="2" data-text="ransac random sample consensus: robustly fits a model (e.g. homography) by repeatedly sampling minimal point sets and keeping the hypothesis with the most inliers."><div class="gloss-term">RANSAC <span class="gloss-phase">P2</span></div><div class="gloss-def">Random Sample Consensus: robustly fits a model (e.g. homography) by repeatedly sampling minimal point sets and keeping the hypothesis with the most inliers.</div></div><div class="gloss-item" data-phase="2" data-text="sift scale-invariant feature transform: detects keypoints across scales and describes each with a 128-d gradient-orientation histogram robust to scale and rotation."><div class="gloss-term">SIFT <span class="gloss-phase">P2</span></div><div class="gloss-def">Scale-Invariant Feature Transform: detects keypoints across scales and describes each with a 128-D gradient-orientation histogram robust to scale and rotation.</div></div><div class="gloss-item" data-phase="3" data-text="baseline the distance between the two camera centers in a stereo rig; a wider baseline improves depth precision but reduces overlap and matchable area."><div class="gloss-term">Baseline <span class="gloss-phase">P3</span></div><div class="gloss-def">The distance between the two camera centers in a stereo rig; a wider baseline improves depth precision but reduces overlap and matchable area.</div></div><div class="gloss-item" data-phase="3" data-text="bundle adjustment joint nonlinear refinement of all camera poses and 3d points by minimizing total reprojection error; the optimization backbone of sfm and slam."><div class="gloss-term">Bundle adjustment <span class="gloss-phase">P3</span></div><div class="gloss-def">Joint nonlinear refinement of all camera poses and 3D points by minimizing total reprojection error; the optimization backbone of SfM and SLAM.</div></div><div class="gloss-item" data-phase="3" data-text="disparity the horizontal pixel shift of a point between left and right rectified stereo images; inversely proportional to depth."><div class="gloss-term">Disparity <span class="gloss-phase">P3</span></div><div class="gloss-def">The horizontal pixel shift of a point between left and right rectified stereo images; inversely proportional to depth.</div></div><div class="gloss-item" data-phase="3" data-text="epipolar line the line in one image along which the match of a given point in the other image must lie, constraining stereo correspondence search to 1d."><div class="gloss-term">Epipolar line <span class="gloss-phase">P3</span></div><div class="gloss-def">The line in one image along which the match of a given point in the other image must lie, constraining stereo correspondence search to 1D.</div></div><div class="gloss-item" data-phase="3" data-text="epipole the point in one image where the other camera&#x27;s center projects; all epipolar lines in that image pass through it."><div class="gloss-term">Epipole <span class="gloss-phase">P3</span></div><div class="gloss-def">The point in one image where the other camera's center projects; all epipolar lines in that image pass through it.</div></div><div class="gloss-item" data-phase="3" data-text="essential matrix the calibrated analog of the fundamental matrix (e = k&#x27;^t f k); it relates normalized image coordinates and decomposes into the relative rotation and translation."><div class="gloss-term">Essential matrix <span class="gloss-phase">P3</span></div><div class="gloss-def">The calibrated analog of the fundamental matrix (E = K'^T F K); it relates normalized image coordinates and decomposes into the relative rotation and translation.</div></div><div class="gloss-item" data-phase="3" data-text="fundamental matrix a 3x3 rank-2 matrix encoding the epipolar geometry between two uncalibrated views: x&#x27;^t f x = 0 for any corresponding image points x and x&#x27;."><div class="gloss-term">Fundamental matrix <span class="gloss-phase">P3</span></div><div class="gloss-def">A 3x3 rank-2 matrix encoding the epipolar geometry between two uncalibrated views: x'^T F x = 0 for any corresponding image points x and x'.</div></div><div class="gloss-item" data-phase="3" data-text="pnp (perspective-n-point) estimating a calibrated camera&#x27;s pose (rotation and translation) from n known 3d points and their 2d image projections."><div class="gloss-term">PnP (Perspective-n-Point) <span class="gloss-phase">P3</span></div><div class="gloss-def">Estimating a calibrated camera's pose (rotation and translation) from n known 3D points and their 2D image projections.</div></div><div class="gloss-item" data-phase="3" data-text="point cloud an unordered set of 3d points (often with color/normals) representing a scene&#x27;s surface, produced by stereo, depth sensors, or sfm/slam."><div class="gloss-term">Point cloud <span class="gloss-phase">P3</span></div><div class="gloss-def">An unordered set of 3D points (often with color/normals) representing a scene's surface, produced by stereo, depth sensors, or SfM/SLAM.</div></div><div class="gloss-item" data-phase="3" data-text="reprojection error the pixel distance between an observed feature and where its estimated 3d point projects into the image; the standard cost minimized in geometry pipelines."><div class="gloss-term">Reprojection error <span class="gloss-phase">P3</span></div><div class="gloss-def">The pixel distance between an observed feature and where its estimated 3D point projects into the image; the standard cost minimized in geometry pipelines.</div></div><div class="gloss-item" data-phase="3" data-text="slam simultaneous localization and mapping: incrementally building a map of an unknown environment while tracking the sensor&#x27;s pose within it in real time."><div class="gloss-term">SLAM <span class="gloss-phase">P3</span></div><div class="gloss-def">Simultaneous Localization and Mapping: incrementally building a map of an unknown environment while tracking the sensor's pose within it in real time.</div></div><div class="gloss-item" data-phase="3" data-text="stereo rectification warping a stereo pair so corresponding epipolar lines become horizontal and aligned, reducing correspondence search to scanning the same image row."><div class="gloss-term">Stereo rectification <span class="gloss-phase">P3</span></div><div class="gloss-def">Warping a stereo pair so corresponding epipolar lines become horizontal and aligned, reducing correspondence search to scanning the same image row.</div></div><div class="gloss-item" data-phase="3" data-text="structure from motion (sfm) reconstructing 3d structure and camera poses from an unordered set of overlapping 2d images, typically offline and globally optimized."><div class="gloss-term">Structure from Motion (SfM) <span class="gloss-phase">P3</span></div><div class="gloss-def">Reconstructing 3D structure and camera poses from an unordered set of overlapping 2D images, typically offline and globally optimized.</div></div><div class="gloss-item" data-phase="3" data-text="triangulation recovering a 3d point by intersecting the rays back-projected from its matching observations in two or more calibrated views."><div class="gloss-term">Triangulation <span class="gloss-phase">P3</span></div><div class="gloss-def">Recovering a 3D point by intersecting the rays back-projected from its matching observations in two or more calibrated views.</div></div><div class="gloss-item" data-phase="4" data-text="anchor box predefined reference boxes of various scales/aspect ratios placed across a feature map; detectors predict offsets and class scores relative to them."><div class="gloss-term">Anchor box <span class="gloss-phase">P4</span></div><div class="gloss-def">Predefined reference boxes of various scales/aspect ratios placed across a feature map; detectors predict offsets and class scores relative to them.</div></div><div class="gloss-item" data-phase="4" data-text="data augmentation synthetically expanding training data with label-preserving transforms (flips, crops, color jitter, mosaic) to improve generalization."><div class="gloss-term">Data augmentation <span class="gloss-phase">P4</span></div><div class="gloss-def">Synthetically expanding training data with label-preserving transforms (flips, crops, color jitter, mosaic) to improve generalization.</div></div><div class="gloss-item" data-phase="4" data-text="iou (intersection over union) overlap metric for two boxes/masks: area of intersection divided by area of union; 1.0 is perfect, and it gates detection matches."><div class="gloss-term">IoU (Intersection over Union) <span class="gloss-phase">P4</span></div><div class="gloss-def">Overlap metric for two boxes/masks: area of intersection divided by area of union; 1.0 is perfect, and it gates detection matches.</div></div><div class="gloss-item" data-phase="4" data-text="map (mean average precision) the mean over classes of average precision (area under the precision-recall curve), the standard summary metric for object detectors."><div class="gloss-term">mAP (mean Average Precision) <span class="gloss-phase">P4</span></div><div class="gloss-def">The mean over classes of Average Precision (area under the precision-recall curve), the standard summary metric for object detectors.</div></div><div class="gloss-item" data-phase="4" data-text="nms (non-maximum suppression) post-processing that removes duplicate detections by keeping the highest-scoring box and discarding others whose iou with it exceeds a threshold."><div class="gloss-term">NMS (Non-Maximum Suppression) <span class="gloss-phase">P4</span></div><div class="gloss-def">Post-processing that removes duplicate detections by keeping the highest-scoring box and discarding others whose IoU with it exceeds a threshold.</div></div><div class="gloss-item" data-phase="4" data-text="pooling a downsampling operation (max or average over a window) that reduces spatial resolution, adds translation tolerance, and cuts computation."><div class="gloss-term">Pooling <span class="gloss-phase">P4</span></div><div class="gloss-def">A downsampling operation (max or average over a window) that reduces spatial resolution, adds translation tolerance, and cuts computation.</div></div><div class="gloss-item" data-phase="4" data-text="receptive field the region of the input image that influences a particular neuron&#x27;s activation; it grows with depth, stride, and dilation in a cnn."><div class="gloss-term">Receptive field <span class="gloss-phase">P4</span></div><div class="gloss-def">The region of the input image that influences a particular neuron's activation; it grows with depth, stride, and dilation in a CNN.</div></div><div class="gloss-item" data-phase="4" data-text="semantic vs instance segmentation semantic segmentation labels every pixel by class; instance segmentation additionally separates individual objects of the same class."><div class="gloss-term">Semantic vs instance segmentation <span class="gloss-phase">P4</span></div><div class="gloss-def">Semantic segmentation labels every pixel by class; instance segmentation additionally separates individual objects of the same class.</div></div><div class="gloss-item" data-phase="4" data-text="skip (residual) connection a shortcut that adds a layer&#x27;s input to its output, easing gradient flow and enabling very deep networks like resnet."><div class="gloss-term">Skip (residual) connection <span class="gloss-phase">P4</span></div><div class="gloss-def">A shortcut that adds a layer's input to its output, easing gradient flow and enabling very deep networks like ResNet.</div></div><div class="gloss-item" data-phase="4" data-text="transfer learning reusing a network pre-trained on a large dataset (e.g. imagenet) and adapting it to a new task by fine-tuning, drastically cutting data and compute needs."><div class="gloss-term">Transfer learning <span class="gloss-phase">P4</span></div><div class="gloss-def">Reusing a network pre-trained on a large dataset (e.g. ImageNet) and adapting it to a new task by fine-tuning, drastically cutting data and compute needs.</div></div><div class="gloss-item" data-phase="5" data-text="clip contrastive language-image pre-training: jointly trains image and text encoders so matching pairs align in a shared space, enabling zero-shot recognition."><div class="gloss-term">CLIP <span class="gloss-phase">P5</span></div><div class="gloss-def">Contrastive Language-Image Pre-training: jointly trains image and text encoders so matching pairs align in a shared space, enabling zero-shot recognition.</div></div><div class="gloss-item" data-phase="5" data-text="diffusion model a generative model that learns to reverse a gradual noising process, denoising random noise into a sample over many steps (e.g. ddpm, stable diffusion)."><div class="gloss-term">Diffusion model <span class="gloss-phase">P5</span></div><div class="gloss-def">A generative model that learns to reverse a gradual noising process, denoising random noise into a sample over many steps (e.g. DDPM, Stable Diffusion).</div></div><div class="gloss-item" data-phase="5" data-text="nerf neural radiance field: an mlp that maps 3d position and view direction to color and density, rendered via volume integration to synthesize novel views."><div class="gloss-term">NeRF <span class="gloss-phase">P5</span></div><div class="gloss-def">Neural Radiance Field: an MLP that maps 3D position and view direction to color and density, rendered via volume integration to synthesize novel views.</div></div><div class="gloss-item" data-phase="5" data-text="onnx open neural network exchange: a framework-agnostic model format that lets you export from pytorch/tf and run via optimized runtimes across hardware."><div class="gloss-term">ONNX <span class="gloss-phase">P5</span></div><div class="gloss-def">Open Neural Network Exchange: a framework-agnostic model format that lets you export from PyTorch/TF and run via optimized runtimes across hardware.</div></div><div class="gloss-item" data-phase="5" data-text="patch embedding splitting an image into fixed-size patches and linearly projecting each into a token vector, the input step that lets a vision transformer process images."><div class="gloss-term">Patch embedding <span class="gloss-phase">P5</span></div><div class="gloss-def">Splitting an image into fixed-size patches and linearly projecting each into a token vector, the input step that lets a Vision Transformer process images.</div></div><div class="gloss-item" data-phase="5" data-text="quantization reducing the numeric precision of weights/activations (e.g. fp32 to int8 or fp16) to shrink model size and speed up inference, often on edge devices."><div class="gloss-term">Quantization <span class="gloss-phase">P5</span></div><div class="gloss-def">Reducing the numeric precision of weights/activations (e.g. FP32 to INT8 or FP16) to shrink model size and speed up inference, often on edge devices.</div></div><div class="gloss-item" data-phase="5" data-text="self-attention a mechanism where each token computes a weighted combination of all tokens via query-key-value scores, capturing long-range, content-dependent relationships."><div class="gloss-term">Self-attention <span class="gloss-phase">P5</span></div><div class="gloss-def">A mechanism where each token computes a weighted combination of all tokens via query-key-value scores, capturing long-range, content-dependent relationships.</div></div><div class="gloss-item" data-phase="5" data-text="vision transformer (vit) an image classifier that applies a standard transformer encoder to a sequence of patch embeddings plus positional encodings, no convolutions required."><div class="gloss-term">Vision Transformer (ViT) <span class="gloss-phase">P5</span></div><div class="gloss-def">An image classifier that applies a standard transformer encoder to a sequence of patch embeddings plus positional encodings, no convolutions required.</div></div></div>
+    <div class="no-results" id="glossEmpty">No terms match your search.</div>
+  </div>
+</section>
+
+<section class="extra-section" id="faq">
+  <div class="extra-header teal"><h2>❓ Frequently Asked Questions</h2>
+    <p>Prerequisites, math, hardware, timelines, and how to actually use this roadmap</p></div>
+  <div class="extra-body"><details class="faq-item"><summary>What prerequisites do I need before starting this roadmap?</summary><p>Comfort with Python and basic programming, plus high-school-level math. Everything else (linear algebra, calculus, image processing) is built up in Phase 1, so you can start as a motivated beginner. Familiarity with NumPy helps but is taught as you go.</p></details><details class="faq-item"><summary>How much math do I really need?</summary><p>Less than people fear, but it is unavoidable. You need vectors, matrices, dot products, and eigenvectors (for PCA and corner/geometry math), partial derivatives and the chain rule (for backprop), and basic probability. Multi-view geometry leans hardest on linear algebra. You do not need to derive everything from scratch, but you should be able to read the equations.</p></details><details class="faq-item"><summary>Do I need a GPU?</summary><p>Not for Phases 1-3. Classical CV and multi-view geometry run fine on a CPU laptop. For Phase 4 (deep learning) a GPU helps a lot for training, but you can use free cloud GPUs (Google Colab, Kaggle Notebooks) instead of buying hardware. Inference and fine-tuning small models are often CPU-feasible.</p></details><details class="faq-item"><summary>How long does the whole roadmap take?</summary><p>Roughly 6-9 months part-time at a steady pace. The repo budgets about 4-6 weeks for Foundations, 4-5 for Classical CV, several weeks for Multi-View Geometry &amp; 3D Vision, 6-8 for Deep Learning, and 5-7 for Modern Frontiers. Going faster is possible full-time; going slower is fine if you build the milestone projects.</p></details><details class="faq-item"><summary>Should I learn PyTorch or TensorFlow?</summary><p>Start with PyTorch. It dominates research, most new CV papers and repos ship PyTorch code, and its eager execution is easier to debug while learning. TensorFlow/Keras is still common in production and edge (TFLite), so pick it up later if a job or deployment target needs it. The concepts transfer; the syntax is secondary.</p></details><details class="faq-item"><summary>Is classical computer vision still worth learning in the deep learning era?</summary><p>Yes. Multi-view geometry, calibration, feature matching, and filtering power SLAM, AR/VR, robotics, photogrammetry, and the data pipelines feeding neural nets. Classical methods are interpretable, run without GPUs, need no training data, and frequently outperform learned methods on geometric tasks. Interviewers also probe these fundamentals heavily.</p></details><details class="faq-item"><summary>How should I actually use this roadmap?</summary><p>Go phase by phase and treat the milestone project as the gate: do not advance until you have built it. Read or watch one curated resource per topic, code along, then implement the project from scratch (e.g. filters in NumPy before OpenCV). Use the quizzes for self-checks and the interview bank once you are job-hunting. Progress is saved in the interactive site via localStorage.</p></details><details class="faq-item"><summary>Do I need to memorize papers and architectures?</summary><p>No. Understand the key ideas (why ResNet uses skip connections, what attention computes, how RANSAC rejects outliers) rather than memorizing layer counts. Be able to explain trade-offs and implement core pieces (IoU, NMS, a convolution). Depth of understanding on a few things beats shallow recall of many.</p></details><details class="faq-item"><summary>What jobs does this roadmap lead to?</summary><p>Computer Vision Engineer, ML/Deep Learning Engineer (vision), Perception Engineer (robotics/autonomous vehicles), AR/VR or SLAM engineer, Research Engineer, and Edge/Embedded AI roles. The geometry phase opens robotics and AR doors; the deep learning and frontiers phases open detection, segmentation, and generative/multimodal roles. Many start adjacent (data/ML engineering) and specialize.</p></details><details class="faq-item"><summary>I already know some deep learning. Can I skip the early phases?</summary><p>Skim them, but do not fully skip. Many strong DL practitioners are weak on geometry and classical CV, which is exactly where interviews and real perception systems expose gaps. At minimum, do the Classical CV and Multi-View Geometry milestone projects; they teach intuition that pure DL courses omit.</p></details></div>
+</section>
 </main>
 
 <footer>
-    <p>Built by <a href="https://github.com/sadhanasharma26">sadhanasharma26</a> ·
-    <a href="https://github.com/sadhanasharma26/computer-vision-roadmap">GitHub</a> ·
-    MIT License</p>
+  <p>Built by <a href="https://github.com/sadhanasharma26">sadhanasharma26</a> ·
+  <a href="https://github.com/sadhanasharma26/computer-vision-roadmap">GitHub</a> ·
+  Every resource is free · MIT License</p>
 </footer>
 
 <script>
+
 // ── KERNELS ──────────────────────────────────────────────
 const K = {
     blur:    { name:'Gaussian Blur',  v:[[1/16,2/16,1/16],[2/16,4/16,2/16],[1/16,2/16,1/16]] },
@@ -661,17 +866,17 @@ function setKernel(name, btn) {
 }
 
 // ── PROGRESS ─────────────────────────────────────────────
-const SKEY = 'cv-roadmap-v1';
+const SKEY = 'cv-roadmap-v2';
 
 function save() {
     const state = {};
     document.querySelectorAll('.checklist input').forEach(cb => state[cb.id] = cb.checked);
-    localStorage.setItem(SKEY, JSON.stringify(state));
+    try{ localStorage.setItem(SKEY, JSON.stringify(state)); }catch(e){}
     updateUI();
 }
 
 function load() {
-    const raw = localStorage.getItem(SKEY);
+    var raw=null; try{ raw = localStorage.getItem(SKEY); }catch(e){}
     if (!raw) return;
     const state = JSON.parse(raw);
     document.querySelectorAll('.checklist input').forEach(cb => {
@@ -687,7 +892,7 @@ function updateUI() {
     document.getElementById('progressText').textContent = `${done.length} / ${all.length} topics`;
     document.getElementById('hbarFill').style.width = pct + '%';
 
-    [1,2,3,4].forEach(p => {
+    [1,2,3,4,5].forEach(p => {
         const pa = document.querySelectorAll(`#phase-${p} .checklist input`);
         const pd = document.querySelectorAll(`#phase-${p} .checklist input:checked`);
         const pp = pa.length ? Math.round(pd.length / pa.length * 100) : 0;
@@ -698,7 +903,7 @@ function updateUI() {
 
 function resetAll() {
     if (!confirm('Reset all progress?')) return;
-    localStorage.removeItem(SKEY);
+    try{ localStorage.removeItem(SKEY); }catch(e){}
     document.querySelectorAll('.checklist input').forEach(cb => cb.checked = false);
     updateUI();
 }
@@ -709,11 +914,828 @@ window.addEventListener('scroll', () => {
     document.getElementById('scrollBar').style.width = pct + '%';
 });
 
+
+function initEpipolar() {
+  var root = document.getElementById('epi-wrap');
+  if (!root || root.dataset.epiInit === '1') return;
+  root.dataset.epiInit = '1';
+
+  var W = 320, H = 240;
+
+  // Hardcoded, pre-verified fundamental matrix (row-major), raw scale.
+  // F = K^{-T} [t]_x R K^{-1};  K: fx=fy=400, cx=160, cy=120;
+  // R: 12 deg yaw about Y; t = [-1, 0, -2]. Verified x'^T F x ~ 1e-16 for all scene pts.
+  var F = [
+    0.0,            1.25e-05,      -1.5e-03,
+   -1.3526293077e-05, 0.0,          3.57001744e-03,
+    1.6231551692e-03, -4.5e-03,      1.1159790720e-01
+  ];
+  // Display version scaled so |max entry| = 1 (scale of F is irrelevant to the line it defines).
+  var Fdisp = [
+    [ 0.000,  0.000112, -0.013441],
+    [-0.000121, 0.000,   0.031990],
+    [ 0.014545, -0.040323, 1.000000]
+  ];
+  // Right epipole e' (left null vector of F), in right-image pixels. ~(360,120): just off the right edge.
+  var epipole = { x: 360.0, y: 120.0 };
+
+  // Pre-verified scene correspondences [Lx,Ly, Rx,Ry] (all in-bounds on both 320x240 panels).
+  var scene = [
+    { L:[110.0,150.0], R:[29.6,179.5],  c:'#0891b2' },
+    { L:[192.0,104.0], R:[221.4,91.5],  c:'#22c55e' },
+    { L:[160.0,153.3], R:[185.6,171.7], c:'#7c3aed' },
+    { L:[133.3,84.4],  R:[101.9,55.1],  c:'#d97706' },
+    { L:[203.6,149.1], R:[249.8,169.2], c:'#dc2626' },
+    { L:[182.9,120.0], R:[137.8,120.0], c:'#0891b2' }
+  ];
+
+  // ---- element refs ----
+  var svgL = document.getElementById('epi-svgL');
+  var svgR = document.getElementById('epi-svgR');
+  var query = document.getElementById('epi-query');
+  var epiline = document.getElementById('epi-epiline');
+  var dotsL = document.getElementById('epi-dotsL');
+  var dotsR = document.getElementById('epi-dotsR');
+  var epiMarker = document.getElementById('epi-epiMarker');
+  var leftEpiDot = document.getElementById('epi-leftEpipole');
+  var baseL = document.getElementById('epi-baseL');
+  var readout = document.getElementById('epi-readout');
+  var btnScene = document.getElementById('epi-btnScene');
+  var btnSnap = document.getElementById('epi-btnSnap');
+  var Fmat = document.getElementById('epi-Fmat');
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  var showScene = true;
+  var px = 110, py = 150; // current query in image coords
+
+  // ---- build the F matrix table ----
+  for (var r = 0; r < 3; r++) {
+    var tr = document.createElement('tr');
+    for (var cc = 0; cc < 3; cc++) {
+      var td = document.createElement('td');
+      var v = Fdisp[r][cc];
+      td.textContent = (v === 0 ? '0' : v.toFixed(6));
+      tr.appendChild(td);
+    }
+    Fmat.appendChild(tr);
+  }
+
+  // ---- faint grids in both panels ----
+  function buildGrid(g) {
+    for (var x = 40; x < W; x += 40) {
+      var ln = document.createElementNS(SVGNS, 'line');
+      ln.setAttribute('x1', x); ln.setAttribute('y1', 0);
+      ln.setAttribute('x2', x); ln.setAttribute('y2', H);
+      g.appendChild(ln);
+    }
+    for (var y = 40; y < H; y += 40) {
+      var lh = document.createElementNS(SVGNS, 'line');
+      lh.setAttribute('x1', 0); lh.setAttribute('y1', y);
+      lh.setAttribute('x2', W); lh.setAttribute('y2', y);
+      g.appendChild(lh);
+    }
+  }
+  buildGrid(document.getElementById('epi-gridL'));
+  buildGrid(document.getElementById('epi-gridR'));
+
+  // Left epipole e ~ (263.9, 120): sits inside the left panel.
+  leftEpiDot.setAttribute('cx', 263.93);
+  leftEpiDot.setAttribute('cy', 120);
+
+  // ---- scene dots ----
+  var sceneDotsR = [];
+  function buildSceneDots() {
+    dotsL.innerHTML = '';
+    dotsR.innerHTML = '';
+    sceneDotsR = [];
+    scene.forEach(function (s, i) {
+      var dl = document.createElementNS(SVGNS, 'circle');
+      dl.setAttribute('class', 'epi-scenedot');
+      dl.setAttribute('cx', s.L[0]); dl.setAttribute('cy', s.L[1]);
+      dl.setAttribute('r', 4.5); dl.setAttribute('fill', s.c);
+      dotsL.appendChild(dl);
+      var dr = document.createElementNS(SVGNS, 'circle');
+      dr.setAttribute('class', 'epi-scenedot');
+      dr.setAttribute('cx', s.R[0]); dr.setAttribute('cy', s.R[1]);
+      dr.setAttribute('r', 4.5); dr.setAttribute('fill', s.c);
+      dotsR.appendChild(dr);
+      sceneDotsR.push(dr);
+    });
+  }
+  function setSceneVisible(on) {
+    dotsL.style.display = on ? '' : 'none';
+    dotsR.style.display = on ? '' : 'none';
+  }
+
+  // ---- math: epipolar line l' = F p ----
+  function lineFor(x, y) {
+    return {
+      a: F[0]*x + F[1]*y + F[2],
+      b: F[3]*x + F[4]*y + F[5],
+      c: F[6]*x + F[7]*y + F[8]
+    };
+  }
+  // Clip a*X + b*Y + c = 0 to the [0,W]x[0,H] rectangle (Liang-Barsky on the line via edge intersections).
+  function clipLine(l) {
+    var pts = [], a = l.a, b = l.b, c = l.c, eps = 1e-9;
+    function add(x, y) {
+      if (x >= -0.5 && x <= W + 0.5 && y >= -0.5 && y <= H + 0.5) pts.push([x, y]);
+    }
+    if (Math.abs(b) > eps) { // intersect x=0 and x=W
+      add(0, -(a*0 + c) / b);
+      add(W, -(a*W + c) / b);
+    }
+    if (Math.abs(a) > eps) { // intersect y=0 and y=H
+      add(-(b*0 + c) / a, 0);
+      add(-(b*H + c) / a, H);
+    }
+    if (pts.length < 2) return null;
+    // pick the two most separated points
+    var best = null, bd = -1;
+    for (var i = 0; i < pts.length; i++)
+      for (var j = i + 1; j < pts.length; j++) {
+        var dx = pts[i][0]-pts[j][0], dy = pts[i][1]-pts[j][1], d = dx*dx+dy*dy;
+        if (d > bd) { bd = d; best = [pts[i], pts[j]]; }
+      }
+    return best;
+  }
+
+  // ---- epipole marker (off-panel arrow + dot if inside) ----
+  function drawEpipoleMarker() {
+    epiMarker.innerHTML = '';
+    var inside = epipole.x >= 0 && epipole.x <= W && epipole.y >= 0 && epipole.y <= H;
+    if (inside) {
+      var dot = document.createElementNS(SVGNS, 'circle');
+      dot.setAttribute('class', 'epi-epipole');
+      dot.setAttribute('cx', epipole.x); dot.setAttribute('cy', epipole.y);
+      dot.setAttribute('r', 5);
+      epiMarker.appendChild(dot);
+      var t = document.createElementNS(SVGNS, 'text');
+      t.setAttribute('class', 'epi-epi-txt');
+      t.setAttribute('x', epipole.x - 8); t.setAttribute('y', epipole.y - 9);
+      t.setAttribute('text-anchor', 'end'); t.textContent = "e′";
+      epiMarker.appendChild(t);
+    } else {
+      // clamp to edge, draw a small triangle pointing outward
+      var cx = Math.max(8, Math.min(W - 8, epipole.x));
+      var cy = Math.max(8, Math.min(H - 8, epipole.y));
+      var tri = document.createElementNS(SVGNS, 'path');
+      tri.setAttribute('class', 'epi-epi-arrow');
+      // pointing right toward the off-edge epipole
+      tri.setAttribute('d', 'M' + (cx - 1) + ' ' + (cy - 6) + ' L' + (cx + 8) + ' ' + cy + ' L' + (cx - 1) + ' ' + (cy + 6) + ' Z');
+      epiMarker.appendChild(tri);
+      var t2 = document.createElementNS(SVGNS, 'text');
+      t2.setAttribute('class', 'epi-epi-txt');
+      t2.setAttribute('x', cx - 6); t2.setAttribute('y', cy - 9);
+      t2.setAttribute('text-anchor', 'end');
+      t2.textContent = "e′ → (" + Math.round(epipole.x) + "," + Math.round(epipole.y) + ")";
+      epiMarker.appendChild(t2);
+    }
+  }
+
+  // highlight which scene match is closest to the query (for the readout)
+  function nearestSceneIndex(x, y) {
+    var bi = -1, bd = 1e9;
+    scene.forEach(function (s, i) {
+      var dx = s.L[0]-x, dy = s.L[1]-y, d = dx*dx+dy*dy;
+      if (d < bd) { bd = d; bi = i; }
+    });
+    return { i: bi, d: Math.sqrt(bd) };
+  }
+
+  function render() {
+    query.setAttribute('cx', px);
+    query.setAttribute('cy', py);
+    query.setAttribute('aria-valuenow', Math.round(px));
+    query.setAttribute('aria-valuetext', 'x ' + Math.round(px) + ', y ' + Math.round(py));
+
+    // baseline guide in left panel: from query toward left epipole (direction of epipolar geometry)
+    baseL.setAttribute('x1', px); baseL.setAttribute('y1', py);
+    baseL.setAttribute('x2', 263.93); baseL.setAttribute('y2', 120);
+
+    var l = lineFor(px, py);
+    var seg = clipLine(l);
+    if (seg) {
+      epiline.style.display = '';
+      epiline.setAttribute('x1', seg[0][0].toFixed(2));
+      epiline.setAttribute('y1', seg[0][1].toFixed(2));
+      epiline.setAttribute('x2', seg[1][0].toFixed(2));
+      epiline.setAttribute('y2', seg[1][1].toFixed(2));
+    } else {
+      epiline.style.display = 'none';
+    }
+    drawEpipoleMarker();
+
+    // readout + highlight nearest match
+    sceneDotsR.forEach(function (d) { d.classList.remove('epi-active-match'); });
+    var nr = nearestSceneIndex(px, py);
+    if (showScene && nr.d < 14) {
+      sceneDotsR[nr.i].classList.add('epi-active-match');
+      // residual: distance of true right match to the drawn line
+      var s = scene[nr.i].R;
+      var dist = Math.abs(l.a*s[0] + l.b*s[1] + l.c) / Math.hypot(l.a, l.b);
+      readout.textContent = 'p = (' + Math.round(px) + ', ' + Math.round(py) +
+        ')  •  match lies ' + dist.toFixed(2) + ' px off the line';
+    } else {
+      readout.textContent = 'p = (' + Math.round(px) + ', ' + Math.round(py) + ')';
+    }
+  }
+
+  // ---- pointer interaction (drag + click) ----
+  function clientToImg(evt) {
+    var rect = svgL.getBoundingClientRect();
+    var sx = W / rect.width, sy = H / rect.height;
+    var x = (evt.clientX - rect.left) * sx;
+    var y = (evt.clientY - rect.top) * sy;
+    return {
+      x: Math.max(0, Math.min(W, x)),
+      y: Math.max(0, Math.min(H, y))
+    };
+  }
+  function maybeSnap() {
+    if (btnSnap.getAttribute('aria-pressed') === 'true') {
+      var nr = nearestSceneIndex(px, py);
+      px = scene[nr.i].L[0]; py = scene[nr.i].L[1];
+    }
+  }
+  var dragging = false;
+  function onDown(evt) {
+    evt.preventDefault();
+    dragging = true;
+    var p = clientToImg(evt);
+    px = p.x; py = p.y;
+    maybeSnap();
+    render();
+    if (svgL.setPointerCapture && evt.pointerId !== undefined) {
+      try { svgL.setPointerCapture(evt.pointerId); } catch (e) {}
+    }
+  }
+  function onMove(evt) {
+    if (!dragging) return;
+    evt.preventDefault();
+    var p = clientToImg(evt);
+    px = p.x; py = p.y;
+    render();
+  }
+  function onUp() { if (dragging) { dragging = false; maybeSnap(); render(); } }
+
+  svgL.addEventListener('pointerdown', onDown);
+  svgL.addEventListener('pointermove', onMove);
+  window.addEventListener('pointerup', onUp);
+
+  // keyboard: arrows move the query point
+  query.addEventListener('keydown', function (evt) {
+    var step = evt.shiftKey ? 10 : 2, used = true;
+    if (evt.key === 'ArrowLeft') px = Math.max(0, px - step);
+    else if (evt.key === 'ArrowRight') px = Math.min(W, px + step);
+    else if (evt.key === 'ArrowUp') py = Math.max(0, py - step);
+    else if (evt.key === 'ArrowDown') py = Math.min(H, py + step);
+    else used = false;
+    if (used) { evt.preventDefault(); render(); }
+  });
+
+  // ---- buttons ----
+  btnScene.addEventListener('click', function () {
+    showScene = !showScene;
+    btnScene.classList.toggle('epi-active', showScene);
+    btnScene.setAttribute('aria-pressed', String(showScene));
+    setSceneVisible(showScene);
+    render();
+  });
+  btnSnap.addEventListener('click', function () {
+    var on = btnSnap.getAttribute('aria-pressed') !== 'true';
+    btnSnap.classList.toggle('epi-active', on);
+    btnSnap.setAttribute('aria-pressed', String(on));
+    if (on) { maybeSnap(); render(); }
+  });
+
+  buildSceneDots();
+  setSceneVisible(showScene);
+  render();
+}
+function initAttention() {
+  var N = 7;
+  var TEMP = 0.35; // softmax temperature — peaked enough to read, still global
+  var state = { mode: 'attn', qr: 3, qc: 3 };
+
+  // Deterministic per-cell feature vector from row/col only (NO randomness)
+  function attnFeature(r, c) {
+    var x = (c / (N - 1)) * 2 - 1;
+    var y = (r / (N - 1)) * 2 - 1;
+    return [
+      Math.sin(2.1 * x + 0.4),
+      Math.cos(1.9 * y - 0.6),
+      Math.sin(1.6 * (x + y)),
+      Math.cos(1.4 * (x - y)),
+      x,
+      y
+    ];
+  }
+
+  // Scaled dot-product attention + softmax over ALL cells. Sums to 1.
+  function attnWeights(qr, qc) {
+    var q = attnFeature(qr, qc);
+    var dim = q.length;
+    var scale = 1 / Math.sqrt(dim);
+    var logits = new Float64Array(N * N);
+    var max = -Infinity;
+    for (var r = 0; r < N; r++) {
+      for (var c = 0; c < N; c++) {
+        var k = attnFeature(r, c);
+        var dot = 0;
+        for (var i = 0; i < dim; i++) dot += q[i] * k[i];
+        var lg = (dot * scale) / TEMP;
+        logits[r * N + c] = lg;
+        if (lg > max) max = lg;
+      }
+    }
+    var sum = 0;
+    var exps = new Float64Array(N * N);
+    for (var j = 0; j < N * N; j++) {
+      exps[j] = Math.exp(logits[j] - max); // subtract max for numerical stability
+      sum += exps[j];
+    }
+    for (var m = 0; m < N * N; m++) exps[m] /= sum; // softmax — sums to ~1
+    return exps;
+  }
+
+  // Fixed 3x3 local neighborhood (clamped at borders) — the conv receptive field.
+  function attnConvField(qr, qc) {
+    var set = {};
+    for (var dr = -1; dr <= 1; dr++) {
+      for (var dc = -1; dc <= 1; dc++) {
+        var r = qr + dr, c = qc + dc;
+        if (r >= 0 && r < N && c >= 0 && c < N) set[r * N + c] = true;
+      }
+    }
+    return set;
+  }
+
+  function attnLerp(a, b, t) { return Math.round(a + (b - a) * t); }
+
+  function attnColorFor(w, wmax) {
+    var t = wmax > 0 ? w / wmax : 0;
+    var tc = Math.pow(t, 0.7); // perceptual boost for small weights
+    var r = attnLerp(248, 79, tc);
+    var g = attnLerp(247, 70, tc);
+    var b = attnLerp(255, 229, tc);
+    return 'rgb(' + r + ',' + g + ',' + b + ')';
+  }
+
+  function attnSum(arr) { var s = 0; for (var i = 0; i < arr.length; i++) s += arr[i]; return s; }
+
+  function attnRender() {
+    var grid = document.getElementById('attn-grid');
+    if (!grid) return;
+    var cells = grid.children;
+    var weights = state.mode === 'attn' ? attnWeights(state.qr, state.qc) : null;
+    var conv = state.mode === 'conv' ? attnConvField(state.qr, state.qc) : null;
+    var wmax = 0;
+    if (weights) for (var w = 0; w < weights.length; w++) if (weights[w] > wmax) wmax = weights[w];
+
+    for (var idx = 0; idx < cells.length; idx++) {
+      var cell = cells[idx];
+      var r = Math.floor(idx / N), c = idx % N;
+      var isQuery = (r === state.qr && c === state.qc);
+      cell.className = 'attn-cell';
+      cell.style.background = '#fff';
+      cell.style.color = 'transparent';
+      cell.textContent = '';
+      cell.removeAttribute('title');
+
+      if (state.mode === 'conv') {
+        if (conv[idx]) {
+          cell.classList.add('attn-field');
+          cell.style.background = isQuery ? '#7c3aed' : '#ede9fe';
+        }
+      } else {
+        var wv = weights[idx];
+        cell.style.background = attnColorFor(wv, wmax);
+        cell.style.color = wv / wmax > 0.55 ? '#fff' : '#5b21b6';
+        cell.textContent = wv >= 0.005 ? Math.round(wv * 100) : '';
+        cell.title = 'cell (' + r + ',' + c + ') weight ' + (wv * 100).toFixed(1) + '%';
+      }
+      if (isQuery) cell.classList.add('attn-query');
+      if (isQuery) cell.setAttribute('aria-current', 'true');
+      else cell.removeAttribute('aria-current');
+    }
+    attnRenderInfo(weights, conv);
+  }
+
+  function attnRenderInfo(weights, conv) {
+    var cap = document.getElementById('attn-caption');
+    var list = document.getElementById('attn-top');
+    if (!cap || !list) return;
+    if (state.mode === 'conv') {
+      var count = Object.keys(conv).length;
+      cap.innerHTML = '<b>Convolution receptive field.</b> A conv kernel only ever sees a <b>fixed local</b> ' +
+        'patch — here the 3×3 neighborhood around the query (' + count + ' cells at this position; ' +
+        'fewer at borders). The shape never changes with the pixel’s <i>content</i>; to reach distant ' +
+        'pixels you must stack many layers.';
+      list.innerHTML = '<div class="attn-toptitle">Receptive field: fixed 3×3 = ' + count + ' cells</div>' +
+        '<div class="attn-topnote">Same shape for every input. Range grows only by stacking layers.</div>';
+      return;
+    }
+    cap.innerHTML = '<b>Self-attention receptive field.</b> The query attends to <b>every</b> cell at once. ' +
+      'Weights come from scaled dot-product similarity of each cell’s feature to the query, passed through ' +
+      'a softmax (the 49 weights sum to 1). The pattern is <b>global + content-dependent</b> — move the ' +
+      'query and the whole distribution shifts.';
+    var arr = [];
+    for (var i = 0; i < weights.length; i++) arr.push([weights[i], i]);
+    arr.sort(function (a, b) { return b[0] - a[0]; });
+    var html = '<div class="attn-toptitle">Top attention weights (softmax Σ = ' +
+      attnSum(weights).toFixed(2) + ')</div>';
+    for (var t = 0; t < 5; t++) {
+      var wv = arr[t][0], id = arr[t][1];
+      var rr = Math.floor(id / N), cc = id % N;
+      var pct = (wv * 100).toFixed(1);
+      var barw = Math.round((wv / arr[0][0]) * 100);
+      html += '<div class="attn-bar"><span class="attn-barlbl">(' + rr + ',' + cc + ')</span>' +
+        '<span class="attn-bartrack"><span class="attn-barfill" style="width:' + barw + '%"></span></span>' +
+        '<span class="attn-barpct">' + pct + '%</span></div>';
+    }
+    list.innerHTML = html;
+  }
+
+  function attnSetMode(mode, btn) {
+    state.mode = mode;
+    var btns = document.querySelectorAll('#attn-modebtns .kbtn');
+    for (var i = 0; i < btns.length; i++) btns[i].classList.remove('active');
+    if (btn) btn.classList.add('active');
+    var box = document.getElementById('attn-box');
+    if (box) box.setAttribute('data-mode', mode);
+    attnRender();
+  }
+
+  function attnSetQuery(r, c) {
+    state.qr = Math.max(0, Math.min(N - 1, r));
+    state.qc = Math.max(0, Math.min(N - 1, c));
+    attnRender();
+  }
+
+  var grid = document.getElementById('attn-grid');
+  if (!grid || grid.dataset.ready) return;
+  grid.dataset.ready = '1';
+  grid.style.gridTemplateColumns = 'repeat(' + N + ', 1fr)';
+
+  for (var idx = 0; idx < N * N; idx++) {
+    (function (i) {
+      var r = Math.floor(i / N), c = i % N;
+      var cell = document.createElement('button');
+      cell.type = 'button';
+      cell.className = 'attn-cell';
+      cell.setAttribute('role', 'gridcell');
+      cell.setAttribute('aria-label', 'token row ' + r + ' column ' + c);
+      cell.addEventListener('mouseenter', function () { attnSetQuery(r, c); });
+      cell.addEventListener('focus', function () { attnSetQuery(r, c); });
+      cell.addEventListener('click', function () { attnSetQuery(r, c); });
+      cell.addEventListener('keydown', function (e) {
+        var nr = state.qr, nc = state.qc, handled = true;
+        if (e.key === 'ArrowUp') nr--;
+        else if (e.key === 'ArrowDown') nr++;
+        else if (e.key === 'ArrowLeft') nc--;
+        else if (e.key === 'ArrowRight') nc++;
+        else handled = false;
+        if (handled) {
+          e.preventDefault();
+          attnSetQuery(nr, nc);
+          var ti = Math.max(0, Math.min(N - 1, nr)) * N + Math.max(0, Math.min(N - 1, nc));
+          var target = grid.children[ti];
+          if (target) target.focus();
+        }
+      });
+      grid.appendChild(cell);
+    })(idx);
+  }
+
+  var mbtns = document.querySelectorAll('#attn-modebtns .kbtn');
+  for (var b = 0; b < mbtns.length; b++) {
+    (function (button) {
+      button.addEventListener('click', function () { attnSetMode(button.getAttribute('data-attn-mode'), button); });
+    })(mbtns[b]);
+  }
+
+  attnSetMode(state.mode, document.querySelector('#attn-modebtns .kbtn.active'));
+}
+function initIouNms() {
+  var SVGNS = 'http://www.w3.org/2000/svg';
+
+  // ---- shared geometry helpers ----
+  function rectIoU(a, b) {
+    var ix = Math.max(0, Math.min(a.x + a.w, b.x + b.w) - Math.max(a.x, b.x));
+    var iy = Math.max(0, Math.min(a.y + a.h, b.y + b.h) - Math.max(a.y, b.y));
+    var inter = ix * iy;
+    var union = a.w * a.h + b.w * b.h - inter;
+    return { inter: inter, union: union, iou: union <= 0 ? 0 : inter / union, ix: ix, iy: iy };
+  }
+  function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
+  function el(tag, attrs) {
+    var n = document.createElementNS(SVGNS, tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    return n;
+  }
+
+  // ================= PART A =================
+  (function partA() {
+    var svg = document.getElementById('iou-svgA');
+    if (!svg) return;
+    var W = 440, H = 300, MIN = 24;
+    var defaults = [
+      { x: 70, y: 70, w: 170, h: 150, color: '#4f46e5', name: 'A' },
+      { x: 170, y: 120, w: 170, h: 130, color: '#0891b2', name: 'B' }
+    ];
+    var boxes = JSON.parse(JSON.stringify(defaults));
+
+    var iouVal = document.getElementById('iou-iouVal');
+    var iouBar = document.getElementById('iou-iouBar');
+    var areaA = document.getElementById('iou-areaA');
+    var areaB = document.getElementById('iou-areaB');
+    var areaI = document.getElementById('iou-areaI');
+    var areaU = document.getElementById('iou-areaU');
+
+    function svgPoint(evt) {
+      var r = svg.getBoundingClientRect();
+      var t = (evt.touches && evt.touches[0]) || evt;
+      return {
+        x: (t.clientX - r.left) / r.width * W,
+        y: (t.clientY - r.top) / r.height * H
+      };
+    }
+
+    function render() {
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      var r = rectIoU(boxes[0], boxes[1]);
+
+      // intersection fill (draw first, under the box outlines)
+      if (r.ix > 0 && r.iy > 0) {
+        svg.appendChild(el('rect', {
+          x: Math.max(boxes[0].x, boxes[1].x), y: Math.max(boxes[0].y, boxes[1].y),
+          width: r.ix, height: r.iy, fill: '#7c3aed', 'fill-opacity': '0.35', stroke: 'none'
+        }));
+      }
+
+      boxes.forEach(function (b, i) {
+        var g = el('g', {});
+        g.appendChild(el('rect', {
+          x: b.x, y: b.y, width: b.w, height: b.h, rx: 4,
+          fill: b.color, 'fill-opacity': '0.10', stroke: b.color, 'stroke-width': '2.5'
+        }));
+        // body drag target (transparent, full rect)
+        var body = el('rect', {
+          x: b.x, y: b.y, width: b.w, height: b.h, fill: 'transparent',
+          'class': 'iou-handle iou-focusring', tabindex: '0',
+          role: 'slider', 'aria-label': 'Box ' + b.name + ' — arrows move, Shift+arrows resize'
+        });
+        body.dataset.idx = i;
+        body.dataset.mode = 'move';
+        g.appendChild(body);
+        // label
+        g.appendChild(el('rect', { x: b.x, y: b.y - 17, width: 22, height: 17, rx: 3, fill: b.color }));
+        var t = el('text', { x: b.x + 11, y: b.y - 4, 'text-anchor': 'middle', fill: '#fff', 'font-size': '12', 'font-weight': '700', 'font-family': 'system-ui' });
+        t.textContent = b.name;
+        g.appendChild(t);
+        // resize handle bottom-right
+        var rh = el('rect', {
+          x: b.x + b.w - 11, y: b.y + b.h - 11, width: 13, height: 13, rx: 2,
+          fill: '#fff', stroke: b.color, 'stroke-width': '2.5', 'class': 'iou-handle'
+        });
+        rh.dataset.idx = i;
+        rh.dataset.mode = 'resize';
+        g.appendChild(rh);
+        svg.appendChild(g);
+      });
+
+      var aA = boxes[0].w * boxes[0].h, aB = boxes[1].w * boxes[1].h;
+      iouVal.textContent = r.iou.toFixed(3);
+      iouBar.style.width = (r.iou * 100).toFixed(1) + '%';
+      areaA.textContent = Math.round(aA).toLocaleString();
+      areaB.textContent = Math.round(aB).toLocaleString();
+      areaI.textContent = Math.round(r.inter).toLocaleString();
+      areaU.textContent = Math.round(r.union).toLocaleString();
+    }
+
+    // pointer drag
+    var drag = null;
+    function onDown(e) {
+      var tgt = e.target;
+      if (!tgt.dataset || tgt.dataset.idx === undefined) return;
+      e.preventDefault();
+      var p = svgPoint(e);
+      var b = boxes[+tgt.dataset.idx];
+      drag = { idx: +tgt.dataset.idx, mode: tgt.dataset.mode, offx: p.x - b.x, offy: p.y - b.y };
+      window.addEventListener('pointermove', onMove);
+      window.addEventListener('pointerup', onUp);
+    }
+    function onMove(e) {
+      if (!drag) return;
+      e.preventDefault();
+      var p = svgPoint(e);
+      var b = boxes[drag.idx];
+      if (drag.mode === 'move') {
+        b.x = clamp(p.x - drag.offx, 0, W - b.w);
+        b.y = clamp(p.y - drag.offy, 0, H - b.h);
+      } else {
+        b.w = clamp(p.x - b.x, MIN, W - b.x);
+        b.h = clamp(p.y - b.y, MIN, H - b.y);
+      }
+      render();
+    }
+    function onUp() {
+      drag = null;
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+    }
+    svg.addEventListener('pointerdown', onDown);
+
+    // keyboard
+    svg.addEventListener('keydown', function (e) {
+      var tgt = e.target;
+      if (!tgt.dataset || tgt.dataset.idx === undefined || tgt.dataset.mode !== 'move') return;
+      var step = e.shiftKey ? 0 : 6;
+      var b = boxes[+tgt.dataset.idx];
+      var handled = true;
+      if (e.shiftKey) {
+        if (e.key === 'ArrowRight') b.w = clamp(b.w + 6, MIN, W - b.x);
+        else if (e.key === 'ArrowLeft') b.w = clamp(b.w - 6, MIN, W - b.x);
+        else if (e.key === 'ArrowDown') b.h = clamp(b.h + 6, MIN, H - b.y);
+        else if (e.key === 'ArrowUp') b.h = clamp(b.h - 6, MIN, H - b.y);
+        else handled = false;
+      } else {
+        if (e.key === 'ArrowRight') b.x = clamp(b.x + step, 0, W - b.w);
+        else if (e.key === 'ArrowLeft') b.x = clamp(b.x - step, 0, W - b.w);
+        else if (e.key === 'ArrowDown') b.y = clamp(b.y + step, 0, H - b.h);
+        else if (e.key === 'ArrowUp') b.y = clamp(b.y - step, 0, H - b.h);
+        else handled = false;
+      }
+      if (handled) {
+        e.preventDefault();
+        var idx = +tgt.dataset.idx;
+        render();
+        // restore focus to the same body handle after re-render
+        var sel = svg.querySelectorAll('[data-mode="move"]');
+        if (sel[idx]) sel[idx].focus();
+      }
+    });
+
+    document.getElementById('iou-resetA').addEventListener('click', function () {
+      boxes = JSON.parse(JSON.stringify(defaults));
+      render();
+    });
+
+    render();
+  })();
+
+  // ================= PART B =================
+  (function partB() {
+    var svg = document.getElementById('iou-svgB');
+    if (!svg) return;
+    var keepList = document.getElementById('iou-keepList');
+    var suppList = document.getElementById('iou-suppList');
+    var thr = document.getElementById('iou-thr');
+    var thrVal = document.getElementById('iou-thrVal');
+
+    // 6 preset detections: a "dog" cluster (left) + a "cat" cluster (right)
+    var dets = [
+      { id: 1, tag: 'dog', x: 40, y: 70, w: 140, h: 150, score: 0.95 },
+      { id: 2, tag: 'dog', x: 55, y: 85, w: 135, h: 140, score: 0.88 },
+      { id: 3, tag: 'dog', x: 30, y: 60, w: 150, h: 155, score: 0.72 },
+      { id: 4, tag: 'cat', x: 250, y: 90, w: 130, h: 140, score: 0.91 },
+      { id: 5, tag: 'cat', x: 265, y: 100, w: 120, h: 130, score: 0.80 },
+      { id: 6, tag: 'cat', x: 300, y: 40, w: 110, h: 120, score: 0.55 }
+    ];
+
+    function nms(boxes, t) {
+      var order = boxes.slice().sort(function (a, b) { return b.score - a.score; });
+      var kept = [], removed = [];
+      for (var i = 0; i < order.length; i++) {
+        var c = order[i], suppressed = false, by = null;
+        for (var j = 0; j < kept.length; j++) {
+          if (rectIoU(c, kept[j]).iou > t) { suppressed = true; by = kept[j].id; break; }
+        }
+        if (suppressed) removed.push({ box: c, by: by });
+        else kept.push(c);
+      }
+      return { kept: kept, removed: removed };
+    }
+
+    function chip(cls, text) {
+      var s = document.createElement('span');
+      s.className = 'iou-chip ' + cls;
+      s.textContent = text;
+      return s;
+    }
+
+    function render() {
+      var t = parseFloat(thr.value);
+      thrVal.textContent = t.toFixed(2);
+      var res = nms(dets, t);
+      var keptIds = {};
+      res.kept.forEach(function (b) { keptIds[b.id] = true; });
+
+      while (svg.firstChild) svg.removeChild(svg.firstChild);
+      // draw suppressed first (under), kept on top
+      dets.slice().sort(function (a, b) { return (keptIds[a.id] ? 1 : 0) - (keptIds[b.id] ? 1 : 0); })
+        .forEach(function (b) {
+          var kept = !!keptIds[b.id];
+          var col = kept ? '#16a34a' : '#dc2626';
+          svg.appendChild(el('rect', {
+            x: b.x, y: b.y, width: b.w, height: b.h, rx: 4,
+            fill: col, 'fill-opacity': kept ? '0.12' : '0.05',
+            stroke: col, 'stroke-width': kept ? '3' : '1.5',
+            'stroke-dasharray': kept ? '0' : '5 4'
+          }));
+          var label = b.tag + ' ' + b.score.toFixed(2);
+          var lw = label.length * 6.4 + 10;
+          svg.appendChild(el('rect', { x: b.x, y: b.y - 17, width: lw, height: 17, rx: 3, fill: col, 'fill-opacity': kept ? '1' : '0.7' }));
+          var tx = el('text', { x: b.x + lw / 2, y: b.y - 4, 'text-anchor': 'middle', fill: '#fff', 'font-size': '11', 'font-weight': '700', 'font-family': 'system-ui' });
+          tx.textContent = label;
+          svg.appendChild(tx);
+        });
+
+      // lists
+      keepList.innerHTML = '';
+      res.kept.slice().sort(function (a, b) { return b.score - a.score; }).forEach(function (b) {
+        keepList.appendChild(chip('iou-chip-keep', '#' + b.id + ' ' + b.tag + ' ' + b.score.toFixed(2)));
+      });
+      if (!res.kept.length) { var e1 = document.createElement('span'); e1.className = 'iou-empty'; e1.textContent = 'none'; keepList.appendChild(e1); }
+
+      suppList.innerHTML = '';
+      res.removed.slice().sort(function (a, b) { return b.box.score - a.box.score; }).forEach(function (r) {
+        suppList.appendChild(chip('iou-chip-supp', '#' + r.box.id + ' ' + r.box.tag + ' ' + r.box.score.toFixed(2) + ' → by #' + r.by));
+      });
+      if (!res.removed.length) { var e2 = document.createElement('span'); e2.className = 'iou-empty'; e2.textContent = 'none — threshold too high to suppress anything'; suppList.appendChild(e2); }
+    }
+
+    thr.addEventListener('input', render);
+    render();
+  })();
+}
+
+// ── THEME ────────────────────────────────────────────────
+function toggleTheme(){
+  var h=document.documentElement;
+  var n=h.getAttribute('data-theme')==='dark'?'light':'dark';
+  h.setAttribute('data-theme',n);
+  try{ localStorage.setItem('cv-theme',n); }catch(e){}
+  var b=document.getElementById('themeBtn'); if(b) b.textContent=n==='dark'?'☀️':'🌙';
+}
+function initTheme(){
+  var h=document.documentElement;
+  if(!h.getAttribute('data-theme')) h.setAttribute('data-theme','light');
+  var b=document.getElementById('themeBtn');
+  if(b) b.textContent=h.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+}
+// ── QUIZ ─────────────────────────────────────────────────
+function quizPick(btn){
+  var q=btn.closest('.quiz-q'); if(!q||q.dataset.done) return;
+  q.dataset.done='1';
+  q.querySelectorAll('.quiz-choice').forEach(function(c){
+    c.disabled=true; if(c.dataset.correct==='1') c.classList.add('quiz-correct');
+  });
+  if(btn.dataset.correct!=='1') btn.classList.add('quiz-wrong');
+  var e=q.querySelector('.quiz-exp'); if(e) e.style.display='block';
+}
+// ── FILTERS (search + chips) ─────────────────────────────
+function setupFilter(cfg){
+  var search=cfg.searchId?document.getElementById(cfg.searchId):null;
+  var chips=cfg.chipsId?document.getElementById(cfg.chipsId):null;
+  var items=[].slice.call(document.querySelectorAll(cfg.itemSel));
+  var empty=cfg.emptyId?document.getElementById(cfg.emptyId):null;
+  var state={q:'',key:'all'};
+  function apply(){
+    var shown=0;
+    items.forEach(function(el){
+      var okText=!state.q || (el.getAttribute('data-text')||'').indexOf(state.q)>=0;
+      var okKey=state.key==='all' || (el.getAttribute('data-'+cfg.attr)||'')===state.key;
+      var vis=okText && okKey; el.style.display=vis?'':'none'; if(vis) shown++;
+    });
+    if(empty) empty.style.display=shown?'none':'block';
+  }
+  if(search) search.addEventListener('input',function(){ state.q=this.value.trim().toLowerCase(); apply(); });
+  if(chips) chips.addEventListener('click',function(e){
+    var c=e.target.closest('.chip'); if(!c) return;
+    state.key=c.getAttribute('data-key');
+    chips.querySelectorAll('.chip').forEach(function(x){ x.classList.toggle('active', x===c); });
+    apply();
+  });
+  apply();
+}
+function initFilters(){
+  setupFilter({searchId:'libSearch', chipsId:'libChips', itemSel:'#library .lib-item', attr:'phase', emptyId:'libEmpty'});
+  setupFilter({searchId:'glossSearch', chipsId:'glossChips', itemSel:'#glossary .gloss-item', attr:'phase', emptyId:'glossEmpty'});
+  setupFilter({chipsId:'iqChips', itemSel:'#interview .iq-card', attr:'cat', emptyId:'iqEmpty'});
+}
+
+
 // ── INIT ─────────────────────────────────────────────────
-renderInput();
-renderKernel();
-renderOutput();
+renderInput(); renderKernel(); renderOutput();
 load();
+initTheme();
+initFilters();
+try{ initEpipolar(); }catch(e){ console.error('epipolar demo:', e); }
+try{ initAttention(); }catch(e){ console.error('attention demo:', e); }
+try{ initIouNms(); }catch(e){ console.error('iou/nms demo:', e); }
+
 </script>
 </body>
 </html>

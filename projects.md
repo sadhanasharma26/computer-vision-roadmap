@@ -24,6 +24,36 @@
 - Skills: Perspective transformation, edge detection
 - Description: Build an app to scan and straighten documents
 
+---
+
+# 🧭 Multi-View Geometry & 3D Projects
+
+## Two-View Structure from Motion from Scratch  · _Advanced_
+- Skills: Feature matching, epipolar geometry, fundamental/essential matrix, RANSAC, triangulation, bundle adjustment, point clouds
+- Description: Take two overlapping photos, match SIFT/ORB features, estimate the fundamental and essential matrices with RANSAC, recover relative pose (R, t) via the cheirality check, triangulate matches into a 3D point cloud, and refine with a simple bundle adjustment. Compare against OpenCV's `recoverPose`/`triangulatePoints`. The classical multi-view geometry capstone.
+
+## Stereo Depth Map from a Calibrated Camera Pair  · _Intermediate_
+- Skills: Stereo calibration, rectification, disparity, block matching, depth from disparity
+- Description: Calibrate a two-camera rig (or use Middlebury/KITTI), rectify the pair so epipolar lines are horizontal, compute a disparity map with block matching / SGBM, and convert to a metric depth map via `Z = f·B/d`. Visualize depth and back-project to a point cloud.
+
+## Marker-Based AR Cube via Homography and PnP  · _Intermediate_
+- Skills: Camera calibration, homography, PnP, pose estimation, real-time video
+- Description: Detect a planar marker in a webcam stream, estimate camera pose with `solvePnP`, and render a 3D cube glued to the marker as the camera moves. Implement the homography-to-pose decomposition yourself once, then use PnP for the live loop; add temporal smoothing to reduce jitter.
+
+---
+
+# 🚀 Capstone & Practice Projects
+
+## From-Scratch Convolution and Edge Detector in NumPy  · _Beginner_
+- Skills: Convolution, image gradients, non-maximum suppression, NumPy vectorization, Canny pipeline
+- Description: Implement 2D convolution, Gaussian blur, and a full Canny pipeline (gradients, NMS, hysteresis) using only NumPy, then validate against `cv2.Canny`.
+
+## Fine-Tune and Export an Edge Object Detector  · _Advanced_
+- Skills: Transfer learning, object detection, mAP/IoU evaluation, ONNX export, INT8 quantization, edge benchmarking
+- Description: Fine-tune a small YOLO model on a custom 3–5 class dataset, evaluate with mAP and a precision-recall curve, export to ONNX, INT8-quantize, and benchmark FPS vs. accuracy on CPU (or a Raspberry Pi / Jetson). Ties the deep-learning and edge phases together.
+
+---
+
 ## 🌟 My Computer Vision Projects
 
 Below are some of my own computer vision projects. Explore the code, try them out, and get inspired!
