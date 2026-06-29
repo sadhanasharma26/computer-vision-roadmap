@@ -8,7 +8,7 @@ A free, structured path from raw pixels to production — five phases, each gate
 
 ## Phase 1: The Foundations (4–6 weeks)
 
-_Math & Pixels — everything in CV reduces to these_
+_The math and pixels that everything else is built on_
 
 - Vectors, Matrices, Dot Products
 - Eigenvalues & Eigenvectors (PCA)
@@ -27,7 +27,7 @@ _Math & Pixels — everything in CV reduces to these_
 
 ## Phase 2: Feature Engineering & Classical CV (4–5 weeks)
 
-_The pre-deep-learning toolkit — still runs in every production pipeline_
+_The pre-deep-learning toolkit that still runs in real pipelines today_
 
 - SIFT — Scale Invariant Feature Transform
 - SURF & ORB (fast SIFT alternatives)
@@ -46,7 +46,7 @@ _The pre-deep-learning toolkit — still runs in every production pipeline_
 
 ## Phase 3: Multi-View Geometry & 3D Vision (4–5 weeks)
 
-_From two flat images to metric 3D — the geometry deep learning skips over_
+_How two flat photos become real 3D, the part deep learning tends to skip_
 
 - Epipolar geometry & the epipolar constraint (x′ᵀ F x = 0)
 - Fundamental matrix F & the normalized 8-point algorithm (uncalibrated)
@@ -65,7 +65,7 @@ _From two flat images to metric 3D — the geometry deep learning skips over_
 
 ## Phase 4: The Deep Learning Era (6–8 weeks)
 
-_CNNs, detection, segmentation — the industry-standard stack_
+_CNNs, detection, and segmentation, the everyday working stack_
 
 - CNN: Convolution, Pooling, Padding, Stride
 - Backpropagation & Gradient Descent variants
@@ -84,7 +84,7 @@ _CNNs, detection, segmentation — the industry-standard stack_
 
 ## Phase 5: Modern Frontiers (5–7 weeks)
 
-_Vision Transformers, generative models, and edge deployment_
+_Transformers, generative models, and getting it onto real devices_
 
 - Self-Attention mechanism — from scratch
 - Vision Transformer (ViT) — patch embeddings

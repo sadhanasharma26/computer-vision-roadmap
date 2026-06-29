@@ -4,65 +4,83 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Computer Vision Roadmap</title>
-<meta name="description" content="A free, interactive computer-vision learning roadmap — from pixels to production across five phases.">
+<meta name="description" content="A free, self-paced computer vision course, from raw pixels to production across five phases.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#F6F7F8; --surface:#FFFFFF; --border:#E4E6EA; --border-strong:#D5D8DE;
-    --text:#191B20; --text-soft:#565B66; --text-mute:#8A909C;
-    --accent:#4F46E5; --accent-text:#4338CA; --accent-soft:#EEF0FE; --ok:#15803D; --ok-soft:#E7F6EC;
-    --teal:#0F766E; --teal-soft:#E1F5F1; --amber:#B45309; --amber-soft:#FBF0DD;
+    --serif:'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+    --sans:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --bg:#FBFAF6; --surface:#FFFFFF; --border:#E7E2D6;
+    --text:#211F1B; --text-soft:#5B564C; --text-mute:#938D7F;
+    --accent:#A8552F; --accent-text:#974A28;
   }
   @media (prefers-color-scheme: dark){
     :root{
-      --bg:#0D0E11; --surface:#15171C; --border:#262A33; --border-strong:#333845;
-      --text:#E9EBF0; --text-soft:#A7AEBC; --text-mute:#6C7480;
-      --accent:#8A8CF7; --accent-text:#A8AAFF; --accent-soft:#1E2138; --ok:#4ADE80; --ok-soft:#16301F;
-      --teal:#2DD4BF; --teal-soft:#0F2E2A; --amber:#FBBF24; --amber-soft:#2E2410;
+      --bg:#16140F; --surface:#1E1B15; --border:#332E24;
+      --text:#ECE6DA; --text-soft:#B4AD9D; --text-mute:#807A6B;
+      --accent:#D98A60; --accent-text:#E29A72;
     }
   }
   *{ margin:0; padding:0; box-sizing:border-box; }
-  body{ font-family:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-    background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6;
-    display:flex; align-items:center; justify-content:center; padding:24px;
-    -webkit-font-smoothing:antialiased; }
-  .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
-    padding:44px 40px 36px; max-width:480px; width:100%; text-align:center;
-    box-shadow:0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.04); }
-  .eyebrow{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;
-    color:var(--text-mute); margin-bottom:14px; }
-  h1{ font-size:1.7rem; font-weight:600; letter-spacing:-0.02em; color:var(--text); margin-bottom:12px; }
-  p{ color:var(--text-soft); font-size:0.95rem; margin-bottom:28px; }
-  .button{ display:inline-block; background:var(--accent); color:#fff; padding:13px 30px;
-    font-size:0.95rem; font-weight:600; border-radius:10px; text-decoration:none; transition:opacity .15s, transform .15s; }
-  .button:hover{ opacity:0.92; transform:translateY(-1px); }
-  .tags{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:30px; }
-  .tag{ background:var(--accent-soft); color:var(--accent-text); font-size:0.8rem; font-weight:600;
-    padding:5px 11px; border-radius:7px; }
-  .tag.free{ background:var(--ok-soft); color:var(--ok); }
-  .tag.teal{ background:var(--teal-soft); color:var(--teal); }
-  .tag.amber{ background:var(--amber-soft); color:var(--amber); }
-  .footer{ margin-top:32px; font-size:0.82rem; color:var(--text-mute); }
-  .footer a{ color:var(--accent-text); text-decoration:none; }
+  body{ font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.65;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+  .page{ max-width:1040px; margin:0 auto; min-height:100vh; padding:36px 40px 30px;
+    display:flex; flex-direction:column; }
+  .mast{ font-family:var(--serif); font-size:1.25rem; font-weight:600; }
+  .hero{ flex:1; display:grid; grid-template-columns:1.45fr 1fr; gap:60px; align-items:center; padding:40px 0; }
+  .hero-main{ min-width:0; max-width:600px; }
+  .kicker{ font-size:0.82rem; font-weight:600; text-transform:uppercase; letter-spacing:0.13em;
+    color:var(--accent-text); margin-bottom:22px; }
+  h1{ font-family:var(--serif); font-size:clamp(2.2rem, 4.6vw, 3.1rem); font-weight:500; line-height:1.12;
+    letter-spacing:-0.015em; color:var(--text); margin-bottom:22px; }
+  .lede{ font-size:1.1rem; color:var(--text-soft); line-height:1.7; margin-bottom:30px; }
+  .btn{ display:inline-block; background:var(--accent); color:#FBFAF6; padding:14px 30px; font-size:0.98rem;
+    font-weight:600; border-radius:8px; text-decoration:none; transition:opacity .15s, transform .15s; }
+  .btn:hover{ opacity:0.92; transform:translateY(-1px); }
+  .submeta{ margin-top:22px; font-size:0.85rem; color:var(--text-mute); letter-spacing:0.01em; }
+  .hero-index-title{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em;
+    color:var(--text-mute); margin-bottom:4px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+  .hero-index ol{ list-style:none; }
+  .hero-index li{ border-bottom:1px solid var(--border); }
+  .hero-index li:last-child{ border-bottom:none; }
+  .hero-index a{ display:flex; align-items:baseline; gap:14px; padding:12px 2px; font-family:var(--serif);
+    font-size:1.05rem; font-weight:500; color:var(--text); text-decoration:none; transition:color .15s; }
+  .hero-index a:hover{ color:var(--accent-text); }
+  .hero-index a span{ font-size:0.92rem; color:var(--text-mute); font-variant-numeric:tabular-nums; min-width:1.7em; }
+  .cover-foot{ padding-top:24px; border-top:1px solid var(--border); font-size:0.84rem; color:var(--text-mute); }
+  .cover-foot a{ color:var(--accent-text); text-decoration:none; }
+  .cover-foot a:hover{ text-decoration:underline; text-underline-offset:2px; }
+  @media (max-width:820px){
+    .hero{ grid-template-columns:1fr; gap:36px; padding:28px 0; }
+    .page{ padding:28px 22px; }
+  }
 </style>
 </head>
 <body>
-  <div class="card">
-    <div class="eyebrow">Pixels → Production</div>
-    <h1>Computer Vision Roadmap</h1>
-    <p>A free, structured path through five phases — Foundations, Classical CV, Multi-View Geometry, Deep Learning, and Modern Frontiers — with interactive demos and curated free resources.</p>
-    <a class="button" href="roadmap.html">Launch the interactive roadmap →</a>
-    <div class="tags">
-      <span class="tag free">100% free</span>
-      <span class="tag teal">5 phases</span>
-      <span class="tag amber">4 interactive demos</span>
-      <span class="tag">no account</span>
-    </div>
-    <div class="footer">
-      &copy; 2026 <a href="https://github.com/sadhanasharma26">sadhanasharma26</a> · MIT License
-    </div>
+  <div class="page">
+    <header class="mast">CV&nbsp;Roadmap</header>
+    <main class="hero">
+      <div class="hero-main">
+        <p class="kicker">A free, self-paced computer vision course</p>
+        <h1>Learn to make machines see, from raw pixels to production.</h1>
+        <p class="lede">Five phases, meant to be done in order, each one ending in a project you actually build. It's all free, with nothing to sign up for. Start wherever you are.</p>
+        <a class="btn" href="roadmap.html">Start the roadmap</a>
+        <p class="submeta">Free &nbsp;·&nbsp; Self-paced &nbsp;·&nbsp; No account needed</p>
+      </div>
+      <aside class="hero-index" aria-label="The five phases">
+        <p class="hero-index-title">The five phases</p>
+        <ol>
+          <li><a href="roadmap.html#phase-1"><span>01</span> Foundations</a></li>
+          <li><a href="roadmap.html#phase-2"><span>02</span> Feature Engineering &amp; Classical CV</a></li>
+          <li><a href="roadmap.html#phase-3"><span>03</span> Multi-View Geometry &amp; 3D Vision</a></li>
+          <li><a href="roadmap.html#phase-4"><span>04</span> The Deep Learning Era</a></li>
+          <li><a href="roadmap.html#phase-5"><span>05</span> Modern Frontiers</a></li>
+        </ol>
+      </aside>
+    </main>
+    <footer class="cover-foot">Free &amp; open source · MIT License · <a href="https://github.com/sadhanasharma26/computer-vision-roadmap">github.com/sadhanasharma26</a></footer>
   </div>
 </body>
 </html>

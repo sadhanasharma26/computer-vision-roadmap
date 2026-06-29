@@ -7,265 +7,246 @@
 <meta name="description" content="A free, interactive computer-vision learning roadmap: foundations, classical CV, multi-view geometry, deep learning, and modern frontiers — with hands-on demos, quizzes, a glossary, and curated free resources.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;500;600&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('cv-theme');if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <style>
 :root{
-  --bg:#F6F7F8; --surface:#FFFFFF; --surface-2:#F1F2F4;
-  --border:#E4E6EA; --border-strong:#D5D8DE;
-  --text:#191B20; --text-soft:#565B66; --text-mute:#8A909C;
-  --accent:#4F46E5; --accent-text:#4338CA; --accent-soft:#EEF0FE;
-  --ok:#15803D; --ok-soft:#E7F6EC; --warn:#9A5B0B; --warn-soft:#FBF1E3; --bad:#B42318; --bad-soft:#FBEAE8;
-  --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.04);
-  --radius:14px; --radius-sm:9px;
+  --serif:'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+  --sans:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --bg:#FBFAF6; --surface:#FFFFFF; --surface-2:#F3F0E8;
+  --border:#E7E2D6; --border-strong:#D8D2C4;
+  --text:#211F1B; --text-soft:#5B564C; --text-mute:#938D7F;
+  --accent:#A8552F; --accent-text:#974A28; --accent-soft:#F2E7DF;
+  --ok:#3F6B4E; --warn:#8A5A1E; --bad:#9B3B2E;
+  --radius:10px; --radius-sm:7px;
   /* legacy aliases so the embedded demos resolve to the new palette */
   --purple:var(--accent); --purple-mid:var(--accent); --purple-light:var(--accent-soft);
-  --cyan:#0891b2; --red:var(--bad); --amber:#d97706; --green:var(--ok);
+  --cyan:#3E6E8E; --red:var(--bad); --amber:#9A6512; --green:var(--ok);
   --gray-900:var(--text); --gray-800:var(--text); --gray-700:var(--text-soft);
   --gray-600:var(--text-soft); --gray-500:var(--text-mute); --gray-400:var(--text-mute);
   --gray-200:var(--border); --gray-100:var(--surface-2);
 }
 html[data-theme="dark"]{
-  --bg:#0D0E11; --surface:#15171C; --surface-2:#1B1E25;
-  --border:#262A33; --border-strong:#333845;
-  --text:#E9EBF0; --text-soft:#A7AEBC; --text-mute:#6C7480;
-  --accent:#8A8CF7; --accent-text:#A8AAFF; --accent-soft:#1E2138;
-  --ok:#4ADE80; --ok-soft:#16301F; --warn:#FBBF24; --warn-soft:#322512; --bad:#F87171; --bad-soft:#3A1A18;
-  --shadow:0 1px 2px rgba(0,0,0,.4);
+  --bg:#16140F; --surface:#1E1B15; --surface-2:#26221A;
+  --border:#332E24; --border-strong:#443C2E;
+  --text:#ECE6DA; --text-soft:#B4AD9D; --text-mute:#807A6B;
+  --accent:#D98A60; --accent-text:#E29A72; --accent-soft:#2A2017;
+  --ok:#7FB58F; --warn:#D2A45E; --bad:#D98A78;
 }
 *{ margin:0; padding:0; box-sizing:border-box; }
 html{ -webkit-text-size-adjust:100%; }
-body{ font-family:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
-  background:var(--bg); color:var(--text); line-height:1.6; font-size:15px;
+body{ font-family:var(--sans); background:var(--bg); color:var(--text); line-height:1.65; font-size:15px;
   -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+h1,h2,h3{ font-family:var(--serif); font-weight:500; letter-spacing:-0.01em; }
 ::selection{ background:var(--accent-soft); }
 a{ color:var(--accent-text); text-decoration:none; }
-a:hover{ text-decoration:underline; }
+a:hover{ text-decoration:underline; text-underline-offset:2px; }
 button, input, select, textarea{ font-family:inherit; font-size:inherit; color:inherit; }
-code{ font-family:'IBM Plex Sans', system-ui, monospace; font-variant-numeric:tabular-nums;
-  background:var(--surface-2); border:1px solid var(--border); border-radius:5px; padding:0 5px; font-size:0.85rem; }
+code{ font-family:var(--sans); font-variant-numeric:tabular-nums; background:var(--surface-2);
+  border:1px solid var(--border); border-radius:5px; padding:0 5px; font-size:0.85rem; }
 #scrollBar{ position:fixed; top:0; left:0; height:2px; background:var(--accent); z-index:1100; transition:width .15s; }
 
-header{ background:var(--surface); border-bottom:1px solid var(--border); padding:14px 24px 11px;
+/* ── masthead ───────────────────────────────────────────── */
+header{ background:var(--bg); border-bottom:1px solid var(--border); padding:16px 28px 13px;
   position:sticky; top:0; z-index:1000; }
-.header-inner{ max-width:1140px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
-.header-title{ font-size:1.02rem; font-weight:600; color:var(--text); letter-spacing:-0.01em; }
-.header-title span{ color:var(--text-mute); font-weight:400; font-size:0.82em; }
-.header-right{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.header-inner{ max-width:1080px; margin:0 auto; display:flex; align-items:baseline; justify-content:space-between; gap:18px; flex-wrap:wrap; }
+.header-title{ font-family:var(--serif); font-size:1.2rem; font-weight:600; color:var(--text); letter-spacing:0; }
+.header-title span{ font-family:var(--sans); color:var(--text-mute); font-weight:400; font-size:0.85rem; letter-spacing:0; }
+.header-right{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
 .progress-pill{ font-size:0.82rem; font-weight:500; color:var(--text-soft); white-space:nowrap; font-variant-numeric:tabular-nums; }
-.hbar-wrap{ width:120px; height:5px; background:var(--surface-2); border-radius:3px; overflow:hidden; }
+.hbar-wrap{ width:108px; height:4px; background:var(--surface-2); border-radius:3px; overflow:hidden; }
 .hbar-fill{ height:100%; background:var(--accent); border-radius:3px; transition:width .4s ease; }
-.btn-reset{ background:transparent; border:1px solid var(--border); color:var(--text-soft); padding:5px 11px;
-  border-radius:8px; cursor:pointer; font-size:0.8rem; transition:all .15s; }
-.btn-reset:hover{ background:var(--surface-2); color:var(--text); border-color:var(--border-strong); }
-.topnav{ max-width:1140px; margin:11px auto 0; display:flex; gap:4px; flex-wrap:wrap; }
-.topnav a{ font-size:0.8rem; font-weight:500; color:var(--text-mute); text-decoration:none;
-  padding:4px 9px; border-radius:7px; white-space:nowrap; transition:all .15s; }
-.topnav a:hover{ color:var(--text); background:var(--surface-2); text-decoration:none; }
+.btn-reset{ background:transparent; border:1px solid var(--border-strong); color:var(--text-soft); padding:5px 12px;
+  border-radius:7px; cursor:pointer; font-size:0.8rem; transition:all .15s; }
+.btn-reset:hover{ background:var(--surface-2); color:var(--text); }
+.topnav{ max-width:1080px; margin:12px auto 0; display:flex; gap:22px; flex-wrap:wrap; }
+.topnav a{ font-size:0.85rem; font-weight:500; color:var(--text-soft); text-decoration:none;
+  padding:2px 0; border-bottom:1.5px solid transparent; transition:color .15s, border-color .15s; }
+.topnav a:hover{ color:var(--text); text-decoration:none; border-bottom-color:var(--accent); }
 
-main{ max-width:1140px; margin:0 auto; padding:34px 24px 10px; }
+main{ max-width:1080px; margin:0 auto; padding:48px 28px 16px; }
 .full-width{ grid-column:1 / -1; }
-.phase, .extra-section, .intro-card{ scroll-margin-top:140px; }
+.phase, .extra-section, .intro-card{ scroll-margin-top:120px; }
 
-.intro-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  padding:30px 32px; margin-bottom:30px; box-shadow:var(--shadow); }
-.intro-card h1{ font-size:1.65rem; font-weight:600; letter-spacing:-0.02em; color:var(--text); margin-bottom:10px; }
-.intro-card p{ color:var(--text-soft); font-size:0.95rem; max-width:860px; }
+/* ── editorial hero (two columns: copy + phase index) ───── */
+.intro-card{ border:none; background:none; box-shadow:none; padding:8px 0 46px; margin-bottom:32px;
+  border-bottom:1px solid var(--border); display:grid; grid-template-columns:1.55fr 1fr; gap:56px; align-items:start; }
+.intro-main{ min-width:0; }
+.intro-card .kicker{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:0.12em; color:var(--accent-text); margin-bottom:18px; }
+.intro-card h1{ font-size:2.5rem; font-weight:500; line-height:1.13; color:var(--text); margin-bottom:18px; }
+.intro-card p{ font-family:var(--sans); color:var(--text-soft); font-size:1.05rem; line-height:1.7; max-width:58ch; }
 .intro-card p strong{ color:var(--text); font-weight:600; }
-.intro-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
-.intro-tag{ background:var(--surface-2); color:var(--text-soft); font-weight:500; font-size:0.8rem;
-  padding:5px 11px; border-radius:7px; border:1px solid var(--border); }
-.intro-tag.free{ background:var(--ok-soft); color:var(--ok); border-color:transparent; font-weight:600; }
+.intro-meta{ font-family:var(--sans); margin-top:24px !important; font-size:0.85rem !important; color:var(--text-mute) !important;
+  letter-spacing:0.01em; }
+.intro-meta b{ color:var(--text-soft); font-weight:600; }
+.intro-index{ align-self:start; }
+.intro-index-title{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase;
+  letter-spacing:0.08em; color:var(--text-mute); margin-bottom:4px; padding-bottom:12px; border-bottom:1px solid var(--border); }
+.intro-index ol{ list-style:none; }
+.intro-index li{ border-bottom:1px solid var(--border); }
+.intro-index li:last-child{ border-bottom:none; }
+.intro-index a{ display:flex; align-items:baseline; gap:14px; padding:12px 2px; font-family:var(--serif);
+  font-size:1.05rem; font-weight:500; color:var(--text); text-decoration:none; transition:color .15s; }
+.intro-index a:hover{ color:var(--accent-text); text-decoration:none; }
+.intro-index a span{ font-size:0.92rem; color:var(--text-mute); font-variant-numeric:tabular-nums; min-width:1.7em; }
+@media (max-width:860px){ .intro-card{ grid-template-columns:1fr; gap:30px; } }
 
-.phase{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  margin-bottom:14px; box-shadow:var(--shadow); overflow:hidden; }
-.phase-header{ padding:22px 26px; display:flex; align-items:flex-start; gap:18px; border-bottom:1px solid var(--border); }
-.phase-num{ width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
-  font-size:1.05rem; font-weight:600; background:var(--text); color:var(--surface); flex-shrink:0; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+/* ── phase ──────────────────────────────────────────────── */
+.phase{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:18px; overflow:hidden; }
+.phase-header{ padding:26px 30px; display:flex; align-items:baseline; gap:22px; border-bottom:1px solid var(--border); }
+.phase-num{ font-family:var(--serif); font-size:2.1rem; font-weight:400; line-height:1; color:var(--text-mute);
+  background:none; width:auto; height:auto; flex-shrink:0; font-variant-numeric:tabular-nums; }
 .phase-meta{ flex:1; min-width:0; }
-.phase-meta h2{ font-size:1.22rem; font-weight:600; letter-spacing:-0.01em; color:var(--text); }
-.phase-meta p{ color:var(--text-soft); font-size:0.9rem; margin-top:2px; }
-.phase-tag{ display:inline-block; margin-top:9px; background:var(--surface-2); color:var(--text-mute);
-  padding:3px 9px; border-radius:6px; font-size:0.8rem; font-weight:600; border:1px solid var(--border); }
-.phase-pp{ text-align:right; flex-shrink:0; min-width:78px; }
-.phase-pp-text{ font-size:0.8rem; color:var(--text-mute); margin-bottom:5px; font-variant-numeric:tabular-nums; }
-.pp-bar{ width:78px; height:4px; background:var(--surface-2); border-radius:3px; overflow:hidden; margin-left:auto; }
+.phase-meta h2{ font-size:1.5rem; font-weight:500; color:var(--text); line-height:1.2; }
+.phase-meta p{ font-family:var(--sans); color:var(--text-soft); font-size:0.92rem; margin-top:5px; }
+.phase-tag{ display:inline-block; margin-top:11px; font-family:var(--sans); color:var(--text-mute);
+  font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; }
+.phase-pp{ text-align:right; flex-shrink:0; min-width:78px; align-self:flex-start; padding-top:6px; }
+.phase-pp-text{ font-size:0.8rem; color:var(--text-mute); margin-bottom:6px; font-variant-numeric:tabular-nums; }
+.pp-bar{ width:78px; height:3px; background:var(--surface-2); border-radius:3px; overflow:hidden; margin-left:auto; }
 .pp-fill{ height:100%; background:var(--accent); border-radius:3px; transition:width .4s; }
-.phase-body{ padding:26px; display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+.phase-body{ padding:30px; display:grid; grid-template-columns:1fr 1fr; gap:30px; }
 @media (max-width:860px){ .phase-body{ grid-template-columns:1fr; } }
-.sec-title{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-mute); margin-bottom:13px; }
+.sec-title{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-mute); margin-bottom:15px; }
 
+/* ── checklist ──────────────────────────────────────────── */
 .checklist{ list-style:none; }
-.checklist li{ display:flex; align-items:flex-start; gap:10px; padding:7px 9px; border-radius:8px; margin-bottom:1px; transition:background .12s; }
-.checklist li:hover{ background:var(--surface-2); }
+.checklist li{ display:flex; align-items:flex-start; gap:11px; padding:7px 0; transition:none; }
+.checklist li:hover{ background:none; }
 .checklist input[type="checkbox"]{ width:15px; height:15px; flex-shrink:0; margin-top:4px; accent-color:var(--accent); cursor:pointer; }
-.checklist label{ cursor:pointer; color:var(--text-soft); font-size:0.9rem; }
-.checklist input:checked + label{ text-decoration:line-through; color:var(--text-mute); }
+.checklist label{ cursor:pointer; color:var(--text-soft); font-size:0.92rem; }
+.checklist input:checked + label{ color:var(--text-mute); text-decoration:line-through; }
 
-.resource-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 15px; margin-bottom:10px;
-  background:var(--surface); transition:border-color .15s, box-shadow .15s; }
-.resource-card:hover{ border-color:var(--border-strong); box-shadow:var(--shadow); }
-.card-badges{ display:flex; gap:5px; margin-bottom:8px; flex-wrap:wrap; }
-.badge{ padding:2px 8px; border-radius:6px; font-size:0.8rem; font-weight:600; background:var(--surface-2); color:var(--text-mute); }
-.b-easy{ background:var(--ok-soft); color:var(--ok); }
-.b-med{ background:var(--warn-soft); color:var(--warn); }
-.b-hard{ background:var(--bad-soft); color:var(--bad); }
-.b-interactive{ background:var(--accent-soft); color:var(--accent-text); }
-.resource-card h4{ font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:4px; }
-.resource-why{ font-size:0.82rem; color:var(--text-soft); font-style:italic; margin-bottom:7px; }
-.resource-link{ font-size:0.8rem; color:var(--accent-text); font-weight:600; }
+/* ── resource cards (quiet, editorial) ──────────────────── */
+.resource-card{ border:none; border-top:1px solid var(--border); border-radius:0; padding:15px 0; margin-bottom:0; background:none; transition:none; }
+.resource-card:first-child{ border-top:none; padding-top:0; }
+.resource-card:hover{ box-shadow:none; border-color:var(--border); }
+.card-badges{ display:flex; gap:0; margin-bottom:7px; flex-wrap:wrap; align-items:center; }
+.badge{ background:none; border:none; padding:0; color:var(--text-mute); font-size:0.8rem; font-weight:600;
+  text-transform:uppercase; letter-spacing:0.05em; }
+.badge + .badge::before{ content:'·'; margin:0 8px; color:var(--border-strong); }
+.resource-card h4{ font-family:var(--serif); font-size:1.02rem; font-weight:500; color:var(--text); margin-bottom:5px; line-height:1.3; }
+.resource-why{ font-family:var(--sans); font-size:0.86rem; color:var(--text-soft); margin-bottom:7px; }
+.resource-link{ font-size:0.82rem; color:var(--accent-text); font-weight:600; }
 
-.demo-box{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
-.demo-box h3{ font-size:0.98rem; font-weight:600; color:var(--text); margin-bottom:5px; letter-spacing:-0.01em; }
-.demo-box .sub{ font-size:0.84rem; color:var(--text-soft); margin-bottom:16px; }
+/* ── demo box (interactive kept; just calmer chrome) ────── */
+.demo-box{ background:var(--surface-2); border:1px solid var(--border); border-radius:var(--radius); padding:24px; }
+.demo-box h3{ font-size:1.15rem; font-weight:500; color:var(--text); margin-bottom:5px; }
+.demo-box .sub{ font-family:var(--sans); font-size:0.86rem; color:var(--text-soft); margin-bottom:18px; }
 .kernel-btns{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px; }
-.kbtn{ padding:5px 11px; border-radius:7px; border:1px solid var(--border); background:var(--surface); cursor:pointer;
+.kbtn{ padding:5px 11px; border-radius:7px; border:1px solid var(--border-strong); background:var(--surface); cursor:pointer;
   font-size:0.8rem; font-weight:500; color:var(--text-soft); transition:all .15s; }
 .kbtn.active, .kbtn:hover{ border-color:var(--accent); color:var(--accent-text); background:var(--accent-soft); }
 .demo-row{ display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; }
-.demo-col h4{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-mute); margin-bottom:8px; }
+.demo-col h4{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-mute); margin-bottom:8px; }
 .pgrid{ display:inline-grid; gap:2px; background:var(--border); padding:2px; border-radius:7px; }
 .cell{ width:30px; height:30px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:0; transition:background .1s; }
 .cell.clickable{ cursor:pointer; }
 .kgrid{ display:inline-grid; grid-template-columns:repeat(3,44px); gap:2px; background:var(--border); padding:2px; border-radius:7px; }
 .kcell{ width:44px; height:30px; background:var(--surface); border-radius:3px; display:flex; align-items:center; justify-content:center;
   font-size:0.8rem; font-weight:600; color:var(--text); font-variant-numeric:tabular-nums; }
-.demo-op{ font-size:1.6rem; color:var(--text-mute); display:flex; align-items:center; padding-top:26px; }
+.demo-op{ font-size:1.5rem; color:var(--text-mute); display:flex; align-items:center; padding-top:26px; }
 .kname{ margin-top:8px; font-size:0.8rem; font-weight:600; color:var(--accent-text); }
 
-.milestone{ background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent);
-  border-radius:var(--radius-sm); padding:20px 22px; }
-.milestone-label{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-text); margin-bottom:6px; }
-.milestone h3{ font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:8px; }
-.milestone p{ color:var(--text-soft); font-size:0.88rem; margin-bottom:14px; }
-.milestone-meta{ display:flex; gap:18px; flex-wrap:wrap; }
-.mm{ font-size:0.8rem; color:var(--text-soft); font-weight:500; }
+/* ── milestone ──────────────────────────────────────────── */
+.milestone{ background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--accent);
+  border-radius:var(--radius-sm); padding:22px 24px; }
+.milestone-label{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-text); margin-bottom:7px; }
+.milestone h3{ font-size:1.2rem; font-weight:500; color:var(--text); margin-bottom:9px; }
+.milestone p{ font-family:var(--sans); color:var(--text-soft); font-size:0.9rem; margin-bottom:15px; }
+.milestone-meta{ display:flex; gap:20px; flex-wrap:wrap; }
+.mm{ font-size:0.82rem; color:var(--text-mute); font-weight:500; }
 
-.connector{ display:flex; justify-content:center; height:22px; margin:-7px 0; position:relative; z-index:1; }
+/* ── connector ──────────────────────────────────────────── */
+.connector{ display:flex; justify-content:center; height:22px; margin:-9px 0; position:relative; z-index:1; }
 .connector::before{ content:''; width:1px; background:var(--border-strong); height:100%; }
 
-.extra-section{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
-  margin-bottom:14px; box-shadow:var(--shadow); overflow:hidden; }
-.extra-header{ padding:20px 26px; border-bottom:1px solid var(--border); }
-.extra-header h2{ font-size:1.08rem; font-weight:600; letter-spacing:-0.01em; color:var(--text); display:flex; align-items:center; gap:9px; }
-.extra-header p{ font-size:0.86rem; margin-top:3px; color:var(--text-soft); }
-.extra-body{ padding:24px 26px; }
+/* ── sections ───────────────────────────────────────────── */
+.extra-section{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); margin-bottom:18px; overflow:hidden; }
+.extra-header{ padding:24px 30px; border-bottom:1px solid var(--border); }
+.extra-header h2{ font-size:1.4rem; font-weight:500; color:var(--text); }
+.extra-header p{ font-family:var(--sans); font-size:0.88rem; margin-top:5px; color:var(--text-soft); }
+.extra-body{ padding:28px 30px; }
 
-.iq-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:13px; }
-.iq-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:15px; background:var(--surface); }
-.iq-cat{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-text); margin-bottom:7px; }
-.iq-card h4{ font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:6px; }
-.iq-card p{ font-size:0.82rem; color:var(--text-soft); }
+/* ── interview ──────────────────────────────────────────── */
+.iq-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:0; }
+.iq-card{ border:none; border-top:1px solid var(--border); border-radius:0; padding:17px 0; margin-right:26px; }
+.iq-cat{ font-family:var(--sans); font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-mute); margin-bottom:7px; }
+.iq-card h4{ font-family:var(--serif); font-size:1.02rem; font-weight:500; color:var(--text); margin-bottom:6px; line-height:1.3; }
+.iq-card p{ font-family:var(--sans); font-size:0.85rem; color:var(--text-soft); }
 
-.pipeline{ display:flex; gap:10px; align-items:stretch; flex-wrap:wrap; }
-.pipe-step{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 15px; flex:1; min-width:140px; }
-.pipe-step .sn{ font-size:0.8rem; font-weight:600; color:var(--text-mute); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; }
-.pipe-step h4{ font-size:0.9rem; font-weight:600; color:var(--text); }
-.pipe-step p{ font-size:0.8rem; color:var(--text-soft); margin-top:3px; }
-.pipe-arrow{ font-size:1.2rem; color:var(--text-mute); align-self:center; flex-shrink:0; }
+/* ── pipeline ───────────────────────────────────────────── */
+.pipeline{ display:flex; gap:12px; align-items:stretch; flex-wrap:wrap; }
+.pipe-step{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 16px; flex:1; min-width:140px; }
+.pipe-step .sn{ font-family:var(--sans); font-size:0.8rem; font-weight:600; color:var(--text-mute); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:5px; }
+.pipe-step h4{ font-family:var(--serif); font-size:1rem; font-weight:500; color:var(--text); }
+.pipe-step p{ font-family:var(--sans); font-size:0.82rem; color:var(--text-soft); margin-top:4px; }
+.pipe-arrow{ font-size:1.1rem; color:var(--text-mute); align-self:center; flex-shrink:0; }
 
-.filter-bar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
-.filter-input{ flex:1; min-width:220px; padding:9px 13px; border:1px solid var(--border); border-radius:var(--radius-sm);
+/* ── filters ────────────────────────────────────────────── */
+.filter-bar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:22px; }
+.filter-input{ flex:1; min-width:220px; padding:9px 14px; border:1px solid var(--border-strong); border-radius:var(--radius-sm);
   font-size:0.88rem; background:var(--surface); color:var(--text); transition:border-color .15s, box-shadow .15s; }
 .filter-input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
 .filter-input::placeholder{ color:var(--text-mute); }
 .chips{ display:flex; gap:6px; flex-wrap:wrap; }
-.chip{ padding:5px 11px; border-radius:7px; border:1px solid var(--border); background:var(--surface); cursor:pointer;
+.chip{ padding:5px 12px; border-radius:7px; border:1px solid var(--border-strong); background:var(--surface); cursor:pointer;
   font-size:0.8rem; font-weight:500; color:var(--text-soft); transition:all .12s; }
-.chip:hover{ border-color:var(--border-strong); color:var(--text); }
-.chip.active{ background:var(--text); border-color:var(--text); color:var(--surface); }
-.lib-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:13px; }
+.chip:hover{ border-color:var(--text-mute); color:var(--text); }
+.chip.active{ background:var(--text); border-color:var(--text); color:var(--bg); }
+.lib-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:0 30px; }
 .lib-grid .resource-card{ margin-bottom:0; }
-.no-results{ color:var(--text-mute); font-size:0.88rem; padding:8px 2px; display:none; }
+.no-results{ color:var(--text-mute); font-size:0.88rem; padding:10px 2px; display:none; }
 
-.gloss-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:11px; }
-.gloss-item{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 15px; background:var(--surface); }
-.gloss-term{ font-weight:600; color:var(--text); font-size:0.9rem; margin-bottom:5px; display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
-.gloss-def{ color:var(--text-soft); font-size:0.83rem; }
-.gloss-phase{ font-size:0.8rem; font-weight:600; color:var(--text-mute); background:var(--surface-2); border:1px solid var(--border); border-radius:5px; padding:1px 6px; white-space:nowrap; }
+/* ── glossary ───────────────────────────────────────────── */
+.gloss-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:0 30px; }
+.gloss-item{ border:none; border-top:1px solid var(--border); border-radius:0; padding:15px 0; background:none; }
+.gloss-term{ font-family:var(--serif); font-weight:500; color:var(--text); font-size:1rem; margin-bottom:5px; display:flex; justify-content:space-between; gap:8px; align-items:baseline; }
+.gloss-def{ font-family:var(--sans); color:var(--text-soft); font-size:0.85rem; }
+.gloss-phase{ font-family:var(--sans); font-size:0.8rem; font-weight:600; color:var(--text-mute); background:none; border:none; padding:0; white-space:nowrap; letter-spacing:0.04em; }
 
-.faq-item{ border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:9px; background:var(--surface); overflow:hidden; }
-.faq-item summary{ padding:14px 16px; cursor:pointer; font-weight:600; color:var(--text); font-size:0.9rem; list-style:none; display:flex; gap:10px; }
+/* ── faq ────────────────────────────────────────────────── */
+.faq-item{ border:none; border-top:1px solid var(--border); border-radius:0; margin-bottom:0; background:none; overflow:hidden; }
+.faq-item summary{ padding:16px 0; cursor:pointer; font-family:var(--serif); font-weight:500; color:var(--text); font-size:1.02rem; list-style:none; display:flex; gap:12px; }
 .faq-item summary::-webkit-details-marker{ display:none; }
-.faq-item summary::before{ content:'+'; color:var(--text-mute); font-weight:600; }
+.faq-item summary::before{ content:'+'; font-family:var(--sans); color:var(--accent-text); font-weight:500; }
 .faq-item[open] summary::before{ content:'\2013'; }
-.faq-item p{ padding:0 16px 15px 34px; margin:0; color:var(--text-soft); font-size:0.86rem; }
+.faq-item p{ padding:0 0 16px 24px; margin:0; font-family:var(--sans); color:var(--text-soft); font-size:0.88rem; }
 
+/* ── quiz ───────────────────────────────────────────────── */
 .quiz-box{ margin-top:4px; }
 .quiz-details{ border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface-2); }
-.quiz-details summary{ padding:13px 17px; cursor:pointer; font-weight:600; color:var(--text); font-size:0.9rem; list-style:none; display:flex; gap:9px; }
+.quiz-details summary{ padding:14px 18px; cursor:pointer; font-family:var(--serif); font-weight:500; color:var(--text); font-size:1rem; list-style:none; display:flex; gap:10px; }
 .quiz-details summary::-webkit-details-marker{ display:none; }
-.quiz-details summary::before{ content:'\25B8'; color:var(--text-mute); }
+.quiz-details summary::before{ content:'\25B8'; font-family:var(--sans); color:var(--text-mute); }
 .quiz-details[open] summary::before{ content:'\25BE'; }
-.quiz-body{ padding:2px 17px 17px; }
-.quiz-q{ padding:14px 0; border-top:1px solid var(--border); }
+.quiz-body{ padding:2px 18px 18px; }
+.quiz-q{ padding:15px 0; border-top:1px solid var(--border); }
 .quiz-q:first-child{ border-top:none; }
-.quiz-qtext{ font-weight:600; color:var(--text); margin-bottom:10px; font-size:0.9rem; }
-.quiz-choices{ display:flex; flex-direction:column; gap:6px; }
-.quiz-choice{ text-align:left; padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface);
-  cursor:pointer; font-size:0.86rem; color:var(--text-soft); transition:all .12s; }
+.quiz-qtext{ font-family:var(--sans); font-weight:600; color:var(--text); margin-bottom:11px; font-size:0.92rem; }
+.quiz-choices{ display:flex; flex-direction:column; gap:7px; }
+.quiz-choice{ font-family:var(--sans); text-align:left; padding:9px 13px; border:1px solid var(--border-strong); border-radius:7px; background:var(--surface);
+  cursor:pointer; font-size:0.87rem; color:var(--text-soft); transition:all .12s; }
 .quiz-choice:hover:not(:disabled){ border-color:var(--accent); color:var(--text); }
 .quiz-choice:disabled{ cursor:default; }
-.quiz-correct{ background:var(--ok-soft); border-color:var(--ok); color:var(--ok); font-weight:600; }
-.quiz-wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
-.quiz-exp{ display:none; margin-top:10px; font-size:0.83rem; color:var(--text-soft); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+.quiz-correct{ background:var(--surface); border-color:var(--ok); color:var(--ok); font-weight:600; }
+.quiz-wrong{ background:var(--surface); border-color:var(--bad); color:var(--bad); }
+.quiz-exp{ display:none; margin-top:11px; font-family:var(--sans); font-size:0.84rem; color:var(--text-soft); background:var(--surface); border:1px solid var(--border); border-radius:7px; padding:11px 13px; }
 
 #epi-Fmat{ font-variant-numeric:tabular-nums; }
 
-footer{ text-align:center; padding:40px 24px; color:var(--text-mute); font-size:0.84rem; }
+footer{ text-align:center; padding:48px 28px; color:var(--text-mute); font-size:0.84rem; border-top:1px solid var(--border); margin-top:20px; }
 footer a{ color:var(--accent-text); }
 
-/* per-phase colour identity (also drives nav dots for wayfinding) */
-.p1{ --pa:#4F46E5; --pa-soft:#EEF0FE; } .p2{ --pa:#0D9488; --pa-soft:#E1F5F1; }
-.p3{ --pa:#C2620E; --pa-soft:#FBF0DD; } .p4{ --pa:#E11D48; --pa-soft:#FCE7EC; }
-.p5{ --pa:#7C3AED; --pa-soft:#F1EAFD; }
-html[data-theme="dark"] .p1{ --pa:#8A8CF7; --pa-soft:#1E2138; }
-html[data-theme="dark"] .p2{ --pa:#2DD4BF; --pa-soft:#0F2E2A; }
-html[data-theme="dark"] .p3{ --pa:#FBBF24; --pa-soft:#2E2410; }
-html[data-theme="dark"] .p4{ --pa:#FB7185; --pa-soft:#3A1620; }
-html[data-theme="dark"] .p5{ --pa:#A78BFA; --pa-soft:#271A3A; }
-.phase{ border-top:3px solid var(--pa, var(--border-strong)); }
-.phase-num{ background:var(--pa, var(--text)); }
-.pp-fill{ background:var(--pa, var(--accent)); }
-.phase-tag{ background:var(--pa-soft); color:var(--pa); border-color:transparent; }
-.phase .checklist input[type="checkbox"]{ accent-color:var(--pa, var(--accent)); }
-.milestone{ border-left-color:var(--pa, var(--accent)); }
-.milestone-label{ color:var(--pa, var(--accent-text)); }
-.resource-link{ color:var(--pa, var(--accent-text)); }
-.kbtn.active, .kbtn:hover{ border-color:var(--pa, var(--accent)); color:var(--pa, var(--accent-text)); background:var(--pa-soft, var(--accent-soft)); }
-.kname{ color:var(--pa, var(--accent-text)); }
-
-/* nav phase dots */
-.topnav a.nav-ph{ display:inline-flex; align-items:center; gap:7px; }
-.topnav a.nav-ph::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--nd); flex-shrink:0; }
-.nav-p1{ --nd:#4F46E5; } .nav-p2{ --nd:#0D9488; } .nav-p3{ --nd:#C2620E; } .nav-p4{ --nd:#E11D48; } .nav-p5{ --nd:#7C3AED; }
-
-/* section heading accent bar */
-.extra-header h2::before{ content:''; width:4px; height:1.05em; border-radius:2px; background:var(--sa, var(--accent)); flex-shrink:0; }
-.extra-header.green{ --sa:#059669; } .extra-header.purple{ --sa:#4F46E5; } .extra-header.blue{ --sa:#0891B2; }
-.extra-header.teal{ --sa:#0D9488; } .extra-header.orange{ --sa:#C2620E; }
-
-/* livelier hero tags */
-.t-green{ background:#E7F6EC; color:#15803D; border-color:transparent; }
-.t-indigo{ background:#EEF0FE; color:#4338CA; border-color:transparent; }
-.t-teal{ background:#E1F5F1; color:#0F766E; border-color:transparent; }
-.t-amber{ background:#FBF0DD; color:#B45309; border-color:transparent; }
-.t-rose{ background:#FCE7EC; color:#BE123C; border-color:transparent; }
-.t-violet{ background:#F1EAFD; color:#6D28D9; border-color:transparent; }
-html[data-theme="dark"] .t-green{ background:#16301F; color:#4ADE80; }
-html[data-theme="dark"] .t-indigo{ background:#1E2138; color:#A8AAFF; }
-html[data-theme="dark"] .t-teal{ background:#0F2E2A; color:#2DD4BF; }
-html[data-theme="dark"] .t-amber{ background:#2E2410; color:#FBBF24; }
-html[data-theme="dark"] .t-rose{ background:#3A1620; color:#FB7185; }
-html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
-
 @media (max-width:600px){
-  header{ padding:12px 16px; }
-  main{ padding:22px 14px 6px; }
-  .phase-header{ padding:18px; }
-  .phase-body{ padding:18px; }
-  .extra-body{ padding:18px; }
-  .intro-card{ padding:22px; }
+  header{ padding:14px 18px; }
+  main{ padding:30px 18px 8px; }
+  .intro-card h1{ font-size:2rem; }
+  .phase-header{ padding:20px; gap:16px; }
+  .phase-body{ padding:20px; }
+  .extra-body{ padding:20px; }
+  .phase-num{ font-size:1.7rem; }
 }
 #epi-wrap { font-family: 'IBM Plex Sans', system-ui, sans-serif; color: var(--gray-900, var(--text)); }
 #epi-panels { display: flex; flex-wrap: wrap; gap: 16px; }
@@ -379,7 +360,26 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 .iou-chip-supp{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
 .iou-empty{font-size:0.8rem;color:var(--gray-400);font-style:italic}
 .iou-focusring:focus-visible{outline:3px solid var(--purple-light);outline-offset:2px}
-@media (max-width:480px){.iou-metric-val{font-size:1.4em}}</style>
+@media (max-width:480px){.iou-metric-val{font-size:1.4em}}
+
+#rns-controls{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:14px; }
+.rns-btn{ padding:6px 13px; border-radius:7px; border:1px solid var(--border-strong); background:var(--surface);
+  color:var(--text-soft); font-size:0.82rem; font-weight:500; cursor:pointer; font-family:var(--sans); transition:all .15s; }
+.rns-btn:hover{ border-color:var(--accent); color:var(--accent-text); background:var(--accent-soft); }
+.rns-toggle{ font-family:var(--sans); font-size:0.82rem; color:var(--text-soft); display:inline-flex; align-items:center; gap:6px; cursor:pointer; }
+.rns-toggle input{ accent-color:var(--accent); }
+.rns-thr{ font-family:var(--sans); font-size:0.82rem; color:var(--text-soft); display:inline-flex; align-items:center; gap:8px; }
+.rns-thr input[type=range]{ accent-color:var(--accent); width:120px; }
+#rns-svg{ width:100%; height:auto; display:block; border:1px solid var(--border); border-radius:8px; background:var(--surface); }
+.rns-in{ fill:var(--accent); stroke:none; }
+.rns-out{ fill:none; stroke:var(--text-mute); stroke-width:1.5; }
+.rns-best{ stroke:var(--accent); stroke-width:2.5; }
+.rns-ls{ stroke:var(--text-mute); stroke-width:2; stroke-dasharray:6 5; }
+.rns-sample{ stroke:var(--accent); stroke-width:1.5; stroke-dasharray:3 4; opacity:.5; }
+.rns-pick{ fill:none; stroke:var(--accent); stroke-width:2; }
+#rns-readout{ margin-top:13px; font-family:var(--sans); font-size:0.88rem; color:var(--text); }
+.rns-note{ margin-top:8px; font-family:var(--sans); font-size:0.85rem; color:var(--text-soft); }
+</style>
 </head>
 <body>
 
@@ -391,16 +391,16 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
     <div class="header-right">
       <div class="progress-pill" id="progressText">0 / 50 topics</div>
       <div class="hbar-wrap"><div class="hbar-fill" id="hbarFill" style="width:0%"></div></div>
-      <button class="btn-reset" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+      <button class="btn-reset" id="themeBtn" type="button" onclick="toggleTheme()" aria-label="Toggle dark mode" title="Toggle dark mode">Dark</button>
       <button class="btn-reset" onclick="resetAll()">Reset</button>
     </div>
   </div>
   <nav class="topnav" aria-label="Jump to section">
-    <a class="nav-ph nav-p1" href="#phase-1">Foundations</a>
-    <a class="nav-ph nav-p2" href="#phase-2">Classical CV</a>
-    <a class="nav-ph nav-p3" href="#phase-3">Geometry &amp; 3D</a>
-    <a class="nav-ph nav-p4" href="#phase-4">Deep Learning</a>
-    <a class="nav-ph nav-p5" href="#phase-5">Frontiers</a>
+    <a href="#phase-1">Foundations</a>
+    <a href="#phase-2">Classical CV</a>
+    <a href="#phase-3">Geometry &amp; 3D</a>
+    <a href="#phase-4">Deep Learning</a>
+    <a href="#phase-5">Frontiers</a>
     <a href="#interview">Interview</a>
     <a href="#library">Resources</a>
     <a href="#glossary">Glossary</a>
@@ -410,30 +410,33 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 
 <main>
 <section class="intro-card">
-  <h1>Computer Vision Roadmap</h1>
-  <p>A free, structured path from raw pixels to production across five phases:
-  <strong>Foundations → Classical CV → Multi-View Geometry → Deep Learning → Modern Frontiers</strong>.
-  Every resource here is free. Check topics off as you learn — your progress saves in this browser (no account).
-  Try the interactive demos, test yourself with the per-phase quizzes, and use the interview bank when you're job-hunting.</p>
-  <div class="intro-tags">
-    <span class="intro-tag t-green">100% free</span>
-    <span class="intro-tag t-indigo">5 phases · 50 topics</span>
-    <span class="intro-tag t-teal">5 milestone projects</span>
-    <span class="intro-tag t-amber">4 interactive demos</span>
-    <span class="intro-tag t-rose">25+ curated resources</span>
-    <span class="intro-tag t-violet">52 glossary terms</span>
+  <div class="intro-main">
+    <p class="kicker">A free, self-paced computer vision course</p>
+    <h1>Learn to make machines see, from raw pixels to production.</h1>
+    <p>Five phases, meant to be done in order, each one ending in a project you actually build. It's all free and there's nothing to sign up for. Check things off as you go, and your spot is saved right here in your browser.</p>
+    <p class="intro-meta"><b>Free</b> &middot; Self-paced &middot; No account &middot; 50 topics &middot; 4 interactive demos &middot; 46+ free resources</p>
   </div>
+  <aside class="intro-index" aria-label="The five phases">
+    <p class="intro-index-title">The five phases</p>
+    <ol>
+      <li><a href="#phase-1"><span>01</span> Foundations</a></li>
+      <li><a href="#phase-2"><span>02</span> Feature Engineering &amp; Classical CV</a></li>
+      <li><a href="#phase-3"><span>03</span> Multi-View Geometry &amp; 3D Vision</a></li>
+      <li><a href="#phase-4"><span>04</span> The Deep Learning Era</a></li>
+      <li><a href="#phase-5"><span>05</span> Modern Frontiers</a></li>
+    </ol>
+  </aside>
 </section>
 <section class="phase p1" id="phase-1">
   <div class="phase-header">
     <div class="phase-num">01</div>
-    <div class="phase-meta"><h2>The Foundations</h2><p>Math &amp; Pixels — everything in CV reduces to these</p><span class="phase-tag">4–6 weeks</span></div>
+    <div class="phase-meta"><h2>The Foundations</h2><p>The math and pixels that everything else is built on</p><span class="phase-tag">4–6 weeks</span></div>
     <div class="phase-pp"><div class="phase-pp-text" id="pp1-txt">0/10</div>
       <div class="pp-bar"><div class="pp-fill" id="pp1-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
     <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li><li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li><li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li><li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li><li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li><li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li><li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li><li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li><li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li><li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li></ul></div>
-    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">6h</span><span class="badge b-video">Video</span></div><h4>3Blue1Brown — Essence of Linear Algebra</h4><div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4><div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Real Python — Image Processing with NumPy &amp; Pillow</h4><div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div><a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">6h</span><span class="badge b-video">Video</span></div><h4>3Blue1Brown — Essence of Linear Algebra</h4><div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Real Python — Image Processing with NumPy &amp; Pillow</h4><div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div><a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4><div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div></div></div>
     <!-- Convolution Visualizer — full width -->
             <div class="full-width demo-box">
                 <h3>Interactive — Convolution Kernel Visualizer</h3>
@@ -469,27 +472,38 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 </section><div class="connector"></div><section class="phase p2" id="phase-2">
   <div class="phase-header">
     <div class="phase-num">02</div>
-    <div class="phase-meta"><h2>Feature Engineering &amp; Classical CV</h2><p>The pre-deep-learning toolkit — still runs in every production pipeline</p><span class="phase-tag">4–5 weeks</span></div>
+    <div class="phase-meta"><h2>Feature Engineering &amp; Classical CV</h2><p>The pre-deep-learning toolkit that still runs in real pipelines today</p><span class="phase-tag">4–5 weeks</span></div>
     <div class="phase-pp"><div class="phase-pp-text" id="pp2-txt">0/10</div>
       <div class="pp-bar"><div class="pp-fill" id="pp2-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
     <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li><li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li><li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li><li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li><li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li><li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li><li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li><li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li><li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li><li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li></ul></div>
     <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-video">Video</span></div><h4>First Principles of CV — Camera Calibration (Columbia / Shree Nayar)</h4><div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div><a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4><div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div><a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4><div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div></div></div>
-    
+    <div class="full-width demo-box"><h3>Interactive — RANSAC line fitting</h3><div class="sub">Real feature matches are full of wrong pairs. Watch RANSAC find the line the good points agree on while least-squares can't.</div><div id="rns-wrap">
+  <div id="rns-controls">
+    <button class="rns-btn" id="rns-run" type="button">Run RANSAC</button>
+    <button class="rns-btn" id="rns-step" type="button">Sample once</button>
+    <button class="rns-btn" id="rns-new" type="button">New points</button>
+    <label class="rns-toggle"><input type="checkbox" id="rns-ls"> Show least-squares fit</label>
+    <span class="rns-thr">Inlier band <input type="range" id="rns-thrR" min="6" max="34" value="16" step="2"><span id="rns-thrV">16</span> px</span>
+  </div>
+  <svg id="rns-svg" viewBox="0 0 480 300" role="img" aria-label="RANSAC line-fitting playground"></svg>
+  <p id="rns-readout" aria-live="polite"></p>
+  <p class="rns-note">RANSAC keeps picking two points at random, drawing the line through them, and counting how many points land inside the band around it; the line with the most agreement wins. The scattered outliers never agree, so it settles on the real line. Least-squares (toggle it on) tries to please every point at once, so a handful of outliers pull it off course. That robustness is why RANSAC is the standard way to fit a homography to noisy feature matches.</p>
+</div></div>
     <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. Why is RANSAC used when estimating a homography from matched features?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It speeds up SIFT descriptor computation</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">It robustly fits the model despite many outlier (wrong) matches</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It converts the image to the frequency domain</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It guarantees the globally optimal least-squares fit</button></div><div class="quiz-exp">✅ Feature matches contain many wrong correspondences; RANSAC repeatedly fits from minimal samples and keeps the hypothesis with the most inliers, ignoring outliers.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Which property makes SIFT descriptors useful across different photos of the same scene?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They are invariant to scale and rotation</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They require a GPU to compute</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They only work on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They encode absolute pixel colors</button></div><div class="quiz-exp">✅ SIFT detects keypoints across scales and assigns a dominant orientation, making its descriptors robust to scale and in-plane rotation.</div></div><div class="quiz-q"><div class="quiz-qtext">3. A homography can exactly map between two images when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The camera never moves</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">The scene is planar or the camera only rotates about its center</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The images are grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The focal length is unknown</button></div><div class="quiz-exp">✅ A homography is a planar projective transform, valid for planar scenes or pure-rotation camera motion; general 3D scenes with translation need epipolar geometry.</div></div></div></details></div>
     <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>Image Panorama Stitcher</h3><p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p><div class="milestone-meta"><span class="mm">Dataset: Your own phone photos</span><span class="mm">Goal: Seamless 3-image panorama</span><span class="mm">8–12 hours</span></div></div>
   </div>
 </section><div class="connector"></div><section class="phase p3" id="phase-3">
   <div class="phase-header">
     <div class="phase-num">03</div>
-    <div class="phase-meta"><h2>Multi-View Geometry &amp; 3D Vision</h2><p>From two flat images to metric 3D — the geometry deep learning skips over</p><span class="phase-tag">4–5 weeks</span></div>
+    <div class="phase-meta"><h2>Multi-View Geometry &amp; 3D Vision</h2><p>How two flat photos become real 3D, the part deep learning tends to skip</p><span class="phase-tag">4–5 weeks</span></div>
     <div class="phase-pp"><div class="phase-pp-text" id="pp3-txt">0/10</div>
       <div class="pp-bar"><div class="pp-fill" id="pp3-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
     <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">Epipolar geometry &amp; the epipolar constraint (x′ᵀ F x = 0)</label></li><li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Fundamental matrix F &amp; the normalized 8-point algorithm (uncalibrated)</label></li><li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">Essential matrix E &amp; decomposition into R, t (calibrated)</label></li><li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Triangulation — back-projecting matches to 3D points</label></li><li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">PnP — camera pose from 2D–3D correspondences</label></li><li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Stereo rectification — aligning epipolar lines to scanlines</label></li><li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">Disparity matching &amp; depth from a stereo pair</label></li><li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Dense depth maps &amp; point-cloud reconstruction</label></li><li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Structure-from-Motion (incremental SfM)</label></li><li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">Bundle adjustment &amp; intro to visual odometry / SLAM</label></li></ul></div>
-    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms &amp; Applications (2nd ed.) — Ch. 11 SfM, Ch. 12 Depth &amp; Stereo</h4><div class="resource-why">"The free, canonical text tying epipolar geometry, triangulation, stereo, and bundle adjustment together."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry and the fundamental/essential matrices — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">6h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry &amp; Computer Vision Lectures (Univ. Bonn)</h4><div class="resource-why">"The clearest lecture series on the fundamental/essential matrices, the 8-point algorithm, and bundle adjustment."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRsi5vzy9PiQpNWHjq-bKN1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines)</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code — turns the epipolar constraint into a picture you can see."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">6h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry &amp; Computer Vision Lectures (Univ. Bonn)</h4><div class="resource-why">"The clearest lecture series on the fundamental/essential matrices, the 8-point algorithm, and bundle adjustment."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRsi5vzy9PiQpNWHjq-bKN1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines)</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code — turns the epipolar constraint into a picture you can see."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms &amp; Applications (2nd ed.) — Ch. 11 SfM, Ch. 12 Depth &amp; Stereo</h4><div class="resource-why">"The free, canonical text tying epipolar geometry, triangulation, stereo, and bundle adjustment together."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry and the fundamental/essential matrices — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div></div>
     <div class="full-width demo-box"><h3>Interactive — Epipolar Geometry Explorer</h3><div class="sub">Drag the point in the LEFT view. Its match in the RIGHT view must lie on the drawn epipolar line.</div><div id="epi-wrap">
   <div id="epi-panels">
     <div class="epi-panel-col">
@@ -558,13 +572,13 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 </section><div class="connector"></div><section class="phase p4" id="phase-4">
   <div class="phase-header">
     <div class="phase-num">04</div>
-    <div class="phase-meta"><h2>The Deep Learning Era</h2><p>CNNs, detection, segmentation — the industry-standard stack</p><span class="phase-tag">6–8 weeks</span></div>
+    <div class="phase-meta"><h2>The Deep Learning Era</h2><p>CNNs, detection, and segmentation, the everyday working stack</p><span class="phase-tag">6–8 weeks</span></div>
     <div class="phase-pp"><div class="phase-pp-text" id="pp4-txt">0/10</div>
       <div class="pp-bar"><div class="pp-fill" id="pp4-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
     <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">CNN: Convolution, Pooling, Padding, Stride</label></li><li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Backpropagation &amp; Gradient Descent variants</label></li><li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">LeNet → AlexNet → VGG → ResNet evolution</label></li><li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">Transfer Learning &amp; Fine-Tuning</label></li><li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">Data Augmentation strategies</label></li><li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">Object Detection: Faster R-CNN &amp; SSD</label></li><li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">YOLO family (v3 → v8) — architecture &amp; training</label></li><li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Semantic Segmentation: FCN, DeepLab</label></li><li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">Instance Segmentation: U-Net, Mask R-CNN</label></li><li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">mAP, IoU, Precision-Recall for CV evaluation</label></li></ul></div>
-    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">30h</span><span class="badge b-course">Course</span></div><h4>CS231n — Convolutional Neural Networks (Stanford)</h4><div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div><a class="resource-link" href="https://cs231n.github.io" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4><div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div><a class="resource-link" href="https://docs.ultralytics.com" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">1.5h</span><span class="badge b-paper">Paper</span></div><h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4><div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div></div></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4><div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div><a class="resource-link" href="https://docs.ultralytics.com" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">30h</span><span class="badge b-course">Course</span></div><h4>CS231n — Convolutional Neural Networks (Stanford)</h4><div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div><a class="resource-link" href="https://cs231n.github.io" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">1.5h</span><span class="badge b-paper">Paper</span></div><h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4><div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div></div></div>
     <div class="full-width demo-box"><h3>Interactive — IoU &amp; Non-Max Suppression Playground</h3><div class="sub">Drag two boxes to feel IoU, then tune the NMS threshold to watch duplicate detections get suppressed.</div><div class="iou-wrap">
 
   <!-- ===== PART A : IoU explorer ===== -->
@@ -631,13 +645,13 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 </section><div class="connector"></div><section class="phase p5" id="phase-5">
   <div class="phase-header">
     <div class="phase-num">05</div>
-    <div class="phase-meta"><h2>Modern Frontiers</h2><p>Vision Transformers, generative models, and edge deployment</p><span class="phase-tag">5–7 weeks</span></div>
+    <div class="phase-meta"><h2>Modern Frontiers</h2><p>Transformers, generative models, and getting it onto real devices</p><span class="phase-tag">5–7 weeks</span></div>
     <div class="phase-pp"><div class="phase-pp-text" id="pp5-txt">0/10</div>
       <div class="pp-bar"><div class="pp-fill" id="pp5-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
     <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p5t1" onchange="save()"><label for="p5t1">Self-Attention mechanism — from scratch</label></li><li><input type="checkbox" id="p5t2" onchange="save()"><label for="p5t2">Vision Transformer (ViT) — patch embeddings</label></li><li><input type="checkbox" id="p5t3" onchange="save()"><label for="p5t3">CLIP — contrastive language-image pre-training</label></li><li><input type="checkbox" id="p5t4" onchange="save()"><label for="p5t4">SAM — Segment Anything Model</label></li><li><input type="checkbox" id="p5t5" onchange="save()"><label for="p5t5">NeRF — Neural Radiance Fields</label></li><li><input type="checkbox" id="p5t6" onchange="save()"><label for="p5t6">3D Gaussian Splatting — real-time radiance fields</label></li><li><input type="checkbox" id="p5t7" onchange="save()"><label for="p5t7">Diffusion Models — DDPM, Stable Diffusion</label></li><li><input type="checkbox" id="p5t8" onchange="save()"><label for="p5t8">Model Quantization: INT8, FP16</label></li><li><input type="checkbox" id="p5t9" onchange="save()"><label for="p5t9">TFLite &amp; ONNX export + runtime</label></li><li><input type="checkbox" id="p5t10" onchange="save()"><label for="p5t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li></ul></div>
-    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4><div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div><a class="resource-link" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4><div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div><a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4><div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div><a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4><div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div><a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4><div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div><a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4><div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div><a class="resource-link" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read paper →</a></div></div>
     <div class="full-width demo-box"><h3>Interactive — Attention vs. Convolution Receptive Field</h3><div class="sub">Hover or click a query cell, then toggle the mode to compare a fixed local kernel against global self-attention.</div><div class="full-width demo-box" id="attn-box" data-mode="attn">
   <div class="attn-controls">
     <div class="attn-modebtns" id="attn-modebtns" role="group" aria-label="Receptive field mode">
@@ -676,7 +690,7 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 <section class="extra-section">
         <div class="extra-header orange">
             <h2>Edge AI Deployment Track</h2>
-            <p>From trained model to hardware in 5 steps — end-to-end path no other CV roadmap covers</p>
+            <p>From trained model to hardware in 5 steps, end to end</p>
         </div>
         <div class="extra-body">
             <div class="pipeline">
@@ -715,13 +729,13 @@ html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
 
 <section class="extra-section" id="library">
   <div class="extra-header purple"><h2>Free Resource Library</h2>
-    <p>25 hand-picked, 100% free resources — search or filter by phase</p></div>
+    <p>46 free resources you can search, or filter by phase</p></div>
   <div class="extra-body">
     <div class="filter-bar">
       <input class="filter-input" id="libSearch" type="search" placeholder="Search resources… (e.g. epipolar, YOLO, diffusion)" aria-label="Search resources">
       <div class="chips" id="libChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="1">1 · Foundations</span><span class="chip" data-key="2">2 · Classical CV</span><span class="chip" data-key="3">3 · Geometry & 3D</span><span class="chip" data-key="4">4 · Deep Learning</span><span class="chip" data-key="5">5 · Frontiers</span></div>
     </div>
-    <div class="lib-grid"><div class="resource-card lib-item" data-phase="1" data-text="khan academy — multivariable calculus: partial derivatives &amp; the gradient free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">4h</span><span class="badge b-course">Course</span></div><h4>Khan Academy — Multivariable Calculus: Partial Derivatives &amp; The Gradient</h4><div class="resource-why">"Free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."</div><a class="resource-link" href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="setosa — image kernels explained visually drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of numpy."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-interactive">Interactive</span></div><h4>Setosa — Image Kernels Explained Visually</h4><div class="resource-why">"Drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of NumPy."</div><a class="resource-link" href="https://setosa.io/ev/image-kernels/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="1" data-text="computerphile — how blurs &amp; filters work / convolution dr mike pound walks through spatial filtering on real images, giving intuition for the gaussian/sobel kernels you&#x27;ll implement in the milestone project."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-video">Video</span></div><h4>Computerphile — How Blurs &amp; Filters Work / Convolution</h4><div class="resource-why">"Dr Mike Pound walks through spatial filtering on real images, giving intuition for the Gaussian/Sobel kernels you'll implement in the milestone project."</div><a class="resource-link" href="https://www.youtube.com/watch?v=C_zFhWdM4ic" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="szeliski — computer vision: algorithms and applications (2nd ed.), ch. 3 image processing author-hosted free pdf; ch. 3 is the modern, rigorous companion to gonzalez &amp; woods covering filtering, pyramids, and the fourier domain."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">5h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms and Applications (2nd ed.), Ch. 3 Image Processing</h4><div class="resource-why">"Author-hosted free PDF; Ch. 3 is the modern, rigorous companion to Gonzalez &amp; Woods covering filtering, pyramids, and the Fourier domain."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="first principles of computer vision — detectors &amp; descriptors monographs (nayar, columbia) free sift-detector monograph (pdf) plus the companion lecture videos for harris and hog — re-derive the feature math at your own pace."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>First Principles of Computer Vision — Detectors &amp; Descriptors Monographs (Nayar, Columbia)</h4><div class="resource-why">"Free SIFT-detector monograph (PDF) plus the companion lecture videos for Harris and HOG — re-derive the feature math at your own pace."</div><a class="resource-link" href="https://fpcv.cs.columbia.edu/Monographs" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="computerphile — canny edge detector (mike pound) the clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing canny."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.3h</span><span class="badge b-video">Video</span></div><h4>Computerphile — Canny Edge Detector (Mike Pound)</h4><div class="resource-why">"The clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing Canny."</div><a class="resource-link" href="https://www.youtube.com/watch?v=sRFM5IEqR2w" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="szeliski cv 2nd ed., ch. 7 — feature detection &amp; matching free pdf chapter unifying harris, sift, orb, ransac and feature matching with the geometry you&#x27;ll use in the panorama stitcher."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>Szeliski CV 2nd ed., Ch. 7 — Feature Detection &amp; Matching</h4><div class="resource-why">"Free PDF chapter unifying Harris, SIFT, ORB, RANSAC and feature matching with the geometry you'll use in the panorama stitcher."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="opencv — optical flow (lucas-kanade &amp; dense) official tutorial working calcopticalflowpyrlk code with the math behind it — the canonical reference for the optical-flow item in the roadmap."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Optical Flow (Lucas-Kanade &amp; Dense) Official Tutorial</h4><div class="resource-why">"Working calcOpticalFlowPyrLK code with the math behind it — the canonical reference for the optical-flow item in the roadmap."</div><a class="resource-link" href="https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="hartley &amp; zisserman — multiple view geometry in computer vision (2nd ed.) the definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the internet archive."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="cyrill stachniss — photogrammetry i &amp; ii (uni bonn, full lecture playlist) university-grade derivations of camera models, epipolar geometry, bundle adjustment, and sfm from a photogrammetry expert, all free on youtube."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">20h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry I &amp; II (Uni Bonn, full lecture playlist)</h4><div class="resource-why">"University-grade derivations of camera models, epipolar geometry, bundle adjustment, and SfM from a photogrammetry expert, all free on YouTube."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRYjqjdZxTEQPZuFHQa7O7Y" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — epipolar geometry (fundamental matrix &amp; epilines) official tutorial runnable findfundamentalmat + computecorrespondepilines code that turns the epipolar theory into a visualizable result."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines) Official Tutorial</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code that turns the epipolar theory into a visualizable result."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — depth map from stereo images official tutorial goes from rectified pairs to a disparity/depth map with stereobm — the practical follow-on to epipolar geometry for 3d reconstruction."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Depth Map from Stereo Images Official Tutorial</h4><div class="resource-why">"Goes from rectified pairs to a disparity/depth map with StereoBM — the practical follow-on to epipolar geometry for 3D reconstruction."</div><a class="resource-link" href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="colmap — structure-from-motion official tutorial the de-facto open-source sfm/mvs pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>COLMAP — Structure-from-Motion Official Tutorial</h4><div class="resource-why">"The de-facto open-source SfM/MVS pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."</div><a class="resource-link" href="https://colmap.github.io/tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="orb-slam2 — official open-source implementation (raulmur) real-time monocular/stereo/rgb-d slam with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">4h</span><span class="badge b-repo">Repo</span></div><h4>ORB-SLAM2 — Official Open-Source Implementation (raulmur)</h4><div class="resource-why">"Real-time monocular/stereo/RGB-D SLAM with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."</div><a class="resource-link" href="https://github.com/raulmur/ORB_SLAM2" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="4" data-text="andrej karpathy — neural networks: zero to hero build autograd and backprop from scratch in code so the cnn training loop is never a black box — the best free &#x27;why it works&#x27; companion to cs231n."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">12h</span><span class="badge b-course">Course</span></div><h4>Andrej Karpathy — Neural Networks: Zero to Hero</h4><div class="resource-why">"Build autograd and backprop from scratch in code so the CNN training loop is never a black box — the best free 'why it works' companion to CS231n."</div><a class="resource-link" href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="fast.ai — practical deep learning for coders top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">14h</span><span class="badge b-course">Course</span></div><h4>fast.ai — Practical Deep Learning for Coders</h4><div class="resource-why">"Top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."</div><a class="resource-link" href="https://course.fast.ai/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="pytorch — transfer learning for computer vision official tutorial canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on resnet — the exact pattern for the custom-detector milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>PyTorch — Transfer Learning for Computer Vision Official Tutorial</h4><div class="resource-why">"Canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on ResNet — the exact pattern for the custom-detector milestone."</div><a class="resource-link" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="cnn explainer — interactive visualization (georgia tech polo club) click through every conv/pool/relu activation of a live cnn to see how an image becomes a class score — best intuition tool for the deep-learning phase."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1h</span><span class="badge b-interactive">Interactive</span></div><h4>CNN Explainer — Interactive Visualization (Georgia Tech Polo Club)</h4><div class="resource-why">"Click through every conv/pool/ReLU activation of a live CNN to see how an image becomes a class score — best intuition tool for the deep-learning phase."</div><a class="resource-link" href="https://poloclub.github.io/cnn-explainer/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="4" data-text="distill — feature visualization (olah, mordvintsev, schubert) shows what cnn filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Distill — Feature Visualization (Olah, Mordvintsev, Schubert)</h4><div class="resource-why">"Shows what CNN filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."</div><a class="resource-link" href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="hugging face — community computer vision course free, hands-on course spanning cnns, detection, and segmentation with transformers/datasets code you can run for the segmentation milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">15h</span><span class="badge b-course">Course</span></div><h4>Hugging Face — Community Computer Vision Course</h4><div class="resource-why">"Free, hands-on course spanning CNNs, detection, and segmentation with Transformers/Datasets code you can run for the segmentation milestone."</div><a class="resource-link" href="https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="openai — clip: connecting text and images (official blog) authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenAI — CLIP: Connecting Text and Images (Official Blog)</h4><div class="resource-why">"Authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."</div><a class="resource-link" href="https://openai.com/index/clip/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kirillov et al. (2023) — segment anything (sam) paper introduces promptable segmentation and the sa-1b data engine; understanding the mask decoder is key to using sam as a labeling/foundation tool."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Kirillov et al. (2023) — Segment Anything (SAM) Paper</h4><div class="resource-why">"Introduces promptable segmentation and the SA-1B data engine; understanding the mask decoder is key to using SAM as a labeling/foundation tool."</div><a class="resource-link" href="https://arxiv.org/abs/2304.02643" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="lilian weng — what are diffusion models? (lil&#x27;log) the clearest free derivation of ddpm forward/reverse processes and classifier-free guidance — the theory the hf diffusers tutorial assumes."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Lilian Weng — What Are Diffusion Models? (Lil'Log)</h4><div class="resource-why">"The clearest free derivation of DDPM forward/reverse processes and classifier-free guidance — the theory the HF Diffusers tutorial assumes."</div><a class="resource-link" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kerbl et al. (2023) — 3d gaussian splatting project page (inria graphdeco) the real-time successor to nerf; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-interactive">Interactive</span></div><h4>Kerbl et al. (2023) — 3D Gaussian Splatting Project Page (Inria GraphDeco)</h4><div class="resource-why">"The real-time successor to NeRF; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."</div><a class="resource-link" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="5" data-text="onnx runtime — quantize onnx models (official docs) complements the tflite guide with the onnx path: static vs. dynamic int8 quantization apis for the real-time edge-ai deployment milestone."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>ONNX Runtime — Quantize ONNX Models (Official Docs)</h4><div class="resource-why">"Complements the TFLite guide with the ONNX path: static vs. dynamic INT8 quantization APIs for the real-time edge-AI deployment milestone."</div><a class="resource-link" href="https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="lib-grid"><div class="resource-card lib-item" data-phase="1" data-text="khan academy — multivariable calculus: partial derivatives &amp; the gradient free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">4h</span><span class="badge b-course">Course</span></div><h4>Khan Academy — Multivariable Calculus: Partial Derivatives &amp; The Gradient</h4><div class="resource-why">"Free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."</div><a class="resource-link" href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="setosa — image kernels explained visually drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of numpy."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-interactive">Interactive</span></div><h4>Setosa — Image Kernels Explained Visually</h4><div class="resource-why">"Drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of NumPy."</div><a class="resource-link" href="https://setosa.io/ev/image-kernels/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="1" data-text="computerphile — how blurs &amp; filters work / convolution dr mike pound walks through spatial filtering on real images, giving intuition for the gaussian/sobel kernels you&#x27;ll implement in the milestone project."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-video">Video</span></div><h4>Computerphile — How Blurs &amp; Filters Work / Convolution</h4><div class="resource-why">"Dr Mike Pound walks through spatial filtering on real images, giving intuition for the Gaussian/Sobel kernels you'll implement in the milestone project."</div><a class="resource-link" href="https://www.youtube.com/watch?v=C_zFhWdM4ic" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="the scientist and engineer&#x27;s guide to digital signal processing (steven w. smith) — free online book the clearest free explanation of convolution, the dft/fft, and the frequency domain (with dedicated linear image-processing chapters), using analogies over heavy math to demystify why filtering works on pixels."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">20h</span><span class="badge b-book">Book</span></div><h4>The Scientist and Engineer's Guide to Digital Signal Processing (Steven W. Smith) — Free Online Book</h4><div class="resource-why">"The clearest free explanation of convolution, the DFT/FFT, and the frequency domain (with dedicated linear image-processing chapters), using analogies over heavy math to demystify why filtering works on pixels."</div><a class="resource-link" href="https://www.dspguide.com/pdfbook.htm" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="1" data-text="szeliski — computer vision: algorithms and applications (2nd ed.), ch. 3 image processing author-hosted free pdf; ch. 3 is the modern, rigorous companion to gonzalez &amp; woods covering filtering, pyramids, and the fourier domain."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">5h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms and Applications (2nd ed.), Ch. 3 Image Processing</h4><div class="resource-why">"Author-hosted free PDF; Ch. 3 is the modern, rigorous companion to Gonzalez &amp; Woods covering filtering, pyramids, and the Fourier domain."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="1" data-text="mathematics for machine learning (deisenroth, faisal, ong) — free pdf book the best single free book tying linear algebra, vector calculus/gradients, and probability together specifically for ml; the authors keep the full pdf free and frame every concept toward downstream learning algorithms."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">40h</span><span class="badge b-book">Book</span></div><h4>Mathematics for Machine Learning (Deisenroth, Faisal, Ong) — Free PDF Book</h4><div class="resource-why">"The best single free book tying linear algebra, vector calculus/gradients, and probability together specifically for ML; the authors keep the full PDF free and frame every concept toward downstream learning algorithms."</div><a class="resource-link" href="https://mml-book.github.io/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="1" data-text="harvard stat 110: probability (joe blitzstein) — lecture playlist blitzstein&#x27;s celebrated harvard course builds genuine probabilistic intuition (random variables, distributions, expectation, conditioning) that underpins generative models and uncertainty in vision — far deeper than a refresher."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">34h</span><span class="badge b-video">Video</span></div><h4>Harvard Stat 110: Probability (Joe Blitzstein) — Lecture Playlist</h4><div class="resource-why">"Blitzstein's celebrated Harvard course builds genuine probabilistic intuition (random variables, distributions, expectation, conditioning) that underpins generative models and uncertainty in vision — far deeper than a refresher."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PL2SOU6wwxB0uwwH80KTQ6ht66KWxbzTIo" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="nptel digital image processing (prof. p.k. biswas, iit kharagpur) — course page a complete, rigorous iit kharagpur video course on dip fundamentals (sampling/quantization, spatial filtering, convolution, and the 2d fourier/frequency domain), offering a lecture-driven complement to the textbook references already on the site."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">40h</span><span class="badge b-course">Course</span></div><h4>NPTEL Digital Image Processing (Prof. P.K. Biswas, IIT Kharagpur) — Course Page</h4><div class="resource-why">"A complete, rigorous IIT Kharagpur video course on DIP fundamentals (sampling/quantization, spatial filtering, convolution, and the 2D Fourier/frequency domain), offering a lecture-driven complement to the textbook references already on the site."</div><a class="resource-link" href="https://nptel.ac.in/courses/117105135" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="mit 18.06 linear algebra (gilbert strang) — ocw video lectures strang&#x27;s full 34-lecture mit course adds the rigorous, proof-backed linear algebra (column space, eigenvalues, svd, pseudoinverse) that 3blue1brown&#x27;s intuition-only series leaves out — the backbone of image transforms and pca."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-hard">Hard</span><span class="badge b-time">36h</span><span class="badge b-course">Course</span></div><h4>MIT 18.06 Linear Algebra (Gilbert Strang) — OCW Video Lectures</h4><div class="resource-why">"Strang's full 34-lecture MIT course adds the rigorous, proof-backed linear algebra (column space, eigenvalues, SVD, pseudoinverse) that 3Blue1Brown's intuition-only series leaves out — the backbone of image transforms and PCA."</div><a class="resource-link" href="https://ocw.mit.edu/courses/18-06-linear-algebra-spring-2010/video_galleries/video-lectures/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="2" data-text="computerphile — canny edge detector (mike pound) the clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing canny."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.3h</span><span class="badge b-video">Video</span></div><h4>Computerphile — Canny Edge Detector (Mike Pound)</h4><div class="resource-why">"The clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing Canny."</div><a class="resource-link" href="https://www.youtube.com/watch?v=sRFM5IEqR2w" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="ucf fundamentals of computer vision (mubarak shah) — lecture videos mubarak shah&#x27;s accessible ucf blackboard-style lecture series walks through filtering, edge detection, sift, corner detection and klt/mean-shift tracking with clear step-by-step derivations."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">24h</span><span class="badge b-video">Video</span></div><h4>UCF Fundamentals of Computer Vision (Mubarak Shah) — Lecture Videos</h4><div class="resource-why">"Mubarak Shah's accessible UCF blackboard-style lecture series walks through filtering, edge detection, SIFT, corner detection and KLT/mean-shift tracking with clear step-by-step derivations."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLmyoWnoyCKo8epWKGHAm4m_SyzoYhslk5" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="first principles of computer vision — detectors &amp; descriptors monographs (nayar, columbia) free sift-detector monograph (pdf) plus the companion lecture videos for harris and hog — re-derive the feature math at your own pace."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>First Principles of Computer Vision — Detectors &amp; Descriptors Monographs (Nayar, Columbia)</h4><div class="resource-why">"Free SIFT-detector monograph (PDF) plus the companion lecture videos for Harris and HOG — re-derive the feature math at your own pace."</div><a class="resource-link" href="https://fpcv.cs.columbia.edu/Monographs" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="szeliski cv 2nd ed., ch. 7 — feature detection &amp; matching free pdf chapter unifying harris, sift, orb, ransac and feature matching with the geometry you&#x27;ll use in the panorama stitcher."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>Szeliski CV 2nd ed., Ch. 7 — Feature Detection &amp; Matching</h4><div class="resource-why">"Free PDF chapter unifying Harris, SIFT, ORB, RANSAC and feature matching with the geometry you'll use in the panorama stitcher."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="opencv — optical flow (lucas-kanade &amp; dense) official tutorial working calcopticalflowpyrlk code with the math behind it — the canonical reference for the optical-flow item in the roadmap."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Optical Flow (Lucas-Kanade &amp; Dense) Official Tutorial</h4><div class="resource-why">"Working calcOpticalFlowPyrLK code with the math behind it — the canonical reference for the optical-flow item in the roadmap."</div><a class="resource-link" href="https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="2" data-text="carnegie mellon 16-385 computer vision (ioannis gkioulekas) — lecture slides gkioulekas&#x27;s cmu course offers a complete set of freely downloadable pdf/ppt slides mapping directly onto this phase: corner detection, feature descriptors and matching, image homographies, camera models, optical flow, and tracking."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">25h</span><span class="badge b-course">Course</span></div><h4>Carnegie Mellon 16-385 Computer Vision (Ioannis Gkioulekas) — Lecture Slides</h4><div class="resource-why">"Gkioulekas's CMU course offers a complete set of freely downloadable PDF/PPT slides mapping directly onto this phase: corner detection, feature descriptors and matching, image homographies, camera models, optical flow, and tracking."</div><a class="resource-link" href="https://www.cs.cmu.edu/~16385/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="2" data-text="stanford cs131: computer vision — foundations and applications (niebles, krishna, fei-fei li) stanford&#x27;s dedicated classical-cv course (distinct from the cs231n deep-learning notes already on the site) is built around edges/canny, harris corners, sift/hog, ransac, feature matching and bag of visual words, with public slides and notes."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">22h</span><span class="badge b-course">Course</span></div><h4>Stanford CS131: Computer Vision — Foundations and Applications (Niebles, Krishna, Fei-Fei Li)</h4><div class="resource-why">"Stanford's dedicated classical-CV course (distinct from the CS231n deep-learning notes already on the site) is built around edges/Canny, Harris corners, SIFT/HOG, RANSAC, feature matching and bag of visual words, with public slides and notes."</div><a class="resource-link" href="https://cs131.stanford.edu/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="2" data-text="stanford cs131 release assignments (stanfordvl) — hands-on notebooks mit-licensed jupyter assignments let you implement canny, harris corners, hog, ransac, panorama stitching, k-means and bag-of-words from scratch — the demanding practical companion to the cs131 lectures."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-hard">Hard</span><span class="badge b-time">18h</span><span class="badge b-repo">Repo</span></div><h4>Stanford CS131 Release Assignments (StanfordVL) — Hands-On Notebooks</h4><div class="resource-why">"MIT-licensed Jupyter assignments let you implement Canny, Harris corners, HOG, RANSAC, panorama stitching, k-means and bag-of-words from scratch — the demanding practical companion to the CS131 lectures."</div><a class="resource-link" href="https://github.com/StanfordVL/CS131_release" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — epipolar geometry (fundamental matrix &amp; epilines) official tutorial runnable findfundamentalmat + computecorrespondepilines code that turns the epipolar theory into a visualizable result."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines) Official Tutorial</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code that turns the epipolar theory into a visualizable result."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — depth map from stereo images official tutorial goes from rectified pairs to a disparity/depth map with stereobm — the practical follow-on to epipolar geometry for 3d reconstruction."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Depth Map from Stereo Images Official Tutorial</h4><div class="resource-why">"Goes from rectified pairs to a disparity/depth map with StereoBM — the practical follow-on to epipolar geometry for 3D reconstruction."</div><a class="resource-link" href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="colmap — structure-from-motion official tutorial the de-facto open-source sfm/mvs pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>COLMAP — Structure-from-Motion Official Tutorial</h4><div class="resource-why">"The de-facto open-source SfM/MVS pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."</div><a class="resource-link" href="https://colmap.github.io/tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="hartley &amp; zisserman — multiple view geometry in computer vision (2nd ed.) the definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the internet archive."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="cyrill stachniss — photogrammetry i &amp; ii (uni bonn, full lecture playlist) university-grade derivations of camera models, epipolar geometry, bundle adjustment, and sfm from a photogrammetry expert, all free on youtube."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">20h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry I &amp; II (Uni Bonn, full lecture playlist)</h4><div class="resource-why">"University-grade derivations of camera models, epipolar geometry, bundle adjustment, and SfM from a photogrammetry expert, all free on YouTube."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRYjqjdZxTEQPZuFHQa7O7Y" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="orb-slam2 — official open-source implementation (raulmur) real-time monocular/stereo/rgb-d slam with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">4h</span><span class="badge b-repo">Repo</span></div><h4>ORB-SLAM2 — Official Open-Source Implementation (raulmur)</h4><div class="resource-why">"Real-time monocular/stereo/RGB-D SLAM with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."</div><a class="resource-link" href="https://github.com/raulmur/ORB_SLAM2" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="3" data-text="tu munich — multiple view geometry (prof. daniel cremers) — lecture videos daniel cremers&#x27; definitive rigorous treatment derives so(3)/se(3) rigid motion, the 8-point algorithm, essential/fundamental matrices, triangulation, and bundle adjustment all from first principles."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">30h</span><span class="badge b-course">Course</span></div><h4>TU Munich — Multiple View Geometry (Prof. Daniel Cremers) — Lecture Videos</h4><div class="resource-why">"Daniel Cremers' definitive rigorous treatment derives SO(3)/SE(3) rigid motion, the 8-point algorithm, essential/fundamental matrices, triangulation, and bundle adjustment all from first principles."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLTBdjV_4f-EJn6udZ34tht9EVIW7lbeo4" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="14 lectures on visual slam: from theory to practice (gao xiang et al.) — free book + code this english slambook ships a freely downloadable pdf plus full c++ code, walking you hands-on through pnp, triangulation, g2o/ceres bundle adjustment, and a complete visual-odometry slam pipeline."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">25h</span><span class="badge b-book">Book</span></div><h4>14 Lectures on Visual SLAM: From Theory to Practice (Gao Xiang et al.) — Free Book + Code</h4><div class="resource-why">"This English slambook ships a freely downloadable PDF plus full C++ code, walking you hands-on through PnP, triangulation, g2o/Ceres bundle adjustment, and a complete visual-odometry SLAM pipeline."</div><a class="resource-link" href="https://github.com/gaoxiang12/slambook-en" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="university of bonn/freiburg — slam course 2013/14 (cyrill stachniss) — lecture videos stachniss teaches the probabilistic estimation backend (ekf-slam, fastslam, least-squares/graph-based slam) that the geometry and visual-odometry resources assume but never derive in depth."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">20h</span><span class="badge b-course">Course</span></div><h4>University of Bonn/Freiburg — SLAM Course 2013/14 (Cyrill Stachniss) — Lecture Videos</h4><div class="resource-why">"Stachniss teaches the probabilistic estimation backend (EKF-SLAM, FastSLAM, least-squares/graph-based SLAM) that the geometry and visual-odometry resources assume but never derive in depth."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGQrZ4O5QzbIHgl3b1JHimN_" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="pytorch — transfer learning for computer vision official tutorial canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on resnet — the exact pattern for the custom-detector milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>PyTorch — Transfer Learning for Computer Vision Official Tutorial</h4><div class="resource-why">"Canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on ResNet — the exact pattern for the custom-detector milestone."</div><a class="resource-link" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="cnn explainer — interactive visualization (georgia tech polo club) click through every conv/pool/relu activation of a live cnn to see how an image becomes a class score — best intuition tool for the deep-learning phase."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1h</span><span class="badge b-interactive">Interactive</span></div><h4>CNN Explainer — Interactive Visualization (Georgia Tech Polo Club)</h4><div class="resource-why">"Click through every conv/pool/ReLU activation of a live CNN to see how an image becomes a class score — best intuition tool for the deep-learning phase."</div><a class="resource-link" href="https://poloclub.github.io/cnn-explainer/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="4" data-text="mit 6.s191: introduction to deep learning (alexander &amp; ava amini) — course site + videos mit&#x27;s fast-paced intro with a dedicated deep computer vision lecture on cnns; all lectures, slides, and labs are open-sourced free and refreshed yearly, ideal as a quick on-ramp before the heavier courses."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">12h</span><span class="badge b-course">Course</span></div><h4>MIT 6.S191: Introduction to Deep Learning (Alexander &amp; Ava Amini) — Course Site + Videos</h4><div class="resource-why">"MIT's fast-paced intro with a dedicated Deep Computer Vision lecture on CNNs; all lectures, slides, and labs are open-sourced free and refreshed yearly, ideal as a quick on-ramp before the heavier courses."</div><a class="resource-link" href="https://introtodeeplearning.com/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="andrej karpathy — neural networks: zero to hero build autograd and backprop from scratch in code so the cnn training loop is never a black box — the best free &#x27;why it works&#x27; companion to cs231n."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">12h</span><span class="badge b-course">Course</span></div><h4>Andrej Karpathy — Neural Networks: Zero to Hero</h4><div class="resource-why">"Build autograd and backprop from scratch in code so the CNN training loop is never a black box — the best free 'why it works' companion to CS231n."</div><a class="resource-link" href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="fast.ai — practical deep learning for coders top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">14h</span><span class="badge b-course">Course</span></div><h4>fast.ai — Practical Deep Learning for Coders</h4><div class="resource-why">"Top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."</div><a class="resource-link" href="https://course.fast.ai/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="distill — feature visualization (olah, mordvintsev, schubert) shows what cnn filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Distill — Feature Visualization (Olah, Mordvintsev, Schubert)</h4><div class="resource-why">"Shows what CNN filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."</div><a class="resource-link" href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="hugging face — community computer vision course free, hands-on course spanning cnns, detection, and segmentation with transformers/datasets code you can run for the segmentation milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">15h</span><span class="badge b-course">Course</span></div><h4>Hugging Face — Community Computer Vision Course</h4><div class="resource-why">"Free, hands-on course spanning CNNs, detection, and segmentation with Transformers/Datasets code you can run for the segmentation milestone."</div><a class="resource-link" href="https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="university of michigan eecs 498-007 / 598-005: deep learning for computer vision (justin johnson) — full course justin johnson co-created cs231n and rebuilt it at michigan with refreshed pytorch assignments and free lecture videos, slides, and notes covering backprop, cnn architectures, detection, and segmentation."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">40h</span><span class="badge b-course">Course</span></div><h4>University of Michigan EECS 498-007 / 598-005: Deep Learning for Computer Vision (Justin Johnson) — Full Course</h4><div class="resource-why">"Justin Johnson co-created CS231n and rebuilt it at Michigan with refreshed PyTorch assignments and free lecture videos, slides, and notes covering backprop, CNN architectures, detection, and segmentation."</div><a class="resource-link" href="https://web.eecs.umich.edu/~justincj/teaching/eecs498/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="stanford cs231n: convolutional neural networks for visual recognition (spring 2017, fei-fei li, johnson, yeung) — lecture videos the legendary cs231n video lectures (the site lists only the written notes); 16 lectures walk through cnns, training, architectures, and detection/segmentation in fei-fei li&#x27;s own course."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">18h</span><span class="badge b-video">Video</span></div><h4>Stanford CS231n: Convolutional Neural Networks for Visual Recognition (Spring 2017, Fei-Fei Li, Johnson, Yeung) — Lecture Videos</h4><div class="resource-why">"The legendary CS231n video lectures (the site lists only the written notes); 16 lectures walk through CNNs, training, architectures, and detection/segmentation in Fei-Fei Li's own course."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PL3FW7Lu3i5JvHM8ljYj-zLfQRF3EO8sYv" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="4" data-text="nptel deep learning for computer vision (vineeth n balasubramanian, iit hyderabad) — full playlist a rigorous iit-hyderabad course that bridges classical cv into deep cnns (alexnet/vgg/inception/resnet), detection, and segmentation, with an accompanying free online book."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">35h</span><span class="badge b-course">Course</span></div><h4>NPTEL Deep Learning for Computer Vision (Vineeth N Balasubramanian, IIT Hyderabad) — Full Playlist</h4><div class="resource-why">"A rigorous IIT-Hyderabad course that bridges classical CV into deep CNNs (AlexNet/VGG/Inception/ResNet), detection, and segmentation, with an accompanying free online book."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLEAYkSg4uSQ0Q5Z1IYI-0g2cbD-2Rt-I6" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="deep residual learning for image recognition — resnet (he, zhang, ren, sun, 2015) the single most influential architecture paper of the deep learning era; the original resnet paper explains skip connections and why very deep networks finally became trainable."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-hard">Hard</span><span class="badge b-time">3h</span><span class="badge b-paper">Paper</span></div><h4>Deep Residual Learning for Image Recognition — ResNet (He, Zhang, Ren, Sun, 2015)</h4><div class="resource-why">"The single most influential architecture paper of the deep learning era; the original ResNet paper explains skip connections and why very deep networks finally became trainable."</div><a class="resource-link" href="https://arxiv.org/abs/1512.03385" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="openai — clip: connecting text and images (official blog) authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenAI — CLIP: Connecting Text and Images (Official Blog)</h4><div class="resource-why">"Authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."</div><a class="resource-link" href="https://openai.com/index/clip/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="onnx runtime — quantize onnx models (official docs) complements the tflite guide with the onnx path: static vs. dynamic int8 quantization apis for the real-time edge-ai deployment milestone."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>ONNX Runtime — Quantize ONNX Models (Official Docs)</h4><div class="resource-why">"Complements the TFLite guide with the ONNX path: static vs. dynamic INT8 quantization APIs for the real-time edge-AI deployment milestone."</div><a class="resource-link" href="https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="stanford cs25: transformers united (div garg, steven feng, chetanya rastogi et al.) — seminar lecture videos stanford&#x27;s flagship transformers seminar with guest lectures from field leaders (vaswani, karpathy, hinton) whose vision and multimodal talks cover self-attention, vit and clip-style frontiers."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">20h</span><span class="badge b-course">Course</span></div><h4>Stanford CS25: Transformers United (Div Garg, Steven Feng, Chetanya Rastogi et al.) — Seminar Lecture Videos</h4><div class="resource-why">"Stanford's flagship Transformers seminar with guest lectures from field leaders (Vaswani, Karpathy, Hinton) whose vision and multimodal talks cover self-attention, ViT and CLIP-style frontiers."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLoROMvodv4rNiJRchCzutFw5ItR_Z27CM" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="hugging face diffusion models course (jonathan whitaker, lewis tunstall) — hands-on notebooks unlike the diffusers library docs, this structured four-unit course has you build a diffusion model from scratch then fine-tune and condition stable diffusion in free colab notebooks."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">25h</span><span class="badge b-course">Course</span></div><h4>Hugging Face Diffusion Models Course (Jonathan Whitaker, Lewis Tunstall) — Hands-On Notebooks</h4><div class="resource-why">"Unlike the Diffusers library docs, this structured four-unit course has you build a diffusion model from scratch then fine-tune and condition Stable Diffusion in free Colab notebooks."</div><a class="resource-link" href="https://huggingface.co/learn/diffusion-course/unit0/1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kirillov et al. (2023) — segment anything (sam) paper introduces promptable segmentation and the sa-1b data engine; understanding the mask decoder is key to using sam as a labeling/foundation tool."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Kirillov et al. (2023) — Segment Anything (SAM) Paper</h4><div class="resource-why">"Introduces promptable segmentation and the SA-1B data engine; understanding the mask decoder is key to using SAM as a labeling/foundation tool."</div><a class="resource-link" href="https://arxiv.org/abs/2304.02643" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="lilian weng — what are diffusion models? (lil&#x27;log) the clearest free derivation of ddpm forward/reverse processes and classifier-free guidance — the theory the hf diffusers tutorial assumes."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Lilian Weng — What Are Diffusion Models? (Lil'Log)</h4><div class="resource-why">"The clearest free derivation of DDPM forward/reverse processes and classifier-free guidance — the theory the HF Diffusers tutorial assumes."</div><a class="resource-link" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kerbl et al. (2023) — 3d gaussian splatting project page (inria graphdeco) the real-time successor to nerf; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-interactive">Interactive</span></div><h4>Kerbl et al. (2023) — 3D Gaussian Splatting Project Page (Inria GraphDeco)</h4><div class="resource-why">"The real-time successor to NeRF; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."</div><a class="resource-link" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="5" data-text="stanford cs236: deep generative models (stefano ermon) — course site, notes &amp; lectures the rigorous probabilistic treatment of vaes, gans, normalizing flows, autoregressive and score-based diffusion models, with self-contained free notes plus the public 2023 lecture playlist."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">35h</span><span class="badge b-course">Course</span></div><h4>Stanford CS236: Deep Generative Models (Stefano Ermon) — Course Site, Notes &amp; Lectures</h4><div class="resource-why">"The rigorous probabilistic treatment of VAEs, GANs, normalizing flows, autoregressive and score-based diffusion models, with self-contained free notes plus the public 2023 lecture playlist."</div><a class="resource-link" href="https://deepgenerativemodels.github.io/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="mit 6.5940 efficientml.ai: tinyml and efficient deep learning computing (song han) — slides &amp; lecture videos the authoritative course on quantization, pruning, nas, distillation and on-device deployment (ending with running llama-2-7b on a laptop), taught by the researcher behind deep compression."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">30h</span><span class="badge b-course">Course</span></div><h4>MIT 6.5940 EfficientML.ai: TinyML and Efficient Deep Learning Computing (Song Han) — Slides &amp; Lecture Videos</h4><div class="resource-why">"The authoritative course on quantization, pruning, NAS, distillation and on-device deployment (ending with running Llama-2-7B on a laptop), taught by the researcher behind Deep Compression."</div><a class="resource-link" href="https://hanlab.mit.edu/courses/2024-fall-65940" target="_blank" rel="noopener">Open course →</a></div></div>
     <div class="no-results" id="libEmpty">No resources match your search.</div>
   </div>
 </section>
@@ -1653,19 +1667,93 @@ function initIouNms() {
   })();
 }
 
+function initRansac(){
+  var root=document.getElementById('rns-wrap'); if(!root||root.dataset.init) return; root.dataset.init='1';
+  var svg=document.getElementById('rns-svg');
+  var W=480,H=300,PAD=24,SVGNS='http://www.w3.org/2000/svg';
+  var seed=20240607;
+  function rnd(){ seed=(seed*1664525+1013904223)>>>0; return seed/4294967296; }
+  function gauss(){ return (rnd()+rnd()+rnd()+rnd()+rnd()+rnd()-3); }
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+  var pts=[], thr=16, showLS=false, best=null, sample=null, lastIters=0;
+
+  function genPoints(){
+    pts=[];
+    var m0=(rnd()*0.9-0.45), b0=H/2+(rnd()*70-35)-m0*W/2;
+    for(var i=0;i<32;i++){ var x=PAD+rnd()*(W-2*PAD); pts.push({x:x,y:clamp(m0*x+b0+gauss()*8,8,H-8)}); }
+    for(var j=0;j<14;j++){ pts.push({x:PAD+rnd()*(W-2*PAD), y:14+rnd()*(H-28)}); }
+  }
+  function fit2(p,q){ var a=q.y-p.y,b=-(q.x-p.x),c=-(a*p.x+b*p.y),n=Math.hypot(a,b)||1; return {a:a/n,b:b/n,c:c/n}; }
+  function dist(L,p){ return Math.abs(L.a*p.x+L.b*p.y+L.c); }
+  function ols(set){ var n=set.length; if(n<2) return null; var sx=0,sy=0,sxx=0,sxy=0,i,P;
+    for(i=0;i<n;i++){ P=set[i]; sx+=P.x; sy+=P.y; sxx+=P.x*P.x; sxy+=P.x*P.y; }
+    var den=n*sxx-sx*sx; if(Math.abs(den)<1e-6) return null;
+    var m=(n*sxy-sx*sy)/den; return {m:m,b:(sy-m*sx)/n}; }
+  function inliersOf(L){ var idx=[]; for(var i=0;i<pts.length;i++) if(dist(L,pts[i])<thr) idx.push(i); return idx; }
+  function setOf(arr){ var s={}; for(var i=0;i<arr.length;i++) s[arr[i]]=true; return s; }
+
+  function runRansac(){
+    var iters=60,bestIdx=[],bestK=0,k,i,j,L,idx;
+    for(k=0;k<iters;k++){
+      i=Math.floor(rnd()*pts.length); j=Math.floor(rnd()*pts.length); if(i===j) continue;
+      L=fit2(pts[i],pts[j]); idx=inliersOf(L);
+      if(idx.length>bestIdx.length){ bestIdx=idx; bestK=k+1; }
+    }
+    var inl=bestIdx.map(function(i){return pts[i];});
+    best={ line:(ols(inl)||{m:0,b:H/2}), set:setOf(bestIdx), count:bestIdx.length, atK:bestK };
+    sample=null; lastIters=iters; render(); readout(false);
+  }
+  function stepOnce(){
+    var i=Math.floor(rnd()*pts.length),j=Math.floor(rnd()*pts.length),g=0;
+    while(i===j && g++<12){ j=Math.floor(rnd()*pts.length); }
+    var L=fit2(pts[i],pts[j]); sample={ i:i,j:j,line:L,count:inliersOf(L).length }; render(); readout(true);
+  }
+
+  function el(tag,a){ var e=document.createElementNS(SVGNS,tag); for(var k in a) e.setAttribute(k,a[k]); return e; }
+  function segMB(m,b){ var x1=PAD-6,x2=W-PAD+6; return {x1:x1,y1:m*x1+b,x2:x2,y2:m*x2+b}; }
+  function segABC(L){ if(Math.abs(L.b)<1e-6){ var x=-L.c/L.a; return {x1:x,y1:0,x2:x,y2:H}; }
+    return segMB(-L.a/L.b,-L.c/L.b); }
+
+  function render(){
+    while(svg.firstChild) svg.removeChild(svg.firstChild);
+    var s;
+    if(showLS){ var ls=ols(pts); if(ls){ s=segMB(ls.m,ls.b); svg.appendChild(el('line',{x1:s.x1,y1:s.y1,x2:s.x2,y2:s.y2,'class':'rns-ls'})); } }
+    if(sample){ s=segABC(sample.line); svg.appendChild(el('line',{x1:s.x1,y1:s.y1,x2:s.x2,y2:s.y2,'class':'rns-sample'})); }
+    if(best){ s=segMB(best.line.m,best.line.b); svg.appendChild(el('line',{x1:s.x1,y1:s.y1,x2:s.x2,y2:s.y2,'class':'rns-best'})); }
+    for(var i=0;i<pts.length;i++){ var p=pts[i]; var c=(best&&best.set[i])?'rns-in':'rns-out';
+      svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:4,'class':c})); }
+    if(sample){ [sample.i,sample.j].forEach(function(k){ var p=pts[k]; svg.appendChild(el('circle',{cx:p.x,cy:p.y,r:6,'class':'rns-pick'})); }); }
+  }
+  function readout(isSample){
+    var r=document.getElementById('rns-readout');
+    if(isSample && sample){ r.textContent='This random 2-point sample agrees with '+sample.count+' of '+pts.length+' points.'; return; }
+    if(best){ r.textContent='RANSAC kept '+best.count+' inliers out of '+pts.length+' (the best of '+lastIters+' random 2-point samples).'; }
+  }
+
+  document.getElementById('rns-run').onclick=function(){ runRansac(); };
+  document.getElementById('rns-step').onclick=function(){ stepOnce(); };
+  document.getElementById('rns-new').onclick=function(){ genPoints(); runRansac(); };
+  document.getElementById('rns-ls').onchange=function(){ showLS=this.checked; render(); };
+  var thrR=document.getElementById('rns-thrR');
+  thrR.oninput=function(){ thr=+this.value; document.getElementById('rns-thrV').textContent=this.value; runRansac(); };
+
+  genPoints(); runRansac();
+}
+
+
 // ── THEME ────────────────────────────────────────────────
 function toggleTheme(){
   var h=document.documentElement;
   var n=h.getAttribute('data-theme')==='dark'?'light':'dark';
   h.setAttribute('data-theme',n);
   try{ localStorage.setItem('cv-theme',n); }catch(e){}
-  var b=document.getElementById('themeBtn'); if(b) b.textContent=n==='dark'?'☀️':'🌙';
+  var b=document.getElementById('themeBtn'); if(b) b.textContent=n==='dark'?'Light':'Dark';
 }
 function initTheme(){
   var h=document.documentElement;
   if(!h.getAttribute('data-theme')) h.setAttribute('data-theme','light');
   var b=document.getElementById('themeBtn');
-  if(b) b.textContent=h.getAttribute('data-theme')==='dark'?'☀️':'🌙';
+  if(b) b.textContent=h.getAttribute('data-theme')==='dark'?'Light':'Dark';
 }
 // ── QUIZ ─────────────────────────────────────────────────
 function quizPick(btn){
@@ -1717,6 +1805,7 @@ initFilters();
 try{ initEpipolar(); }catch(e){ console.error('epipolar demo:', e); }
 try{ initAttention(); }catch(e){ console.error('attention demo:', e); }
 try{ initIouNms(); }catch(e){ console.error('iou/nms demo:', e); }
+try{ initRansac(); }catch(e){ console.error('ransac demo:', e); }
 
 </script>
 </body>
