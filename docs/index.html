@@ -1,71 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Computer Vision Roadmap</title>
-    <style>
-        body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .container {
-            background: rgba(255,255,255,0.9);
-            border-radius: 20px;
-            box-shadow: 0 8px 24px rgba(79, 70, 229, 0.18);
-            padding: 40px 30px 30px 30px;
-            text-align: center;
-            max-width: 450px;
-        }
-        h1 {
-            color: #4f46e5;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #555;
-            margin-bottom: 30px;
-        }
-        .button {
-            display: inline-block;
-            background: linear-gradient(90deg, #4f46e5 0%, #7c3aed 100%);
-            color: #fff;
-            padding: 16px 38px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: background 0.2s, transform 0.2s;
-            box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
-        }
-        .button:hover {
-            background: linear-gradient(90deg, #7c3aed 0%, #4f46e5 100%);
-            transform: scale(1.04);
-        }
-        .footer {
-            margin-top: 35px;
-            font-size: 0.93em;
-            color: #888;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Computer Vision Roadmap</title>
+<meta name="description" content="A free, interactive computer-vision learning roadmap — from pixels to production across five phases.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F7F8; --surface:#FFFFFF; --border:#E4E6EA; --border-strong:#D5D8DE;
+    --text:#191B20; --text-soft:#565B66; --text-mute:#8A909C;
+    --accent:#4F46E5; --accent-text:#4338CA; --accent-soft:#EEF0FE; --ok:#15803D; --ok-soft:#E7F6EC;
+    --teal:#0F766E; --teal-soft:#E1F5F1; --amber:#B45309; --amber-soft:#FBF0DD;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --bg:#0D0E11; --surface:#15171C; --border:#262A33; --border-strong:#333845;
+      --text:#E9EBF0; --text-soft:#A7AEBC; --text-mute:#6C7480;
+      --accent:#8A8CF7; --accent-text:#A8AAFF; --accent-soft:#1E2138; --ok:#4ADE80; --ok-soft:#16301F;
+      --teal:#2DD4BF; --teal-soft:#0F2E2A; --amber:#FBBF24; --amber-soft:#2E2410;
+    }
+  }
+  *{ margin:0; padding:0; box-sizing:border-box; }
+  body{ font-family:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    background:var(--bg); color:var(--text); min-height:100vh; line-height:1.6;
+    display:flex; align-items:center; justify-content:center; padding:24px;
+    -webkit-font-smoothing:antialiased; }
+  .card{ background:var(--surface); border:1px solid var(--border); border-radius:16px;
+    padding:44px 40px 36px; max-width:480px; width:100%; text-align:center;
+    box-shadow:0 1px 2px rgba(16,24,40,.04), 0 1px 3px rgba(16,24,40,.04); }
+  .eyebrow{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em;
+    color:var(--text-mute); margin-bottom:14px; }
+  h1{ font-size:1.7rem; font-weight:600; letter-spacing:-0.02em; color:var(--text); margin-bottom:12px; }
+  p{ color:var(--text-soft); font-size:0.95rem; margin-bottom:28px; }
+  .button{ display:inline-block; background:var(--accent); color:#fff; padding:13px 30px;
+    font-size:0.95rem; font-weight:600; border-radius:10px; text-decoration:none; transition:opacity .15s, transform .15s; }
+  .button:hover{ opacity:0.92; transform:translateY(-1px); }
+  .tags{ display:flex; gap:8px; flex-wrap:wrap; justify-content:center; margin-top:30px; }
+  .tag{ background:var(--accent-soft); color:var(--accent-text); font-size:0.8rem; font-weight:600;
+    padding:5px 11px; border-radius:7px; }
+  .tag.free{ background:var(--ok-soft); color:var(--ok); }
+  .tag.teal{ background:var(--teal-soft); color:var(--teal); }
+  .tag.amber{ background:var(--amber-soft); color:var(--amber); }
+  .footer{ margin-top:32px; font-size:0.82rem; color:var(--text-mute); }
+  .footer a{ color:var(--accent-text); text-decoration:none; }
+</style>
 </head>
 <body>
-    <div class="container">
-        <h1>🔍 Computer Vision Roadmap</h1>
-        <p>
-            Welcome! Explore the interactive, beginner-friendly roadmap for learning Computer Vision.<br>
-            Click below to start your journey.
-        </p>
-        <a class="button" href="roadmap.html">🚀 Launch Interactive Roadmap</a>
-        <div class="footer">
-            &copy; 2025 <a href="https://github.com/sadhanasharma26" style="color:#4f46e5;text-decoration:none;">sadhanasharma26</a>
-        </div>
+  <div class="card">
+    <div class="eyebrow">Pixels → Production</div>
+    <h1>Computer Vision Roadmap</h1>
+    <p>A free, structured path through five phases — Foundations, Classical CV, Multi-View Geometry, Deep Learning, and Modern Frontiers — with interactive demos and curated free resources.</p>
+    <a class="button" href="roadmap.html">Launch the interactive roadmap →</a>
+    <div class="tags">
+      <span class="tag free">100% free</span>
+      <span class="tag teal">5 phases</span>
+      <span class="tag amber">4 interactive demos</span>
+      <span class="tag">no account</span>
     </div>
+    <div class="footer">
+      &copy; 2026 <a href="https://github.com/sadhanasharma26">sadhanasharma26</a> · MIT License
+    </div>
+  </div>
 </body>
 </html>

@@ -5,331 +5,313 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Computer Vision Roadmap — free, interactive, pixels to production</title>
 <meta name="description" content="A free, interactive computer-vision learning roadmap: foundations, classical CV, multi-view geometry, deep learning, and modern frontiers — with hands-on demos, quizzes, a glossary, and curated free resources.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <script>(function(){try{var t=localStorage.getItem('cv-theme');if(!t)t=(window.matchMedia&&matchMedia('(prefers-color-scheme:dark)').matches)?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
 <style>
-        :root {
-            --purple: #4f46e5;
-            --purple-mid: #7c3aed;
-            --purple-light: #a78bfa;
-            --cyan: #0891b2;
-            --red: #dc2626;
-            --amber: #d97706;
-            --green: #22c55e;
-            --gray-900: #111827;
-            --gray-800: #1f2937;
-            --gray-700: #374151;
-            --gray-600: #4b5563;
-            --gray-400: #9ca3af;
-            --gray-200: #e5e7eb;
-            --gray-100: #f3f4f6;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f0f0f8; color: var(--gray-800); line-height: 1.6; }
+:root{
+  --bg:#F6F7F8; --surface:#FFFFFF; --surface-2:#F1F2F4;
+  --border:#E4E6EA; --border-strong:#D5D8DE;
+  --text:#191B20; --text-soft:#565B66; --text-mute:#8A909C;
+  --accent:#4F46E5; --accent-text:#4338CA; --accent-soft:#EEF0FE;
+  --ok:#15803D; --ok-soft:#E7F6EC; --warn:#9A5B0B; --warn-soft:#FBF1E3; --bad:#B42318; --bad-soft:#FBEAE8;
+  --shadow:0 1px 2px rgba(16,24,40,.04),0 1px 3px rgba(16,24,40,.04);
+  --radius:14px; --radius-sm:9px;
+  /* legacy aliases so the embedded demos resolve to the new palette */
+  --purple:var(--accent); --purple-mid:var(--accent); --purple-light:var(--accent-soft);
+  --cyan:#0891b2; --red:var(--bad); --amber:#d97706; --green:var(--ok);
+  --gray-900:var(--text); --gray-800:var(--text); --gray-700:var(--text-soft);
+  --gray-600:var(--text-soft); --gray-500:var(--text-mute); --gray-400:var(--text-mute);
+  --gray-200:var(--border); --gray-100:var(--surface-2);
+}
+html[data-theme="dark"]{
+  --bg:#0D0E11; --surface:#15171C; --surface-2:#1B1E25;
+  --border:#262A33; --border-strong:#333845;
+  --text:#E9EBF0; --text-soft:#A7AEBC; --text-mute:#6C7480;
+  --accent:#8A8CF7; --accent-text:#A8AAFF; --accent-soft:#1E2138;
+  --ok:#4ADE80; --ok-soft:#16301F; --warn:#FBBF24; --warn-soft:#322512; --bad:#F87171; --bad-soft:#3A1A18;
+  --shadow:0 1px 2px rgba(0,0,0,.4);
+}
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ -webkit-text-size-adjust:100%; }
+body{ font-family:'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background:var(--bg); color:var(--text); line-height:1.6; font-size:15px;
+  -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility; }
+::selection{ background:var(--accent-soft); }
+a{ color:var(--accent-text); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+button, input, select, textarea{ font-family:inherit; font-size:inherit; color:inherit; }
+code{ font-family:'IBM Plex Sans', system-ui, monospace; font-variant-numeric:tabular-nums;
+  background:var(--surface-2); border:1px solid var(--border); border-radius:5px; padding:0 5px; font-size:0.85rem; }
+#scrollBar{ position:fixed; top:0; left:0; height:2px; background:var(--accent); z-index:1100; transition:width .15s; }
 
-        /* Scroll progress */
-        #scrollBar { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(to right, var(--purple), var(--purple-mid)); z-index: 1001; transition: width 0.15s; }
+header{ background:var(--surface); border-bottom:1px solid var(--border); padding:14px 24px 11px;
+  position:sticky; top:0; z-index:1000; }
+.header-inner{ max-width:1140px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; }
+.header-title{ font-size:1.02rem; font-weight:600; color:var(--text); letter-spacing:-0.01em; }
+.header-title span{ color:var(--text-mute); font-weight:400; font-size:0.82em; }
+.header-right{ display:flex; align-items:center; gap:12px; flex-wrap:wrap; }
+.progress-pill{ font-size:0.82rem; font-weight:500; color:var(--text-soft); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.hbar-wrap{ width:120px; height:5px; background:var(--surface-2); border-radius:3px; overflow:hidden; }
+.hbar-fill{ height:100%; background:var(--accent); border-radius:3px; transition:width .4s ease; }
+.btn-reset{ background:transparent; border:1px solid var(--border); color:var(--text-soft); padding:5px 11px;
+  border-radius:8px; cursor:pointer; font-size:0.8rem; transition:all .15s; }
+.btn-reset:hover{ background:var(--surface-2); color:var(--text); border-color:var(--border-strong); }
+.topnav{ max-width:1140px; margin:11px auto 0; display:flex; gap:4px; flex-wrap:wrap; }
+.topnav a{ font-size:0.8rem; font-weight:500; color:var(--text-mute); text-decoration:none;
+  padding:4px 9px; border-radius:7px; white-space:nowrap; transition:all .15s; }
+.topnav a:hover{ color:var(--text); background:var(--surface-2); text-decoration:none; }
 
-        /* Header */
-        header { background: linear-gradient(135deg, #4f46e5, #7c3aed); color: white; padding: 20px 32px; position: sticky; top: 0; z-index: 1000; box-shadow: 0 4px 20px rgba(79,70,229,0.35); }
-        .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
-        .header-title { font-size: 1.35em; font-weight: 700; }
-        .header-title span { opacity: 0.65; font-weight: 400; font-size: 0.8em; }
-        .header-right { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-        .progress-pill { background: rgba(255,255,255,0.2); border-radius: 20px; padding: 5px 14px; font-size: 0.88em; font-weight: 500; white-space: nowrap; }
-        .hbar-wrap { width: 140px; height: 7px; background: rgba(255,255,255,0.25); border-radius: 4px; overflow: hidden; }
-        .hbar-fill { height: 100%; background: #22c55e; border-radius: 4px; transition: width 0.4s ease; }
-        .btn-reset { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 5px 12px; border-radius: 7px; cursor: pointer; font-size: 0.82em; transition: background 0.2s; }
-        .btn-reset:hover { background: rgba(255,255,255,0.28); }
+main{ max-width:1140px; margin:0 auto; padding:34px 24px 10px; }
+.full-width{ grid-column:1 / -1; }
+.phase, .extra-section, .intro-card{ scroll-margin-top:140px; }
 
-        /* Layout */
-        main { max-width: 1200px; margin: 0 auto; padding: 40px 24px; }
+.intro-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  padding:30px 32px; margin-bottom:30px; box-shadow:var(--shadow); }
+.intro-card h1{ font-size:1.65rem; font-weight:600; letter-spacing:-0.02em; color:var(--text); margin-bottom:10px; }
+.intro-card p{ color:var(--text-soft); font-size:0.95rem; max-width:860px; }
+.intro-card p strong{ color:var(--text); font-weight:600; }
+.intro-tags{ display:flex; gap:8px; flex-wrap:wrap; margin-top:18px; }
+.intro-tag{ background:var(--surface-2); color:var(--text-soft); font-weight:500; font-size:0.8rem;
+  padding:5px 11px; border-radius:7px; border:1px solid var(--border); }
+.intro-tag.free{ background:var(--ok-soft); color:var(--ok); border-color:transparent; font-weight:600; }
 
-        /* Phase card */
-        .phase { background: white; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid var(--gray-200); overflow: hidden; }
-        .phase-header { padding: 24px 28px; display: flex; align-items: flex-start; gap: 18px; border-bottom: 2px solid var(--gray-100); }
-        .phase-num { width: 52px; height: 52px; border-radius: 13px; display: flex; align-items: center; justify-content: center; font-size: 1.3em; font-weight: 800; color: white; flex-shrink: 0; }
-        .p1 .phase-num { background: linear-gradient(135deg, #4f46e5, #7c3aed); }
-        .p2 .phase-num { background: linear-gradient(135deg, #0891b2, #0e7490); }
-        .p3 .phase-num { background: linear-gradient(135deg, #dc2626, #b91c1c); }
-        .p4 .phase-num { background: linear-gradient(135deg, #d97706, #b45309); }
-        .phase-meta { flex: 1; }
-        .phase-meta h2 { font-size: 1.4em; font-weight: 700; color: var(--gray-900); }
-        .phase-meta p { color: var(--gray-600); font-size: 0.92em; margin-top: 2px; }
-        .phase-tag { display: inline-block; margin-top: 8px; background: var(--gray-100); color: var(--gray-600); padding: 3px 10px; border-radius: 10px; font-size: 0.78em; font-weight: 600; }
-        .phase-pp { text-align: right; flex-shrink: 0; min-width: 80px; }
-        .phase-pp-text { font-size: 0.82em; color: var(--gray-500); margin-bottom: 4px; }
-        .pp-bar { width: 80px; height: 5px; background: var(--gray-200); border-radius: 3px; overflow: hidden; margin-left: auto; }
-        .pp-fill { height: 100%; border-radius: 3px; transition: width 0.4s; }
-        .p1 .pp-fill { background: var(--purple); }
-        .p2 .pp-fill { background: var(--cyan); }
-        .p3 .pp-fill { background: var(--red); }
-        .p4 .pp-fill { background: var(--amber); }
+.phase{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  margin-bottom:14px; box-shadow:var(--shadow); overflow:hidden; }
+.phase-header{ padding:22px 26px; display:flex; align-items:flex-start; gap:18px; border-bottom:1px solid var(--border); }
+.phase-num{ width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+  font-size:1.05rem; font-weight:600; background:var(--text); color:var(--surface); flex-shrink:0; letter-spacing:-0.02em; font-variant-numeric:tabular-nums; }
+.phase-meta{ flex:1; min-width:0; }
+.phase-meta h2{ font-size:1.22rem; font-weight:600; letter-spacing:-0.01em; color:var(--text); }
+.phase-meta p{ color:var(--text-soft); font-size:0.9rem; margin-top:2px; }
+.phase-tag{ display:inline-block; margin-top:9px; background:var(--surface-2); color:var(--text-mute);
+  padding:3px 9px; border-radius:6px; font-size:0.8rem; font-weight:600; border:1px solid var(--border); }
+.phase-pp{ text-align:right; flex-shrink:0; min-width:78px; }
+.phase-pp-text{ font-size:0.8rem; color:var(--text-mute); margin-bottom:5px; font-variant-numeric:tabular-nums; }
+.pp-bar{ width:78px; height:4px; background:var(--surface-2); border-radius:3px; overflow:hidden; margin-left:auto; }
+.pp-fill{ height:100%; background:var(--accent); border-radius:3px; transition:width .4s; }
+.phase-body{ padding:26px; display:grid; grid-template-columns:1fr 1fr; gap:26px; }
+@media (max-width:860px){ .phase-body{ grid-template-columns:1fr; } }
+.sec-title{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--text-mute); margin-bottom:13px; }
 
-        /* Phase body grid */
-        .phase-body { padding: 28px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-        @media (max-width: 860px) { .phase-body { grid-template-columns: 1fr; } }
-        .full-width { grid-column: 1 / -1; }
+.checklist{ list-style:none; }
+.checklist li{ display:flex; align-items:flex-start; gap:10px; padding:7px 9px; border-radius:8px; margin-bottom:1px; transition:background .12s; }
+.checklist li:hover{ background:var(--surface-2); }
+.checklist input[type="checkbox"]{ width:15px; height:15px; flex-shrink:0; margin-top:4px; accent-color:var(--accent); cursor:pointer; }
+.checklist label{ cursor:pointer; color:var(--text-soft); font-size:0.9rem; }
+.checklist input:checked + label{ text-decoration:line-through; color:var(--text-mute); }
 
-        /* Section titles */
-        .sec-title { font-size: 0.78em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--gray-600); margin-bottom: 12px; }
+.resource-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:14px 15px; margin-bottom:10px;
+  background:var(--surface); transition:border-color .15s, box-shadow .15s; }
+.resource-card:hover{ border-color:var(--border-strong); box-shadow:var(--shadow); }
+.card-badges{ display:flex; gap:5px; margin-bottom:8px; flex-wrap:wrap; }
+.badge{ padding:2px 8px; border-radius:6px; font-size:0.8rem; font-weight:600; background:var(--surface-2); color:var(--text-mute); }
+.b-easy{ background:var(--ok-soft); color:var(--ok); }
+.b-med{ background:var(--warn-soft); color:var(--warn); }
+.b-hard{ background:var(--bad-soft); color:var(--bad); }
+.b-interactive{ background:var(--accent-soft); color:var(--accent-text); }
+.resource-card h4{ font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:4px; }
+.resource-why{ font-size:0.82rem; color:var(--text-soft); font-style:italic; margin-bottom:7px; }
+.resource-link{ font-size:0.8rem; color:var(--accent-text); font-weight:600; }
 
-        /* Checklist */
-        .checklist { list-style: none; }
-        .checklist li { display: flex; align-items: flex-start; gap: 9px; padding: 7px 8px; border-radius: 7px; margin-bottom: 2px; transition: background 0.15s; }
-        .checklist li:hover { background: var(--gray-100); }
-        .checklist input[type="checkbox"] { width: 16px; height: 16px; flex-shrink: 0; margin-top: 3px; accent-color: var(--purple); cursor: pointer; }
-        .checklist label { cursor: pointer; color: var(--gray-700); font-size: 0.92em; }
-        .checklist input:checked + label { text-decoration: line-through; color: var(--gray-400); }
+.demo-box{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:22px; }
+.demo-box h3{ font-size:0.98rem; font-weight:600; color:var(--text); margin-bottom:5px; letter-spacing:-0.01em; }
+.demo-box .sub{ font-size:0.84rem; color:var(--text-soft); margin-bottom:16px; }
+.kernel-btns{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:16px; }
+.kbtn{ padding:5px 11px; border-radius:7px; border:1px solid var(--border); background:var(--surface); cursor:pointer;
+  font-size:0.8rem; font-weight:500; color:var(--text-soft); transition:all .15s; }
+.kbtn.active, .kbtn:hover{ border-color:var(--accent); color:var(--accent-text); background:var(--accent-soft); }
+.demo-row{ display:flex; gap:20px; align-items:flex-start; flex-wrap:wrap; }
+.demo-col h4{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--text-mute); margin-bottom:8px; }
+.pgrid{ display:inline-grid; gap:2px; background:var(--border); padding:2px; border-radius:7px; }
+.cell{ width:30px; height:30px; border-radius:3px; display:flex; align-items:center; justify-content:center; font-size:0; transition:background .1s; }
+.cell.clickable{ cursor:pointer; }
+.kgrid{ display:inline-grid; grid-template-columns:repeat(3,44px); gap:2px; background:var(--border); padding:2px; border-radius:7px; }
+.kcell{ width:44px; height:30px; background:var(--surface); border-radius:3px; display:flex; align-items:center; justify-content:center;
+  font-size:0.8rem; font-weight:600; color:var(--text); font-variant-numeric:tabular-nums; }
+.demo-op{ font-size:1.6rem; color:var(--text-mute); display:flex; align-items:center; padding-top:26px; }
+.kname{ margin-top:8px; font-size:0.8rem; font-weight:600; color:var(--accent-text); }
 
-        /* Resource cards */
-        .resource-card { border: 1px solid var(--gray-200); border-radius: 11px; padding: 14px; margin-bottom: 10px; transition: box-shadow 0.2s, border-color 0.2s; }
-        .resource-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.09); border-color: var(--purple-light); }
-        .card-badges { display: flex; gap: 5px; margin-bottom: 7px; flex-wrap: wrap; }
-        .badge { padding: 2px 7px; border-radius: 7px; font-size: 0.72em; font-weight: 700; }
-        .b-easy { background: #dcfce7; color: #15803d; }
-        .b-med  { background: #fef9c3; color: #854d0e; }
-        .b-hard { background: #fee2e2; color: #991b1b; }
-        .b-time { background: var(--gray-100); color: var(--gray-600); }
-        .b-video    { background: #ede9fe; color: #5b21b6; }
-        .b-paper    { background: #fce7f3; color: #9d174d; }
-        .b-repo     { background: #d1fae5; color: #065f46; }
-        .b-tutorial { background: #e0f2fe; color: #0369a1; }
-        .b-book     { background: #fff7ed; color: #c2410c; }
-        .b-course   { background: #ede9fe; color: #5b21b6; }
-        .resource-card h4 { font-size: 0.92em; font-weight: 600; color: var(--gray-800); margin-bottom: 4px; }
-        .resource-why { font-size: 0.82em; color: var(--gray-600); font-style: italic; margin-bottom: 6px; }
-        .resource-link { font-size: 0.82em; color: var(--purple); font-weight: 600; text-decoration: none; }
-        .resource-link:hover { text-decoration: underline; }
+.milestone{ background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent);
+  border-radius:var(--radius-sm); padding:20px 22px; }
+.milestone-label{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.08em; color:var(--accent-text); margin-bottom:6px; }
+.milestone h3{ font-size:1.05rem; font-weight:600; color:var(--text); margin-bottom:8px; }
+.milestone p{ color:var(--text-soft); font-size:0.88rem; margin-bottom:14px; }
+.milestone-meta{ display:flex; gap:18px; flex-wrap:wrap; }
+.mm{ font-size:0.8rem; color:var(--text-soft); font-weight:500; }
 
-        /* Milestone card */
-        .milestone { background: linear-gradient(135deg, #fffbeb, #fef3c7); border: 2px solid #f59e0b; border-radius: 14px; padding: 20px; }
-        .milestone-label { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #d97706; margin-bottom: 4px; }
-        .milestone h3 { font-size: 1.1em; font-weight: 700; color: #92400e; margin-bottom: 8px; }
-        .milestone p { color: #78350f; font-size: 0.9em; margin-bottom: 12px; }
-        .milestone-meta { display: flex; gap: 14px; flex-wrap: wrap; }
-        .mm { font-size: 0.82em; color: #92400e; font-weight: 600; }
+.connector{ display:flex; justify-content:center; height:22px; margin:-7px 0; position:relative; z-index:1; }
+.connector::before{ content:''; width:1px; background:var(--border-strong); height:100%; }
 
-        /* Convolution demo */
-        .demo-box { background: #f8f7ff; border: 2px solid #c4b5fd; border-radius: 14px; padding: 22px; }
-        .demo-box h3 { font-size: 1em; font-weight: 700; color: #5b21b6; margin-bottom: 6px; }
-        .demo-box .sub { font-size: 0.85em; color: #7c3aed; margin-bottom: 14px; }
-        .kernel-btns { display: flex; gap: 7px; flex-wrap: wrap; margin-bottom: 16px; }
-        .kbtn { padding: 5px 11px; border-radius: 7px; border: 2px solid var(--gray-200); background: white; cursor: pointer; font-size: 0.8em; font-weight: 600; color: var(--gray-700); transition: all 0.15s; }
-        .kbtn.active, .kbtn:hover { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
-        .demo-row { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
-        .demo-col h4 { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: 8px; }
-        .pgrid { display: inline-grid; gap: 2px; background: #c4b5fd; padding: 2px; border-radius: 6px; }
-        .cell { width: 30px; height: 30px; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0; transition: background 0.1s; }
-        .cell.clickable { cursor: pointer; }
-        .kgrid { display: inline-grid; grid-template-columns: repeat(3, 44px); gap: 2px; background: #c4b5fd; padding: 2px; border-radius: 6px; }
-        .kcell { width: 44px; height: 30px; background: white; border-radius: 3px; display: flex; align-items: center; justify-content: center; font-size: 0.72em; font-weight: 700; color: #5b21b6; }
-        .demo-op { font-size: 1.8em; color: #a78bfa; display: flex; align-items: center; padding-top: 26px; }
-        .kname { margin-top: 8px; font-size: 0.8em; font-weight: 700; color: #7c3aed; }
+.extra-section{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius);
+  margin-bottom:14px; box-shadow:var(--shadow); overflow:hidden; }
+.extra-header{ padding:20px 26px; border-bottom:1px solid var(--border); }
+.extra-header h2{ font-size:1.08rem; font-weight:600; letter-spacing:-0.01em; color:var(--text); display:flex; align-items:center; gap:9px; }
+.extra-header p{ font-size:0.86rem; margin-top:3px; color:var(--text-soft); }
+.extra-body{ padding:24px 26px; }
 
-        /* Phase connector */
-        .connector { display: flex; justify-content: center; height: 28px; margin: -14px 0; position: relative; z-index: 1; }
-        .connector::before { content: ''; width: 2px; background: linear-gradient(to bottom, #c4b5fd, #a78bfa); height: 100%; }
+.iq-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:13px; }
+.iq-card{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:15px; background:var(--surface); }
+.iq-cat{ font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.06em; color:var(--accent-text); margin-bottom:7px; }
+.iq-card h4{ font-size:0.9rem; font-weight:600; color:var(--text); margin-bottom:6px; }
+.iq-card p{ font-size:0.82rem; color:var(--text-soft); }
 
-        /* Unique sections */
-        .extra-section { background: white; border-radius: 20px; margin-bottom: 16px; box-shadow: 0 4px 24px rgba(0,0,0,0.07); border: 1px solid var(--gray-200); overflow: hidden; }
-        .extra-header { padding: 22px 28px; border-bottom: 2px solid var(--gray-100); }
-        .extra-header.green { background: linear-gradient(135deg, #f0fdf4, #dcfce7); }
-        .extra-header.orange { background: linear-gradient(135deg, #fff7ed, #fed7aa); }
-        .extra-header h2 { font-size: 1.2em; font-weight: 700; display: flex; align-items: center; gap: 9px; }
-        .extra-header.green h2 { color: #15803d; }
-        .extra-header.orange h2 { color: #c2410c; }
-        .extra-header p { font-size: 0.87em; margin-top: 3px; }
-        .extra-header.green p { color: #15803d; }
-        .extra-header.orange p { color: #c2410c; }
-        .extra-body { padding: 22px 28px; }
+.pipeline{ display:flex; gap:10px; align-items:stretch; flex-wrap:wrap; }
+.pipe-step{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 15px; flex:1; min-width:140px; }
+.pipe-step .sn{ font-size:0.8rem; font-weight:600; color:var(--text-mute); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:4px; }
+.pipe-step h4{ font-size:0.9rem; font-weight:600; color:var(--text); }
+.pipe-step p{ font-size:0.8rem; color:var(--text-soft); margin-top:3px; }
+.pipe-arrow{ font-size:1.2rem; color:var(--text-mute); align-self:center; flex-shrink:0; }
 
-        /* Interview grid */
-        .iq-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; }
-        .iq-card { border: 1px solid var(--gray-200); border-radius: 11px; padding: 14px; }
-        .iq-cat { font-size: 0.72em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--purple); margin-bottom: 6px; }
-        .iq-card h4 { font-size: 0.9em; font-weight: 600; color: var(--gray-800); margin-bottom: 5px; }
-        .iq-card p { font-size: 0.82em; color: var(--gray-600); }
-
-        /* Edge AI pipeline */
-        .pipeline { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
-        .pipe-step { background: white; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; flex: 1; min-width: 140px; text-align: center; }
-        .pipe-step .sn { font-size: 0.7em; font-weight: 700; color: var(--gray-400); text-transform: uppercase; margin-bottom: 3px; }
-        .pipe-step h4 { font-size: 0.9em; font-weight: 700; color: var(--gray-800); }
-        .pipe-step p { font-size: 0.78em; color: var(--gray-600); margin-top: 3px; }
-        .pipe-arrow { font-size: 1.4em; color: var(--gray-400); flex-shrink: 0; }
-
-        footer { text-align: center; padding: 36px 24px; color: var(--gray-400); font-size: 0.88em; }
-        footer a { color: var(--purple); text-decoration: none; }
-        footer a:hover { text-decoration: underline; }
-
-        @media (max-width: 600px) {
-            .phase-header { padding: 18px; }
-            .phase-body { padding: 18px; }
-            .extra-body { padding: 18px; }
-            main { padding: 20px 14px; }
-        }
-    
-/* ── theme variables & dark mode ───────────────────────── */
-:root{ --page-bg:#f0f0f8; }
-html[data-theme="dark"] body{ background:#0f1320; color:#e5e7eb; }
-html[data-theme="dark"] .phase, html[data-theme="dark"] .extra-section{ background:#1b2233; border-color:#2b3346; }
-html[data-theme="dark"] .phase-header{ border-bottom-color:#2b3346; }
-html[data-theme="dark"] .phase-meta h2{ color:#f3f4f6; }
-html[data-theme="dark"] .phase-meta p, html[data-theme="dark"] .phase-pp-text{ color:#9ca3af; }
-html[data-theme="dark"] .phase-tag{ background:#2b3346; color:#cbd5e1; }
-html[data-theme="dark"] .sec-title{ color:#9ca3af; }
-html[data-theme="dark"] .checklist label{ color:#cbd5e1; }
-html[data-theme="dark"] .checklist input:checked + label{ color:#6b7280; }
-html[data-theme="dark"] .checklist li:hover{ background:#222b3d; }
-html[data-theme="dark"] .resource-card{ background:#161c2b; border-color:#2b3346; }
-html[data-theme="dark"] .resource-card h4{ color:#e5e7eb; }
-html[data-theme="dark"] .resource-why{ color:#9ca3af; }
-html[data-theme="dark"] .iq-card{ background:#161c2b; border-color:#2b3346; }
-html[data-theme="dark"] .iq-card h4{ color:#e5e7eb; }
-html[data-theme="dark"] .iq-card p{ color:#9ca3af; }
-html[data-theme="dark"] .pp-bar{ background:#2b3346; }
-html[data-theme="dark"] .pipe-step{ background:#161c2b; border-color:#2b3346; }
-html[data-theme="dark"] .pipe-step h4{ color:#e5e7eb; }
-html[data-theme="dark"] .pipe-step p{ color:#9ca3af; }
-html[data-theme="dark"] footer{ color:#6b7280; }
-html[data-theme="dark"] .intro-card{ background:#1b2233; border-color:#2b3346; }
-html[data-theme="dark"] .intro-card h1{ color:#f3f4f6; }
-html[data-theme="dark"] .intro-card p{ color:#cbd5e1; }
-html[data-theme="dark"] .gloss-item{ background:#161c2b; border-color:#2b3346; }
-html[data-theme="dark"] .gloss-term{ color:#e5e7eb; }
-html[data-theme="dark"] .gloss-def{ color:#9ca3af; }
-html[data-theme="dark"] .faq-item{ background:#161c2b; border-color:#2b3346; }
-html[data-theme="dark"] .faq-item summary{ color:#e5e7eb; }
-html[data-theme="dark"] .faq-item p{ color:#9ca3af; }
-html[data-theme="dark"] .filter-input{ background:#161c2b; border-color:#2b3346; color:#e5e7eb; }
-html[data-theme="dark"] .chip{ background:#161c2b; border-color:#2b3346; color:#cbd5e1; }
-html[data-theme="dark"] .quiz-box, html[data-theme="dark"] .quiz-details{ background:#161c2b; border-color:#3b3066; }
-html[data-theme="dark"] .quiz-qtext{ color:#e5e7eb; }
-html[data-theme="dark"] .quiz-q{ border-color:#2b3346; }
-html[data-theme="dark"] .quiz-choice{ background:#1b2233; border-color:#2b3346; color:#cbd5e1; }
-html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
-
-/* ── phase 5 accent + interactive badge ─────────────────── */
-.p5 .phase-num{ background:linear-gradient(135deg,#16a34a,#15803d); }
-.p5 .pp-fill{ background:#16a34a; }
-.b-interactive{ background:#fae8ff; color:#86198f; }
-
-/* ── sticky section nav (inside header) ─────────────────── */
-.topnav{ max-width:1200px; margin:12px auto 0; padding:0; display:flex; gap:6px; flex-wrap:wrap; }
-.topnav a{ font-size:0.78em; font-weight:600; color:rgba(255,255,255,0.92); text-decoration:none;
-  padding:5px 10px; border-radius:8px; background:rgba(255,255,255,0.13); white-space:nowrap; transition:background .15s; }
-.topnav a:hover{ background:rgba(255,255,255,0.30); }
-.phase, .extra-section, .intro-card{ scroll-margin-top:150px; }
-
-/* ── intro card ─────────────────────────────────────────── */
-.intro-card{ background:#fff; border:1px solid var(--gray-200); border-radius:20px; padding:26px 30px;
-  margin-bottom:18px; box-shadow:0 4px 24px rgba(0,0,0,0.07); }
-.intro-card h1{ font-size:1.55em; color:var(--gray-900); margin-bottom:8px; }
-.intro-card p{ color:var(--gray-600); font-size:0.95em; max-width:880px; }
-.intro-tags{ display:flex; gap:9px; flex-wrap:wrap; margin-top:15px; }
-.intro-tag{ background:#ede9fe; color:#5b21b6; font-weight:700; font-size:0.76em; padding:5px 11px; border-radius:20px; }
-.intro-tag.free{ background:#dcfce7; color:#15803d; }
-
-/* ── extra-header colour variants ───────────────────────── */
-.extra-header.purple{ background:linear-gradient(135deg,#eef2ff,#e0e7ff); }
-.extra-header.purple h2, .extra-header.purple p{ color:#4338ca; }
-.extra-header.blue{ background:linear-gradient(135deg,#ecfeff,#cffafe); }
-.extra-header.blue h2, .extra-header.blue p{ color:#0e7490; }
-.extra-header.teal{ background:linear-gradient(135deg,#f0fdfa,#ccfbf1); }
-.extra-header.teal h2, .extra-header.teal p{ color:#0f766e; }
-
-/* ── filters ────────────────────────────────────────────── */
 .filter-bar{ display:flex; gap:12px; flex-wrap:wrap; align-items:center; margin-bottom:18px; }
-.filter-input{ flex:1; min-width:220px; padding:9px 14px; border:1px solid var(--gray-200); border-radius:10px;
-  font-size:0.9em; font-family:inherit; color:var(--gray-800); }
+.filter-input{ flex:1; min-width:220px; padding:9px 13px; border:1px solid var(--border); border-radius:var(--radius-sm);
+  font-size:0.88rem; background:var(--surface); color:var(--text); transition:border-color .15s, box-shadow .15s; }
+.filter-input:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); }
+.filter-input::placeholder{ color:var(--text-mute); }
 .chips{ display:flex; gap:6px; flex-wrap:wrap; }
-.chip{ padding:5px 11px; border-radius:20px; border:1px solid var(--gray-200); background:#fff; cursor:pointer;
-  font-size:0.78em; font-weight:600; color:var(--gray-600); }
-.chip.active{ background:var(--purple); border-color:var(--purple); color:#fff; }
-.lib-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:14px; }
-.no-results{ color:var(--gray-500); font-size:0.9em; padding:8px 2px; display:none; }
+.chip{ padding:5px 11px; border-radius:7px; border:1px solid var(--border); background:var(--surface); cursor:pointer;
+  font-size:0.8rem; font-weight:500; color:var(--text-soft); transition:all .12s; }
+.chip:hover{ border-color:var(--border-strong); color:var(--text); }
+.chip.active{ background:var(--text); border-color:var(--text); color:var(--surface); }
+.lib-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:13px; }
+.lib-grid .resource-card{ margin-bottom:0; }
+.no-results{ color:var(--text-mute); font-size:0.88rem; padding:8px 2px; display:none; }
 
-/* ── glossary ───────────────────────────────────────────── */
-.gloss-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:12px; }
-.gloss-item{ border:1px solid var(--gray-200); border-radius:11px; padding:13px 15px; background:#fff; }
-.gloss-term{ font-weight:700; color:var(--gray-800); font-size:0.92em; margin-bottom:5px; display:flex;
-  justify-content:space-between; gap:8px; align-items:flex-start; }
-.gloss-def{ color:var(--gray-600); font-size:0.84em; }
-.gloss-phase{ font-size:0.64em; font-weight:700; color:var(--purple); background:#ede9fe; border-radius:6px;
-  padding:2px 6px; white-space:nowrap; }
+.gloss-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(290px,1fr)); gap:11px; }
+.gloss-item{ border:1px solid var(--border); border-radius:var(--radius-sm); padding:13px 15px; background:var(--surface); }
+.gloss-term{ font-weight:600; color:var(--text); font-size:0.9rem; margin-bottom:5px; display:flex; justify-content:space-between; gap:8px; align-items:flex-start; }
+.gloss-def{ color:var(--text-soft); font-size:0.83rem; }
+.gloss-phase{ font-size:0.8rem; font-weight:600; color:var(--text-mute); background:var(--surface-2); border:1px solid var(--border); border-radius:5px; padding:1px 6px; white-space:nowrap; }
 
-/* ── faq ────────────────────────────────────────────────── */
-.faq-item{ border:1px solid var(--gray-200); border-radius:11px; margin-bottom:10px; background:#fff; overflow:hidden; }
-.faq-item summary{ padding:14px 16px; cursor:pointer; font-weight:600; color:var(--gray-800); font-size:0.92em; list-style:none; }
+.faq-item{ border:1px solid var(--border); border-radius:var(--radius-sm); margin-bottom:9px; background:var(--surface); overflow:hidden; }
+.faq-item summary{ padding:14px 16px; cursor:pointer; font-weight:600; color:var(--text); font-size:0.9rem; list-style:none; display:flex; gap:10px; }
 .faq-item summary::-webkit-details-marker{ display:none; }
-.faq-item summary::before{ content:'＋'; color:var(--purple); font-weight:700; margin-right:9px; }
-.faq-item[open] summary::before{ content:'－'; }
-.faq-item p{ padding:0 16px 15px; margin:0; color:var(--gray-600); font-size:0.88em; }
+.faq-item summary::before{ content:'+'; color:var(--text-mute); font-weight:600; }
+.faq-item[open] summary::before{ content:'\2013'; }
+.faq-item p{ padding:0 16px 15px 34px; margin:0; color:var(--text-soft); font-size:0.86rem; }
 
-/* ── quizzes ────────────────────────────────────────────── */
-.quiz-details{ border:1px dashed #c4b5fd; border-radius:14px; background:#faf9ff; }
-.quiz-details summary{ padding:14px 18px; cursor:pointer; font-weight:700; color:#5b21b6; list-style:none; }
+.quiz-box{ margin-top:4px; }
+.quiz-details{ border:1px solid var(--border); border-radius:var(--radius-sm); background:var(--surface-2); }
+.quiz-details summary{ padding:13px 17px; cursor:pointer; font-weight:600; color:var(--text); font-size:0.9rem; list-style:none; display:flex; gap:9px; }
 .quiz-details summary::-webkit-details-marker{ display:none; }
-.quiz-details summary::before{ content:'▸'; margin-right:9px; }
-.quiz-details[open] summary::before{ content:'▾'; }
-.quiz-body{ padding:2px 18px 18px; }
-.quiz-q{ padding:13px 0; border-top:1px solid var(--gray-200); }
+.quiz-details summary::before{ content:'\25B8'; color:var(--text-mute); }
+.quiz-details[open] summary::before{ content:'\25BE'; }
+.quiz-body{ padding:2px 17px 17px; }
+.quiz-q{ padding:14px 0; border-top:1px solid var(--border); }
 .quiz-q:first-child{ border-top:none; }
-.quiz-qtext{ font-weight:600; color:var(--gray-800); margin-bottom:9px; font-size:0.92em; }
+.quiz-qtext{ font-weight:600; color:var(--text); margin-bottom:10px; font-size:0.9rem; }
 .quiz-choices{ display:flex; flex-direction:column; gap:6px; }
-.quiz-choice{ text-align:left; padding:8px 12px; border:1px solid var(--gray-200); border-radius:8px; background:#fff;
-  cursor:pointer; font-size:0.87em; font-family:inherit; color:var(--gray-700); transition:all .12s; }
-.quiz-choice:hover:not(:disabled){ border-color:var(--purple-light); }
+.quiz-choice{ text-align:left; padding:8px 12px; border:1px solid var(--border); border-radius:8px; background:var(--surface);
+  cursor:pointer; font-size:0.86rem; color:var(--text-soft); transition:all .12s; }
+.quiz-choice:hover:not(:disabled){ border-color:var(--accent); color:var(--text); }
 .quiz-choice:disabled{ cursor:default; }
-.quiz-correct{ background:#dcfce7; border-color:#22c55e; color:#15803d; font-weight:600; }
-.quiz-wrong{ background:#fee2e2; border-color:#ef4444; color:#991b1b; }
-.quiz-exp{ display:none; margin-top:9px; font-size:0.84em; color:var(--gray-600); background:var(--gray-100);
-  border-radius:8px; padding:9px 11px; }
-#epi-wrap { font-family: 'Segoe UI', system-ui, sans-serif; color: var(--gray-900, #1f2937); }
+.quiz-correct{ background:var(--ok-soft); border-color:var(--ok); color:var(--ok); font-weight:600; }
+.quiz-wrong{ background:var(--bad-soft); border-color:var(--bad); color:var(--bad); }
+.quiz-exp{ display:none; margin-top:10px; font-size:0.83rem; color:var(--text-soft); background:var(--surface); border:1px solid var(--border); border-radius:8px; padding:10px 12px; }
+
+#epi-Fmat{ font-variant-numeric:tabular-nums; }
+
+footer{ text-align:center; padding:40px 24px; color:var(--text-mute); font-size:0.84rem; }
+footer a{ color:var(--accent-text); }
+
+/* per-phase colour identity (also drives nav dots for wayfinding) */
+.p1{ --pa:#4F46E5; --pa-soft:#EEF0FE; } .p2{ --pa:#0D9488; --pa-soft:#E1F5F1; }
+.p3{ --pa:#C2620E; --pa-soft:#FBF0DD; } .p4{ --pa:#E11D48; --pa-soft:#FCE7EC; }
+.p5{ --pa:#7C3AED; --pa-soft:#F1EAFD; }
+html[data-theme="dark"] .p1{ --pa:#8A8CF7; --pa-soft:#1E2138; }
+html[data-theme="dark"] .p2{ --pa:#2DD4BF; --pa-soft:#0F2E2A; }
+html[data-theme="dark"] .p3{ --pa:#FBBF24; --pa-soft:#2E2410; }
+html[data-theme="dark"] .p4{ --pa:#FB7185; --pa-soft:#3A1620; }
+html[data-theme="dark"] .p5{ --pa:#A78BFA; --pa-soft:#271A3A; }
+.phase{ border-top:3px solid var(--pa, var(--border-strong)); }
+.phase-num{ background:var(--pa, var(--text)); }
+.pp-fill{ background:var(--pa, var(--accent)); }
+.phase-tag{ background:var(--pa-soft); color:var(--pa); border-color:transparent; }
+.phase .checklist input[type="checkbox"]{ accent-color:var(--pa, var(--accent)); }
+.milestone{ border-left-color:var(--pa, var(--accent)); }
+.milestone-label{ color:var(--pa, var(--accent-text)); }
+.resource-link{ color:var(--pa, var(--accent-text)); }
+.kbtn.active, .kbtn:hover{ border-color:var(--pa, var(--accent)); color:var(--pa, var(--accent-text)); background:var(--pa-soft, var(--accent-soft)); }
+.kname{ color:var(--pa, var(--accent-text)); }
+
+/* nav phase dots */
+.topnav a.nav-ph{ display:inline-flex; align-items:center; gap:7px; }
+.topnav a.nav-ph::before{ content:''; width:7px; height:7px; border-radius:50%; background:var(--nd); flex-shrink:0; }
+.nav-p1{ --nd:#4F46E5; } .nav-p2{ --nd:#0D9488; } .nav-p3{ --nd:#C2620E; } .nav-p4{ --nd:#E11D48; } .nav-p5{ --nd:#7C3AED; }
+
+/* section heading accent bar */
+.extra-header h2::before{ content:''; width:4px; height:1.05em; border-radius:2px; background:var(--sa, var(--accent)); flex-shrink:0; }
+.extra-header.green{ --sa:#059669; } .extra-header.purple{ --sa:#4F46E5; } .extra-header.blue{ --sa:#0891B2; }
+.extra-header.teal{ --sa:#0D9488; } .extra-header.orange{ --sa:#C2620E; }
+
+/* livelier hero tags */
+.t-green{ background:#E7F6EC; color:#15803D; border-color:transparent; }
+.t-indigo{ background:#EEF0FE; color:#4338CA; border-color:transparent; }
+.t-teal{ background:#E1F5F1; color:#0F766E; border-color:transparent; }
+.t-amber{ background:#FBF0DD; color:#B45309; border-color:transparent; }
+.t-rose{ background:#FCE7EC; color:#BE123C; border-color:transparent; }
+.t-violet{ background:#F1EAFD; color:#6D28D9; border-color:transparent; }
+html[data-theme="dark"] .t-green{ background:#16301F; color:#4ADE80; }
+html[data-theme="dark"] .t-indigo{ background:#1E2138; color:#A8AAFF; }
+html[data-theme="dark"] .t-teal{ background:#0F2E2A; color:#2DD4BF; }
+html[data-theme="dark"] .t-amber{ background:#2E2410; color:#FBBF24; }
+html[data-theme="dark"] .t-rose{ background:#3A1620; color:#FB7185; }
+html[data-theme="dark"] .t-violet{ background:#271A3A; color:#A78BFA; }
+
+@media (max-width:600px){
+  header{ padding:12px 16px; }
+  main{ padding:22px 14px 6px; }
+  .phase-header{ padding:18px; }
+  .phase-body{ padding:18px; }
+  .extra-body{ padding:18px; }
+  .intro-card{ padding:22px; }
+}
+#epi-wrap { font-family: 'IBM Plex Sans', system-ui, sans-serif; color: var(--gray-900, var(--text)); }
 #epi-panels { display: flex; flex-wrap: wrap; gap: 16px; }
 .epi-panel-col { flex: 1 1 280px; min-width: 0; }
-.epi-panel-label { font-size: 0.8em; font-weight: 700; color: #5b21b6; margin-bottom: 6px; text-align: center; }
+.epi-panel-label { font-size: 0.8em; font-weight: 700; color: var(--text); margin-bottom: 6px; text-align: center; }
 .epi-svg { width: 100%; height: auto; aspect-ratio: 320 / 240; display: block;
-  background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 12px;
+  background: var(--surface); border: 1px solid var(--gray-200, var(--border)); border-radius: 12px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.07); touch-action: none; }
 #epi-svgL { cursor: crosshair; }
-.epi-bg { fill: #fbfaff; }
-.epi-grid line { stroke: #ece9fb; stroke-width: 1; }
-.epi-baseline { stroke: #c4b5fd; stroke-width: 1; stroke-dasharray: 4 4; }
+.epi-bg { fill: var(--surface-2); }
+.epi-grid line { stroke: var(--accent-soft); stroke-width: 1; }
+.epi-baseline { stroke: var(--border); stroke-width: 1; stroke-dasharray: 4 4; }
 .epi-line { stroke: #dc2626; stroke-width: 2.5; stroke-linecap: round; }
-.epi-query { fill: #4f46e5; stroke: #fff; stroke-width: 2.5; cursor: grab; }
+.epi-query { fill: var(--accent); stroke: var(--surface); stroke-width: 2.5; cursor: grab; }
 .epi-query:active { cursor: grabbing; }
-.epi-query:focus { outline: none; stroke: #7c3aed; stroke-width: 3.5; }
-.epi-epipole { fill: #d97706; stroke: #fff; stroke-width: 1.5; }
-.epi-scenedot { stroke: #fff; stroke-width: 1.5; }
-.epi-scenedot.epi-active-match { stroke: #1f2937; stroke-width: 2; }
+.epi-query:focus { outline: none; stroke: var(--accent); stroke-width: 3.5; }
+.epi-epipole { fill: #d97706; stroke: var(--surface); stroke-width: 1.5; }
+.epi-scenedot { stroke: var(--surface); stroke-width: 1.5; }
+.epi-scenedot.epi-active-match { stroke: var(--text); stroke-width: 2; }
 .epi-epi-arrow { fill: #d97706; }
-.epi-epi-txt { fill: #d97706; font: 700 11px 'Segoe UI', sans-serif; }
+.epi-epi-txt { fill: #d97706; font: 700 12px 'IBM Plex Sans', sans-serif; }
 #epi-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin: 16px 0 4px; }
-.epi-kbtn { padding: 5px 11px; border-radius: 7px; border: 2px solid var(--gray-200, #e5e7eb);
-  background: #fff; cursor: pointer; font-size: 0.8em; font-weight: 600; color: var(--gray-700, #374151);
+.epi-kbtn { padding: 5px 11px; border-radius: 7px; border: 2px solid var(--gray-200, var(--border));
+  background: var(--surface); cursor: pointer; font-size: 0.8em; font-weight: 600; color: var(--gray-700, var(--text-soft));
   transition: all 0.15s; }
-.epi-kbtn.epi-active, .epi-kbtn:hover { border-color: #7c3aed; color: #7c3aed; background: #ede9fe; }
-.epi-kbtn:focus-visible { outline: 2px solid #7c3aed; outline-offset: 2px; }
-#epi-readout { font-size: 0.8em; color: #7c3aed; font-weight: 600; margin-left: auto; }
-#epi-explain { margin-top: 14px; font-size: 0.88em; line-height: 1.6; color: var(--gray-700, #374151); }
+.epi-kbtn.epi-active, .epi-kbtn:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.epi-kbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+#epi-readout { font-size: 0.8em; color: var(--accent); font-weight: 600; margin-left: auto; }
+#epi-explain { margin-top: 14px; font-size: 0.88em; line-height: 1.6; color: var(--gray-700, var(--text-soft)); }
 #epi-explain p { margin: 0 0 10px; }
 .epi-em-line { color: #dc2626; font-weight: 700; }
 .epi-em-epi { color: #d97706; font-weight: 700; }
-#epi-explain code { background: #ede9fe; color: #5b21b6; padding: 1px 5px; border-radius: 5px;
-  font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace; font-size: 0.92em; }
-#epi-math { background: #fff; border: 1px solid var(--gray-200, #e5e7eb); border-radius: 12px;
+#epi-explain code { background: var(--accent-soft); color: var(--text); padding: 1px 5px; border-radius: 5px;
+  font-family: 'IBM Plex Sans', system-ui, monospace; font-size: 0.92em; }
+#epi-math { background: var(--surface); border: 1px solid var(--gray-200, var(--border)); border-radius: 12px;
   padding: 14px 16px; margin-top: 4px; }
 .epi-math-row { display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-start; }
 .epi-mat-block { flex: 1 1 240px; min-width: 0; }
-.epi-mat-cap { font-size: 0.8em; color: var(--gray-700, #374151); margin-bottom: 8px; }
-#epi-Fmat { border-collapse: collapse; font-family: ui-monospace, 'SFMono-Regular', Menlo, monospace;
+.epi-mat-cap { font-size: 0.8em; color: var(--gray-700, var(--text-soft)); margin-bottom: 8px; }
+#epi-Fmat { border-collapse: collapse; font-family: 'IBM Plex Sans', system-ui, monospace;
   font-size: 0.82em; }
-#epi-Fmat td { padding: 3px 10px; text-align: right; color: #5b21b6;
-  border-left: 2px solid #c4b5fd; }
-#epi-Fmat td:last-child { border-right: 2px solid #c4b5fd; }
-.epi-params { font-size: 0.76em; color: #7c3aed; margin-top: 12px; padding-top: 10px;
-  border-top: 1px dashed #c4b5fd; }
+#epi-Fmat td { padding: 3px 10px; text-align: right; color: var(--text);
+  border-left: 2px solid var(--border); }
+#epi-Fmat td:last-child { border-right: 2px solid var(--border); }
+.epi-params { font-size:0.8rem; color: var(--accent); margin-top: 12px; padding-top: 10px;
+  border-top: 1px dashed var(--border); }
 @media (max-width: 420px) { #epi-readout { margin-left: 0; width: 100%; } }
 #attn-box { max-width: 100%; }
 .attn-controls { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
@@ -337,37 +319,37 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
 .attn-modehint { font-size: 0.8em; color: var(--gray-600); }
 .attn-layout { display: flex; gap: 22px; align-items: flex-start; flex-wrap: wrap; }
 .attn-gridwrap { flex: 0 0 auto; }
-.attn-gridwrap h4 { font-size: 0.75em; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: 8px; }
-.attn-grid { display: grid; gap: 3px; background: #c4b5fd; padding: 3px; border-radius: 8px; width: min(308px, 78vw); }
-.attn-cell { aspect-ratio: 1 / 1; width: 100%; border: 0; padding: 0; border-radius: 4px; background: #fff; font-family: inherit; font-size: clamp(8px, 2.4vw, 12px); font-weight: 700; color: transparent; cursor: pointer; transition: background 0.12s, box-shadow 0.12s, transform 0.08s; display: flex; align-items: center; justify-content: center; }
+.attn-gridwrap h4 { font-size:0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--gray-500); margin-bottom: 8px; }
+.attn-grid { display: grid; gap: 3px; background: var(--border); padding: 3px; border-radius: 8px; width: min(308px, 78vw); }
+.attn-cell { aspect-ratio: 1 / 1; width: 100%; border: 0; padding: 0; border-radius: 4px; background: var(--surface); font-family: inherit; font-size: clamp(12px, 2.6vw, 14px); font-weight: 700; color: transparent; cursor: pointer; transition: background 0.12s, box-shadow 0.12s, transform 0.08s; display: flex; align-items: center; justify-content: center; }
 .attn-cell:hover { transform: scale(1.08); }
 .attn-cell:focus-visible { outline: 3px solid var(--cyan); outline-offset: 1px; z-index: 2; }
 .attn-cell.attn-query { box-shadow: 0 0 0 3px var(--amber), 0 2px 6px rgba(0,0,0,0.25); transform: scale(1.06); }
-.attn-cell.attn-field { box-shadow: inset 0 0 0 1px #a78bfa; }
+.attn-cell.attn-field { box-shadow: inset 0 0 0 1px var(--accent); }
 .attn-side { flex: 1 1 230px; min-width: 200px; }
-.attn-caption { font-size: 0.86em; color: var(--gray-700); background: #fff; border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
-.attn-caption b { color: #5b21b6; }
+.attn-caption { font-size: 0.86em; color: var(--gray-700); background: var(--surface); border: 1px solid var(--gray-200); border-radius: 10px; padding: 12px 14px; margin-bottom: 14px; }
+.attn-caption b { color: var(--text); }
 .attn-top { font-size: 0.84em; }
-.attn-toptitle { font-weight: 700; color: #5b21b6; margin-bottom: 8px; font-size: 0.92em; }
+.attn-toptitle { font-weight: 700; color: var(--text); margin-bottom: 8px; font-size: 0.92em; }
 .attn-topnote { color: var(--gray-600); font-size: 0.92em; }
 .attn-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
 .attn-barlbl { width: 44px; font-variant-numeric: tabular-nums; color: var(--gray-700); font-weight: 600; }
 .attn-bartrack { flex: 1; height: 12px; background: var(--gray-100); border-radius: 6px; overflow: hidden; }
 .attn-barfill { display: block; height: 100%; background: linear-gradient(to right, var(--purple), var(--purple-mid)); border-radius: 6px; transition: width 0.18s; }
-.attn-barpct { width: 42px; text-align: right; font-variant-numeric: tabular-nums; color: #5b21b6; font-weight: 700; }
-.attn-legend { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size: 0.78em; color: var(--gray-600); }
-.attn-legbar { flex: 1; max-width: 160px; height: 10px; border-radius: 5px; background: linear-gradient(to right, #f8f7ff, #4f46e5); border: 1px solid var(--gray-200); }
+.attn-barpct { width: 42px; text-align: right; font-variant-numeric: tabular-nums; color: var(--text); font-weight: 700; }
+.attn-legend { display: flex; align-items: center; gap: 8px; margin-top: 14px; font-size:0.8rem; color: var(--gray-600); }
+.attn-legbar { flex: 1; max-width: 160px; height: 10px; border-radius: 5px; background: linear-gradient(to right, var(--surface-2), var(--accent)); border: 1px solid var(--gray-200); }
 @media (max-width: 520px) { .attn-layout { gap: 16px; } .attn-side { flex-basis: 100%; } }
 .iou-wrap{display:flex;flex-direction:column;gap:26px}
-.iou-part{background:#fff;border:1px solid var(--gray-200);border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.07);padding:18px}
-.iou-part-title{font-size:.95em;font-weight:700;color:#5b21b6;margin-bottom:2px}
+.iou-part{background:var(--surface);border:1px solid var(--gray-200);border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.07);padding:18px}
+.iou-part-title{font-size:.95em;font-weight:700;color:var(--text);margin-bottom:2px}
 .iou-part-hint{font-size:.8em;color:var(--gray-600);margin-bottom:14px}
 .iou-stage{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start}
 .iou-svg-holder{flex:1 1 360px;min-width:280px}
-.iou-svg{width:100%;height:auto;display:block;background:#faf9ff;border:1px solid var(--gray-200);border-radius:10px;touch-action:none}
+.iou-svg{width:100%;height:auto;display:block;background:var(--surface-2);border:1px solid var(--gray-200);border-radius:10px;touch-action:none}
 .iou-side{flex:1 1 220px;min-width:200px;display:flex;flex-direction:column;gap:12px}
-.iou-metric{background:#f8f7ff;border:1px solid #e9e3ff;border-radius:10px;padding:12px 14px}
-.iou-metric-label{font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:4px}
+.iou-metric{background:var(--surface-2);border:1px solid var(--accent-soft);border-radius:10px;padding:12px 14px}
+.iou-metric-label{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--purple);margin-bottom:4px}
 .iou-metric-val{font-size:1.7em;font-weight:800;color:var(--gray-900);font-variant-numeric:tabular-nums;line-height:1.1}
 .iou-bar-track{height:9px;background:var(--gray-200);border-radius:5px;overflow:hidden;margin-top:8px}
 .iou-bar-fill{height:100%;width:0;background:linear-gradient(to right,var(--purple),var(--purple-mid));border-radius:5px;transition:width .08s linear}
@@ -381,21 +363,21 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
 .iou-slider-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
 .iou-slider-wrap label{font-size:.82em;font-weight:600;color:var(--gray-700)}
 .iou-range{flex:1 1 180px;min-width:160px;accent-color:var(--purple);height:6px}
-.iou-thr-val{font-weight:800;font-variant-numeric:tabular-nums;color:#5b21b6;min-width:46px;text-align:right}
-.iou-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.78em;margin-bottom:12px}
+.iou-thr-val{font-weight:800;font-variant-numeric:tabular-nums;color:var(--text);min-width:46px;text-align:right}
+.iou-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:0.8rem;margin-bottom:12px}
 .iou-legend span{display:inline-flex;align-items:center;gap:6px;color:var(--gray-700)}
 .iou-dot{width:13px;height:13px;border-radius:3px;display:inline-block}
 .iou-dot-keep{background:var(--green)}
 .iou-dot-supp{background:var(--red)}
 .iou-result{flex:1 1 240px;min-width:220px;display:flex;flex-direction:column;gap:10px}
-.iou-result-block{background:#f8f7ff;border:1px solid #e9e3ff;border-radius:10px;padding:10px 12px}
-.iou-result-block h5{font-size:.72em;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+.iou-result-block{background:var(--surface-2);border:1px solid var(--accent-soft);border-radius:10px;padding:10px 12px}
+.iou-result-block h5{font-size:0.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
 .iou-result-keep h5{color:var(--green)}
 .iou-result-supp h5{color:var(--red)}
-.iou-chip{display:inline-block;font-size:.76em;font-weight:700;padding:3px 8px;border-radius:6px;margin:2px 3px 2px 0;font-variant-numeric:tabular-nums}
+.iou-chip{display:inline-block;font-size:0.8rem;font-weight:700;padding:3px 8px;border-radius:6px;margin:2px 3px 2px 0;font-variant-numeric:tabular-nums}
 .iou-chip-keep{background:#dcfce7;color:#15803d;border:1px solid #86efac}
 .iou-chip-supp{background:#fee2e2;color:#b91c1c;border:1px solid #fca5a5}
-.iou-empty{font-size:.78em;color:var(--gray-400);font-style:italic}
+.iou-empty{font-size:0.8rem;color:var(--gray-400);font-style:italic}
 .iou-focusring:focus-visible{outline:3px solid var(--purple-light);outline-offset:2px}
 @media (max-width:480px){.iou-metric-val{font-size:1.4em}}</style>
 </head>
@@ -405,7 +387,7 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
 
 <header>
   <div class="header-inner">
-    <div class="header-title">🔍 CV Roadmap <span>· pixels → production</span></div>
+    <div class="header-title">CV Roadmap <span>· pixels → production</span></div>
     <div class="header-right">
       <div class="progress-pill" id="progressText">0 / 50 topics</div>
       <div class="hbar-wrap"><div class="hbar-fill" id="hbarFill" style="width:0%"></div></div>
@@ -414,32 +396,32 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
     </div>
   </div>
   <nav class="topnav" aria-label="Jump to section">
-    <a href="#phase-1">1 · Foundations</a>
-    <a href="#phase-2">2 · Classical CV</a>
-    <a href="#phase-3">3 · Geometry &amp; 3D</a>
-    <a href="#phase-4">4 · Deep Learning</a>
-    <a href="#phase-5">5 · Frontiers</a>
-    <a href="#interview">💼 Interview</a>
-    <a href="#library">📚 Resources</a>
-    <a href="#glossary">📖 Glossary</a>
-    <a href="#faq">❓ FAQ</a>
+    <a class="nav-ph nav-p1" href="#phase-1">Foundations</a>
+    <a class="nav-ph nav-p2" href="#phase-2">Classical CV</a>
+    <a class="nav-ph nav-p3" href="#phase-3">Geometry &amp; 3D</a>
+    <a class="nav-ph nav-p4" href="#phase-4">Deep Learning</a>
+    <a class="nav-ph nav-p5" href="#phase-5">Frontiers</a>
+    <a href="#interview">Interview</a>
+    <a href="#library">Resources</a>
+    <a href="#glossary">Glossary</a>
+    <a href="#faq">FAQ</a>
   </nav>
 </header>
 
 <main>
 <section class="intro-card">
-  <h1>🔍 Computer Vision Roadmap</h1>
+  <h1>Computer Vision Roadmap</h1>
   <p>A free, structured path from raw pixels to production across five phases:
   <strong>Foundations → Classical CV → Multi-View Geometry → Deep Learning → Modern Frontiers</strong>.
   Every resource here is free. Check topics off as you learn — your progress saves in this browser (no account).
   Try the interactive demos, test yourself with the per-phase quizzes, and use the interview bank when you're job-hunting.</p>
   <div class="intro-tags">
-    <span class="intro-tag free">100% free</span>
-    <span class="intro-tag">5 phases · 50 topics</span>
-    <span class="intro-tag">5 milestone projects</span>
-    <span class="intro-tag">4 interactive demos</span>
-    <span class="intro-tag">25+ curated resources</span>
-    <span class="intro-tag">52 glossary terms</span>
+    <span class="intro-tag t-green">100% free</span>
+    <span class="intro-tag t-indigo">5 phases · 50 topics</span>
+    <span class="intro-tag t-teal">5 milestone projects</span>
+    <span class="intro-tag t-amber">4 interactive demos</span>
+    <span class="intro-tag t-rose">25+ curated resources</span>
+    <span class="intro-tag t-violet">52 glossary terms</span>
   </div>
 </section>
 <section class="phase p1" id="phase-1">
@@ -450,11 +432,11 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
       <div class="pp-bar"><div class="pp-fill" id="pp1-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
-    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li><li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li><li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li><li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li><li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li><li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li><li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li><li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li><li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li><li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li></ul></div>
-    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 6h</span><span class="badge b-video">Video</span></div><h4>3Blue1Brown — Essence of Linear Algebra</h4><div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div><h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4><div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Real Python — Image Processing with NumPy &amp; Pillow</h4><div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div><a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p1t1" onchange="save()"><label for="p1t1">Vectors, Matrices, Dot Products</label></li><li><input type="checkbox" id="p1t2" onchange="save()"><label for="p1t2">Eigenvalues &amp; Eigenvectors (PCA)</label></li><li><input type="checkbox" id="p1t3" onchange="save()"><label for="p1t3">Partial Derivatives &amp; Gradients</label></li><li><input type="checkbox" id="p1t4" onchange="save()"><label for="p1t4">Chain Rule — foundation of backprop</label></li><li><input type="checkbox" id="p1t5" onchange="save()"><label for="p1t5">Pixels, Color Spaces (RGB / HSV / LAB)</label></li><li><input type="checkbox" id="p1t6" onchange="save()"><label for="p1t6">Histograms &amp; Histogram Equalization</label></li><li><input type="checkbox" id="p1t7" onchange="save()"><label for="p1t7">Convolution &amp; Cross-Correlation</label></li><li><input type="checkbox" id="p1t8" onchange="save()"><label for="p1t8">Frequency Domain (FFT basics)</label></li><li><input type="checkbox" id="p1t9" onchange="save()"><label for="p1t9">Morphological Ops (erosion / dilation)</label></li><li><input type="checkbox" id="p1t10" onchange="save()"><label for="p1t10">NumPy image manipulation from scratch</label></li></ul></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">6h</span><span class="badge b-video">Video</span></div><h4>3Blue1Brown — Essence of Linear Algebra</h4><div class="resource-why">"Visual proofs build intuition faster than any textbook — watch before reading anything else."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Digital Image Processing — Gonzalez &amp; Woods (Ch. 1–5)</h4><div class="resource-why">"The authoritative reference — Ch. 3 on spatial filtering is the single best treatment of convolution in print."</div></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Real Python — Image Processing with NumPy &amp; Pillow</h4><div class="resource-why">"Hands-on pixel manipulation before touching OpenCV — reveals exactly what the library abstracts."</div><a class="resource-link" href="https://realpython.com/image-processing-with-the-python-pillow-library/" target="_blank" rel="noopener">Read tutorial →</a></div></div>
     <!-- Convolution Visualizer — full width -->
             <div class="full-width demo-box">
-                <h3>🧪 Interactive — Convolution Kernel Visualizer</h3>
+                <h3>Interactive — Convolution Kernel Visualizer</h3>
                 <div class="sub">Click input cells to toggle pixels. Select a kernel. Output updates in real time.</div>
                 <div class="kernel-btns" id="kbtns">
                     <button class="kbtn active" onclick="setKernel('blur',this)">Gaussian Blur</button>
@@ -481,8 +463,8 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
                     </div>
                 </div>
             </div>
-    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. What is the main difference between convolution and cross-correlation?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Convolution flips the kernel before sliding; cross-correlation does not</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They operate on different color spaces</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Cross-correlation only works on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convolution cannot be used for blurring</button></div><div class="quiz-exp">✅ Convolution flips (rotates 180 degrees) the kernel before the sliding dot product, whereas cross-correlation applies the kernel as-is; for symmetric kernels the results are identical.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Histogram equalization is primarily used to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Detect edges in an image</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Improve contrast by spreading intensities across the full range</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convert RGB to grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Compress the image file size</button></div><div class="quiz-exp">✅ It remaps intensities so the output histogram is roughly uniform, stretching contrast across the available range.</div></div><div class="quiz-q"><div class="quiz-qtext">3. In PCA, the principal directions of the data correspond to the:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Rows of the image with the most pixels</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Eigenvectors of the covariance matrix</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Highest-frequency FFT components</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Largest gradients in the Sobel map</button></div><div class="quiz-exp">✅ PCA finds the eigenvectors of the data's covariance matrix, ordered by eigenvalue (variance explained).</div></div></div></details></div>
-    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>NumPy Image Filter Library</h3><p>Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.</p><div class="milestone-meta"><span class="mm">📦 Dataset: BSDS500</span><span class="mm">🎯 Goal: 5 filters from scratch</span><span class="mm">⏱ 6–8 hours</span></div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. What is the main difference between convolution and cross-correlation?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Convolution flips the kernel before sliding; cross-correlation does not</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They operate on different color spaces</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Cross-correlation only works on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convolution cannot be used for blurring</button></div><div class="quiz-exp">✅ Convolution flips (rotates 180 degrees) the kernel before the sliding dot product, whereas cross-correlation applies the kernel as-is; for symmetric kernels the results are identical.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Histogram equalization is primarily used to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Detect edges in an image</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Improve contrast by spreading intensities across the full range</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Convert RGB to grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Compress the image file size</button></div><div class="quiz-exp">✅ It remaps intensities so the output histogram is roughly uniform, stretching contrast across the available range.</div></div><div class="quiz-q"><div class="quiz-qtext">3. In PCA, the principal directions of the data correspond to the:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Rows of the image with the most pixels</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Eigenvectors of the covariance matrix</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Highest-frequency FFT components</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Largest gradients in the Sobel map</button></div><div class="quiz-exp">✅ PCA finds the eigenvectors of the data's covariance matrix, ordered by eigenvalue (variance explained).</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>NumPy Image Filter Library</h3><p>Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.</p><div class="milestone-meta"><span class="mm">Dataset: BSDS500</span><span class="mm">Goal: 5 filters from scratch</span><span class="mm">6–8 hours</span></div></div>
   </div>
 </section><div class="connector"></div><section class="phase p2" id="phase-2">
   <div class="phase-header">
@@ -492,11 +474,11 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
       <div class="pp-bar"><div class="pp-fill" id="pp2-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
-    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li><li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li><li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li><li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li><li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li><li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li><li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li><li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li><li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li><li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li></ul></div>
-    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-video">Video</span></div><h4>First Principles of CV — Camera Calibration (Columbia / Shree Nayar)</h4><div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div><a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4><div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div><a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4><div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div></div></div>
+    <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p2t1" onchange="save()"><label for="p2t1">SIFT — Scale Invariant Feature Transform</label></li><li><input type="checkbox" id="p2t2" onchange="save()"><label for="p2t2">SURF &amp; ORB (fast SIFT alternatives)</label></li><li><input type="checkbox" id="p2t3" onchange="save()"><label for="p2t3">HOG — Histogram of Oriented Gradients</label></li><li><input type="checkbox" id="p2t4" onchange="save()"><label for="p2t4">Harris Corner Detector</label></li><li><input type="checkbox" id="p2t5" onchange="save()"><label for="p2t5">Canny Edge Detection (full pipeline)</label></li><li><input type="checkbox" id="p2t6" onchange="save()"><label for="p2t6">Camera Calibration — Zhang's method</label></li><li><input type="checkbox" id="p2t7" onchange="save()"><label for="p2t7">Homography &amp; RANSAC</label></li><li><input type="checkbox" id="p2t8" onchange="save()"><label for="p2t8">Optical Flow — Lucas-Kanade</label></li><li><input type="checkbox" id="p2t9" onchange="save()"><label for="p2t9">Bag of Visual Words</label></li><li><input type="checkbox" id="p2t10" onchange="save()"><label for="p2t10">Feature Matching: Brute-Force vs. FLANN</label></li></ul></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-video">Video</span></div><h4>First Principles of CV — Camera Calibration (Columbia / Shree Nayar)</h4><div class="resource-why">"Clearest derivation of Zhang's method on YouTube — used in every production pipeline."</div><a class="resource-link" href="https://www.youtube.com/channel/UCf0WB91t8Ky6AuYcQV0CcLw" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV Python — Feature Detection &amp; Matching (Official Docs)</h4><div class="resource-why">"Authoritative working code for SIFT, ORB, FLANN — copy, modify, break it to learn."</div><a class="resource-link" href="https://docs.opencv.org/4.x/db/d27/tutorial_py_table_of_contents_feature2d.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Lowe (2004) — Distinctive Image Features from Scale-Invariant Keypoints</h4><div class="resource-why">"Original SIFT paper — reading it reveals why scale-space and orientation stability matter in practice."</div></div></div>
     
-    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. Why is RANSAC used when estimating a homography from matched features?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It speeds up SIFT descriptor computation</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">It robustly fits the model despite many outlier (wrong) matches</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It converts the image to the frequency domain</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It guarantees the globally optimal least-squares fit</button></div><div class="quiz-exp">✅ Feature matches contain many wrong correspondences; RANSAC repeatedly fits from minimal samples and keeps the hypothesis with the most inliers, ignoring outliers.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Which property makes SIFT descriptors useful across different photos of the same scene?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They are invariant to scale and rotation</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They require a GPU to compute</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They only work on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They encode absolute pixel colors</button></div><div class="quiz-exp">✅ SIFT detects keypoints across scales and assigns a dominant orientation, making its descriptors robust to scale and in-plane rotation.</div></div><div class="quiz-q"><div class="quiz-qtext">3. A homography can exactly map between two images when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The camera never moves</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">The scene is planar or the camera only rotates about its center</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The images are grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The focal length is unknown</button></div><div class="quiz-exp">✅ A homography is a planar projective transform, valid for planar scenes or pure-rotation camera motion; general 3D scenes with translation need epipolar geometry.</div></div></div></details></div>
-    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Image Panorama Stitcher</h3><p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Your own phone photos</span><span class="mm">🎯 Goal: Seamless 3-image panorama</span><span class="mm">⏱ 8–12 hours</span></div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. Why is RANSAC used when estimating a homography from matched features?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It speeds up SIFT descriptor computation</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">It robustly fits the model despite many outlier (wrong) matches</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It converts the image to the frequency domain</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It guarantees the globally optimal least-squares fit</button></div><div class="quiz-exp">✅ Feature matches contain many wrong correspondences; RANSAC repeatedly fits from minimal samples and keeps the hypothesis with the most inliers, ignoring outliers.</div></div><div class="quiz-q"><div class="quiz-qtext">2. Which property makes SIFT descriptors useful across different photos of the same scene?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They are invariant to scale and rotation</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They require a GPU to compute</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They only work on binary images</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They encode absolute pixel colors</button></div><div class="quiz-exp">✅ SIFT detects keypoints across scales and assigns a dominant orientation, making its descriptors robust to scale and in-plane rotation.</div></div><div class="quiz-q"><div class="quiz-qtext">3. A homography can exactly map between two images when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The camera never moves</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">The scene is planar or the camera only rotates about its center</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The images are grayscale</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The focal length is unknown</button></div><div class="quiz-exp">✅ A homography is a planar projective transform, valid for planar scenes or pure-rotation camera motion; general 3D scenes with translation need epipolar geometry.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>Image Panorama Stitcher</h3><p>Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.</p><div class="milestone-meta"><span class="mm">Dataset: Your own phone photos</span><span class="mm">Goal: Seamless 3-image panorama</span><span class="mm">8–12 hours</span></div></div>
   </div>
 </section><div class="connector"></div><section class="phase p3" id="phase-3">
   <div class="phase-header">
@@ -506,9 +488,9 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
       <div class="pp-bar"><div class="pp-fill" id="pp3-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
-    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">Epipolar geometry &amp; the epipolar constraint (x′ᵀ F x = 0)</label></li><li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Fundamental matrix F &amp; the normalized 8-point algorithm (uncalibrated)</label></li><li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">Essential matrix E &amp; decomposition into R, t (calibrated)</label></li><li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Triangulation — back-projecting matches to 3D points</label></li><li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">PnP — camera pose from 2D–3D correspondences</label></li><li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Stereo rectification — aligning epipolar lines to scanlines</label></li><li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">Disparity matching &amp; depth from a stereo pair</label></li><li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Dense depth maps &amp; point-cloud reconstruction</label></li><li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Structure-from-Motion (incremental SfM)</label></li><li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">Bundle adjustment &amp; intro to visual odometry / SLAM</label></li></ul></div>
-    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 8h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms &amp; Applications (2nd ed.) — Ch. 11 SfM, Ch. 12 Depth &amp; Stereo</h4><div class="resource-why">"The free, canonical text tying epipolar geometry, triangulation, stereo, and bundle adjustment together."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry and the fundamental/essential matrices — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 6h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry &amp; Computer Vision Lectures (Univ. Bonn)</h4><div class="resource-why">"The clearest lecture series on the fundamental/essential matrices, the 8-point algorithm, and bundle adjustment."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRsi5vzy9PiQpNWHjq-bKN1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines)</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code — turns the epipolar constraint into a picture you can see."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
-    <div class="full-width demo-box"><h3>🧪 Interactive — Epipolar Geometry Explorer</h3><div class="sub">Drag the point in the LEFT view. Its match in the RIGHT view must lie on the drawn epipolar line.</div><div id="epi-wrap">
+    <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p3t1" onchange="save()"><label for="p3t1">Epipolar geometry &amp; the epipolar constraint (x′ᵀ F x = 0)</label></li><li><input type="checkbox" id="p3t2" onchange="save()"><label for="p3t2">Fundamental matrix F &amp; the normalized 8-point algorithm (uncalibrated)</label></li><li><input type="checkbox" id="p3t3" onchange="save()"><label for="p3t3">Essential matrix E &amp; decomposition into R, t (calibrated)</label></li><li><input type="checkbox" id="p3t4" onchange="save()"><label for="p3t4">Triangulation — back-projecting matches to 3D points</label></li><li><input type="checkbox" id="p3t5" onchange="save()"><label for="p3t5">PnP — camera pose from 2D–3D correspondences</label></li><li><input type="checkbox" id="p3t6" onchange="save()"><label for="p3t6">Stereo rectification — aligning epipolar lines to scanlines</label></li><li><input type="checkbox" id="p3t7" onchange="save()"><label for="p3t7">Disparity matching &amp; depth from a stereo pair</label></li><li><input type="checkbox" id="p3t8" onchange="save()"><label for="p3t8">Dense depth maps &amp; point-cloud reconstruction</label></li><li><input type="checkbox" id="p3t9" onchange="save()"><label for="p3t9">Structure-from-Motion (incremental SfM)</label></li><li><input type="checkbox" id="p3t10" onchange="save()"><label for="p3t10">Bundle adjustment &amp; intro to visual odometry / SLAM</label></li></ul></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">8h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms &amp; Applications (2nd ed.) — Ch. 11 SfM, Ch. 12 Depth &amp; Stereo</h4><div class="resource-why">"The free, canonical text tying epipolar geometry, triangulation, stereo, and bundle adjustment together."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry and the fundamental/essential matrices — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">6h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry &amp; Computer Vision Lectures (Univ. Bonn)</h4><div class="resource-why">"The clearest lecture series on the fundamental/essential matrices, the 8-point algorithm, and bundle adjustment."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRsi5vzy9PiQpNWHjq-bKN1" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines)</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code — turns the epipolar constraint into a picture you can see."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="full-width demo-box"><h3>Interactive — Epipolar Geometry Explorer</h3><div class="sub">Drag the point in the LEFT view. Its match in the RIGHT view must lie on the drawn epipolar line.</div><div id="epi-wrap">
   <div id="epi-panels">
     <div class="epi-panel-col">
       <div class="epi-panel-label">Left camera view</div>
@@ -570,8 +552,8 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
     </div>
   </div>
 </div></div>
-    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. The epipolar constraint x'^T F x = 0 means that:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Every pixel has the same depth</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">A point's match in the other view lies on a known line, not anywhere</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The two cameras must be identical</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity times baseline</button></div><div class="quiz-exp">✅ The fundamental matrix maps a point in one image to its epipolar line in the other, reducing the correspondence search from 2D to 1D.</div></div><div class="quiz-q"><div class="quiz-qtext">2. In a rectified stereo pair, depth is related to disparity how?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth is proportional to disparity</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Depth is inversely proportional to disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Disparity is independent of depth</button></div><div class="quiz-exp">✅ Depth = (focal length x baseline) / disparity, so larger disparity (more shift) means a closer, smaller-depth point.</div></div><div class="quiz-q"><div class="quiz-qtext">3. What does bundle adjustment optimize?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the camera intrinsics</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the 3D point colors</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Camera poses and 3D points jointly to minimize total reprojection error</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The order in which images were captured</button></div><div class="quiz-exp">✅ Bundle adjustment is a joint nonlinear refinement of all poses and structure that minimizes the sum of reprojection errors across all observations.</div></div></div></details></div>
-    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Two-View Structure-from-Motion (Sparse 3D Reconstruction)</h3><p>Take two photos of a static scene and get the intrinsics K from calibration (Phase 2) or image EXIF. Match SIFT/ORB features, estimate the fundamental matrix with the normalized 8-point algorithm inside RANSAC, convert it to the essential matrix (E = K′ᵀ F K), and decompose E into its four candidate (R, t) solutions. Use the cheirality check — reconstructed points must lie in front of both cameras — to pick the correct pose, then triangulate the matches into a sparse 3D point cloud and visualize it. No high-level SfM pipelines (e.g. COLMAP) for the core estimation.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Your two-view phone photos (calibrate or use EXIF focal length)</span><span class="mm">🎯 Goal: Recover (R, t) + sparse 3D point cloud</span><span class="mm">⏱ 10–15 hours</span></div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. The epipolar constraint x'^T F x = 0 means that:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Every pixel has the same depth</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">A point's match in the other view lies on a known line, not anywhere</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The two cameras must be identical</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity times baseline</button></div><div class="quiz-exp">✅ The fundamental matrix maps a point in one image to its epipolar line in the other, reducing the correspondence search from 2D to 1D.</div></div><div class="quiz-q"><div class="quiz-qtext">2. In a rectified stereo pair, depth is related to disparity how?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth is proportional to disparity</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Depth is inversely proportional to disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Depth equals disparity</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Disparity is independent of depth</button></div><div class="quiz-exp">✅ Depth = (focal length x baseline) / disparity, so larger disparity (more shift) means a closer, smaller-depth point.</div></div><div class="quiz-q"><div class="quiz-qtext">3. What does bundle adjustment optimize?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the camera intrinsics</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Only the 3D point colors</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Camera poses and 3D points jointly to minimize total reprojection error</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">The order in which images were captured</button></div><div class="quiz-exp">✅ Bundle adjustment is a joint nonlinear refinement of all poses and structure that minimizes the sum of reprojection errors across all observations.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>Two-View Structure-from-Motion (Sparse 3D Reconstruction)</h3><p>Take two photos of a static scene and get the intrinsics K from calibration (Phase 2) or image EXIF. Match SIFT/ORB features, estimate the fundamental matrix with the normalized 8-point algorithm inside RANSAC, convert it to the essential matrix (E = K′ᵀ F K), and decompose E into its four candidate (R, t) solutions. Use the cheirality check — reconstructed points must lie in front of both cameras — to pick the correct pose, then triangulate the matches into a sparse 3D point cloud and visualize it. No high-level SfM pipelines (e.g. COLMAP) for the core estimation.</p><div class="milestone-meta"><span class="mm">Dataset: Your two-view phone photos (calibrate or use EXIF focal length)</span><span class="mm">Goal: Recover (R, t) + sparse 3D point cloud</span><span class="mm">10–15 hours</span></div></div>
   </div>
 </section><div class="connector"></div><section class="phase p4" id="phase-4">
   <div class="phase-header">
@@ -581,9 +563,9 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
       <div class="pp-bar"><div class="pp-fill" id="pp4-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
-    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">CNN: Convolution, Pooling, Padding, Stride</label></li><li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Backpropagation &amp; Gradient Descent variants</label></li><li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">LeNet → AlexNet → VGG → ResNet evolution</label></li><li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">Transfer Learning &amp; Fine-Tuning</label></li><li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">Data Augmentation strategies</label></li><li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">Object Detection: Faster R-CNN &amp; SSD</label></li><li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">YOLO family (v3 → v8) — architecture &amp; training</label></li><li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Semantic Segmentation: FCN, DeepLab</label></li><li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">Instance Segmentation: U-Net, Mask R-CNN</label></li><li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">mAP, IoU, Precision-Recall for CV evaluation</label></li></ul></div>
-    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 30h</span><span class="badge b-course">Course</span></div><h4>CS231n — Convolutional Neural Networks (Stanford)</h4><div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div><a class="resource-link" href="https://cs231n.github.io" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4><div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div><a class="resource-link" href="https://docs.ultralytics.com" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-paper">Paper</span></div><h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4><div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div></div></div>
-    <div class="full-width demo-box"><h3>🧪 Interactive — IoU &amp; Non-Max Suppression Playground</h3><div class="sub">Drag two boxes to feel IoU, then tune the NMS threshold to watch duplicate detections get suppressed.</div><div class="iou-wrap">
+    <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p4t1" onchange="save()"><label for="p4t1">CNN: Convolution, Pooling, Padding, Stride</label></li><li><input type="checkbox" id="p4t2" onchange="save()"><label for="p4t2">Backpropagation &amp; Gradient Descent variants</label></li><li><input type="checkbox" id="p4t3" onchange="save()"><label for="p4t3">LeNet → AlexNet → VGG → ResNet evolution</label></li><li><input type="checkbox" id="p4t4" onchange="save()"><label for="p4t4">Transfer Learning &amp; Fine-Tuning</label></li><li><input type="checkbox" id="p4t5" onchange="save()"><label for="p4t5">Data Augmentation strategies</label></li><li><input type="checkbox" id="p4t6" onchange="save()"><label for="p4t6">Object Detection: Faster R-CNN &amp; SSD</label></li><li><input type="checkbox" id="p4t7" onchange="save()"><label for="p4t7">YOLO family (v3 → v8) — architecture &amp; training</label></li><li><input type="checkbox" id="p4t8" onchange="save()"><label for="p4t8">Semantic Segmentation: FCN, DeepLab</label></li><li><input type="checkbox" id="p4t9" onchange="save()"><label for="p4t9">Instance Segmentation: U-Net, Mask R-CNN</label></li><li><input type="checkbox" id="p4t10" onchange="save()"><label for="p4t10">mAP, IoU, Precision-Recall for CV evaluation</label></li></ul></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">30h</span><span class="badge b-course">Course</span></div><h4>CS231n — Convolutional Neural Networks (Stanford)</h4><div class="resource-why">"Gold-standard CNN education — the lecture notes alone are worth more than most full courses."</div><a class="resource-link" href="https://cs231n.github.io" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-easy">Easy</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Ultralytics YOLOv8 — Train a Custom Object Detector</h4><div class="resource-why">"Best ROI in CV learning: train a real detector in 30 lines, forces you to understand mAP and anchors."</div><a class="resource-link" href="https://docs.ultralytics.com" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">1.5h</span><span class="badge b-paper">Paper</span></div><h4>Ronneberger et al. (2015) — U-Net: CNNs for Biomedical Image Segmentation</h4><div class="resource-why">"Skip connections introduced here appear in every modern architecture — 30k+ citations for a reason."</div></div></div>
+    <div class="full-width demo-box"><h3>Interactive — IoU &amp; Non-Max Suppression Playground</h3><div class="sub">Drag two boxes to feel IoU, then tune the NMS threshold to watch duplicate detections get suppressed.</div><div class="iou-wrap">
 
   <!-- ===== PART A : IoU explorer ===== -->
   <section class="iou-part" aria-labelledby="iou-titleA">
@@ -643,8 +625,8 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
   </section>
 
 </div></div>
-    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. At an IoU threshold of 0.5, a predicted box counts as a true positive when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its confidence score exceeds 0.5</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Its intersection-over-union with a ground-truth box is at least 0.5 (and class matches)</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It covers the entire image</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its center is inside any ground-truth box</button></div><div class="quiz-exp">✅ A detection is a true positive when its IoU with a same-class ground-truth box meets the threshold (here 0.5).</div></div><div class="quiz-q"><div class="quiz-qtext">2. What problem does Non-Maximum Suppression solve?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Vanishing gradients in deep networks</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Multiple overlapping boxes for the same object</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Class imbalance during training</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Low image resolution</button></div><div class="quiz-exp">✅ NMS keeps the highest-scoring box and removes others with high IoU overlap, collapsing duplicate detections of one object.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Why do ResNet skip connections help train very deep networks?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They reduce the number of parameters to zero</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They let gradients flow through identity shortcuts, easing optimization</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They replace convolutions with attention</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They eliminate the need for any activation function</button></div><div class="quiz-exp">✅ Residual shortcuts add the input to the output, providing an identity path that mitigates vanishing gradients and degradation in deep nets.</div></div></div></details></div>
-    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Custom Object Detector + Segmentation</h3><p>Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights &amp; Biases.</p><div class="milestone-meta"><span class="mm">📦 Dataset: Custom via Roboflow</span><span class="mm">🎯 Goal: &gt;0.5 mAP@50</span><span class="mm">⏱ 15–20 hours</span></div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. At an IoU threshold of 0.5, a predicted box counts as a true positive when:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its confidence score exceeds 0.5</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Its intersection-over-union with a ground-truth box is at least 0.5 (and class matches)</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">It covers the entire image</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Its center is inside any ground-truth box</button></div><div class="quiz-exp">✅ A detection is a true positive when its IoU with a same-class ground-truth box meets the threshold (here 0.5).</div></div><div class="quiz-q"><div class="quiz-qtext">2. What problem does Non-Maximum Suppression solve?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Vanishing gradients in deep networks</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Multiple overlapping boxes for the same object</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Class imbalance during training</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Low image resolution</button></div><div class="quiz-exp">✅ NMS keeps the highest-scoring box and removes others with high IoU overlap, collapsing duplicate detections of one object.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Why do ResNet skip connections help train very deep networks?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They reduce the number of parameters to zero</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">They let gradients flow through identity shortcuts, easing optimization</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They replace convolutions with attention</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">They eliminate the need for any activation function</button></div><div class="quiz-exp">✅ Residual shortcuts add the input to the output, providing an identity path that mitigates vanishing gradients and degradation in deep nets.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>Custom Object Detector + Segmentation</h3><p>Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights &amp; Biases.</p><div class="milestone-meta"><span class="mm">Dataset: Custom via Roboflow</span><span class="mm">Goal: &gt;0.5 mAP@50</span><span class="mm">15–20 hours</span></div></div>
   </div>
 </section><div class="connector"></div><section class="phase p5" id="phase-5">
   <div class="phase-header">
@@ -654,9 +636,9 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
       <div class="pp-bar"><div class="pp-fill" id="pp5-bar" style="width:0%"></div></div></div>
   </div>
   <div class="phase-body">
-    <div><div class="sec-title">📋 Topics</div><ul class="checklist"><li><input type="checkbox" id="p5t1" onchange="save()"><label for="p5t1">Self-Attention mechanism — from scratch</label></li><li><input type="checkbox" id="p5t2" onchange="save()"><label for="p5t2">Vision Transformer (ViT) — patch embeddings</label></li><li><input type="checkbox" id="p5t3" onchange="save()"><label for="p5t3">CLIP — contrastive language-image pre-training</label></li><li><input type="checkbox" id="p5t4" onchange="save()"><label for="p5t4">SAM — Segment Anything Model</label></li><li><input type="checkbox" id="p5t5" onchange="save()"><label for="p5t5">NeRF — Neural Radiance Fields</label></li><li><input type="checkbox" id="p5t6" onchange="save()"><label for="p5t6">3D Gaussian Splatting — real-time radiance fields</label></li><li><input type="checkbox" id="p5t7" onchange="save()"><label for="p5t7">Diffusion Models — DDPM, Stable Diffusion</label></li><li><input type="checkbox" id="p5t8" onchange="save()"><label for="p5t8">Model Quantization: INT8, FP16</label></li><li><input type="checkbox" id="p5t9" onchange="save()"><label for="p5t9">TFLite &amp; ONNX export + runtime</label></li><li><input type="checkbox" id="p5t10" onchange="save()"><label for="p5t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li></ul></div>
-    <div><div class="sec-title">📚 Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4><div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div><a class="resource-link" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4><div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div><a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4><div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div><a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank" rel="noopener">Read tutorial →</a></div></div>
-    <div class="full-width demo-box"><h3>🧪 Interactive — Attention vs. Convolution Receptive Field</h3><div class="sub">Hover or click a query cell, then toggle the mode to compare a fixed local kernel against global self-attention.</div><div class="full-width demo-box" id="attn-box" data-mode="attn">
+    <div><div class="sec-title">Topics</div><ul class="checklist"><li><input type="checkbox" id="p5t1" onchange="save()"><label for="p5t1">Self-Attention mechanism — from scratch</label></li><li><input type="checkbox" id="p5t2" onchange="save()"><label for="p5t2">Vision Transformer (ViT) — patch embeddings</label></li><li><input type="checkbox" id="p5t3" onchange="save()"><label for="p5t3">CLIP — contrastive language-image pre-training</label></li><li><input type="checkbox" id="p5t4" onchange="save()"><label for="p5t4">SAM — Segment Anything Model</label></li><li><input type="checkbox" id="p5t5" onchange="save()"><label for="p5t5">NeRF — Neural Radiance Fields</label></li><li><input type="checkbox" id="p5t6" onchange="save()"><label for="p5t6">3D Gaussian Splatting — real-time radiance fields</label></li><li><input type="checkbox" id="p5t7" onchange="save()"><label for="p5t7">Diffusion Models — DDPM, Stable Diffusion</label></li><li><input type="checkbox" id="p5t8" onchange="save()"><label for="p5t8">Model Quantization: INT8, FP16</label></li><li><input type="checkbox" id="p5t9" onchange="save()"><label for="p5t9">TFLite &amp; ONNX export + runtime</label></li><li><input type="checkbox" id="p5t10" onchange="save()"><label for="p5t10">Edge deployment: Raspberry Pi / Jetson Nano</label></li></ul></div>
+    <div><div class="sec-title">Resources</div><div class="resource-card"><div class="card-badges"><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Dosovitskiy et al. (2021) — An Image is Worth 16×16 Words (ViT)</h4><div class="resource-why">"Short, readable, paradigm-shifting — proved transformers beat CNNs at scale without convolution."</div><a class="resource-link" href="https://arxiv.org/abs/2010.11929" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Hugging Face Diffusers — Stable Diffusion from Scratch</h4><div class="resource-why">"Most practical diffusion path: modify the denoising loop and see exactly what breaks."</div><a class="resource-link" href="https://huggingface.co/docs/diffusers" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card"><div class="card-badges"><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>TensorFlow Lite — Model Optimization &amp; Raspberry Pi Guide</h4><div class="resource-why">"Quantization + TFLite is the fastest path from trained model to real hardware in under 100 lines."</div><a class="resource-link" href="https://www.tensorflow.org/lite/guide" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="full-width demo-box"><h3>Interactive — Attention vs. Convolution Receptive Field</h3><div class="sub">Hover or click a query cell, then toggle the mode to compare a fixed local kernel against global self-attention.</div><div class="full-width demo-box" id="attn-box" data-mode="attn">
   <div class="attn-controls">
     <div class="attn-modebtns" id="attn-modebtns" role="group" aria-label="Receptive field mode">
       <button type="button" class="kbtn active" data-attn-mode="attn">Self-Attention</button>
@@ -676,13 +658,13 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
     </div>
   </div>
 </div></div>
-    <div class="full-width quiz-box"><details class="quiz-details"><summary>🧠 Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. How does a Vision Transformer first turn an image into tokens?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By running a Canny edge detector</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">By splitting it into fixed-size patches and linearly projecting each</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By computing its FFT</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By applying max pooling until one pixel remains</button></div><div class="quiz-exp">✅ ViT divides the image into fixed-size patches and linearly embeds each into a token vector, then adds positional encodings.</div></div><div class="quiz-q"><div class="quiz-qtext">2. What is the core training objective of CLIP?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Predict the next word in a caption</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Align matching image-text pairs in a shared embedding space via contrastive loss</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Reconstruct images from noise</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Segment every object in an image</button></div><div class="quiz-exp">✅ CLIP contrastively trains image and text encoders so true image-caption pairs have high similarity and mismatched pairs low, enabling zero-shot classification.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Quantizing a model to INT8 primarily aims to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Increase model accuracy beyond FP32</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Reduce model size and speed up inference, especially on edge devices</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Add more layers automatically</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Enable training without labels</button></div><div class="quiz-exp">✅ INT8 quantization lowers numeric precision to shrink memory and accelerate inference on edge hardware, usually with minor accuracy loss.</div></div></div></details></div>
-    <div class="full-width milestone"><div class="milestone-label">🏆 Milestone Project</div><h3>Real-Time Edge AI Detector</h3><p>Export your Phase 4 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with &lt;5% mAP drop from quantization.</p><div class="milestone-meta"><span class="mm">📦 Hardware: RPi 4 or webcam</span><span class="mm">🎯 Goal: ≥10 FPS real-time</span><span class="mm">⏱ 10–14 hours</span></div></div>
+    <div class="full-width quiz-box"><details class="quiz-details"><summary>Knowledge check — 3 quick questions</summary><div class="quiz-body"><div class="quiz-q"><div class="quiz-qtext">1. How does a Vision Transformer first turn an image into tokens?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By running a Canny edge detector</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">By splitting it into fixed-size patches and linearly projecting each</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By computing its FFT</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">By applying max pooling until one pixel remains</button></div><div class="quiz-exp">✅ ViT divides the image into fixed-size patches and linearly embeds each into a token vector, then adds positional encodings.</div></div><div class="quiz-q"><div class="quiz-qtext">2. What is the core training objective of CLIP?</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Predict the next word in a caption</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Align matching image-text pairs in a shared embedding space via contrastive loss</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Reconstruct images from noise</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Segment every object in an image</button></div><div class="quiz-exp">✅ CLIP contrastively trains image and text encoders so true image-caption pairs have high similarity and mismatched pairs low, enabling zero-shot classification.</div></div><div class="quiz-q"><div class="quiz-qtext">3. Quantizing a model to INT8 primarily aims to:</div><div class="quiz-choices"><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Increase model accuracy beyond FP32</button><button class="quiz-choice" data-correct="1" type="button" onclick="quizPick(this)">Reduce model size and speed up inference, especially on edge devices</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Add more layers automatically</button><button class="quiz-choice" data-correct="0" type="button" onclick="quizPick(this)">Enable training without labels</button></div><div class="quiz-exp">✅ INT8 quantization lowers numeric precision to shrink memory and accelerate inference on edge hardware, usually with minor accuracy loss.</div></div></div></details></div>
+    <div class="full-width milestone"><div class="milestone-label">Milestone Project</div><h3>Real-Time Edge AI Detector</h3><p>Export your Phase 4 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with &lt;5% mAP drop from quantization.</p><div class="milestone-meta"><span class="mm">Hardware: RPi 4 or webcam</span><span class="mm">Goal: ≥10 FPS real-time</span><span class="mm">10–14 hours</span></div></div>
   </div>
 </section>
 
 <section class="extra-section" id="interview">
-  <div class="extra-header green"><h2>💼 Interview Prep Bank</h2>
+  <div class="extra-header green"><h2>Interview Prep Bank</h2>
     <p>CV-specific theory, implementation, math, and system-design questions with hints</p></div>
   <div class="extra-body">
     <div class="filter-bar"><div class="chips" id="iqChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="Theory">Theory</span><span class="chip" data-key="Implementation">Implementation</span><span class="chip" data-key="System Design">System Design</span><span class="chip" data-key="Debugging">Debugging</span><span class="chip" data-key="Math">Math</span></div></div>
@@ -693,7 +675,7 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
 
 <section class="extra-section">
         <div class="extra-header orange">
-            <h2>⚡ Edge AI Deployment Track</h2>
+            <h2>Edge AI Deployment Track</h2>
             <p>From trained model to hardware in 5 steps — end-to-end path no other CV roadmap covers</p>
         </div>
         <div class="extra-body">
@@ -732,20 +714,20 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
     </section>
 
 <section class="extra-section" id="library">
-  <div class="extra-header purple"><h2>📚 Free Resource Library</h2>
+  <div class="extra-header purple"><h2>Free Resource Library</h2>
     <p>25 hand-picked, 100% free resources — search or filter by phase</p></div>
   <div class="extra-body">
     <div class="filter-bar">
       <input class="filter-input" id="libSearch" type="search" placeholder="Search resources… (e.g. epipolar, YOLO, diffusion)" aria-label="Search resources">
       <div class="chips" id="libChips"><span class="chip active" data-key="all">All</span><span class="chip" data-key="1">1 · Foundations</span><span class="chip" data-key="2">2 · Classical CV</span><span class="chip" data-key="3">3 · Geometry & 3D</span><span class="chip" data-key="4">4 · Deep Learning</span><span class="chip" data-key="5">5 · Frontiers</span></div>
     </div>
-    <div class="lib-grid"><div class="resource-card lib-item" data-phase="1" data-text="khan academy — multivariable calculus: partial derivatives &amp; the gradient free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 4h</span><span class="badge b-course">Course</span></div><h4>Khan Academy — Multivariable Calculus: Partial Derivatives &amp; The Gradient</h4><div class="resource-why">"Free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."</div><a class="resource-link" href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="setosa — image kernels explained visually drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of numpy."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.5h</span><span class="badge b-interactive">Interactive</span></div><h4>Setosa — Image Kernels Explained Visually</h4><div class="resource-why">"Drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of NumPy."</div><a class="resource-link" href="https://setosa.io/ev/image-kernels/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="1" data-text="computerphile — how blurs &amp; filters work / convolution dr mike pound walks through spatial filtering on real images, giving intuition for the gaussian/sobel kernels you&#x27;ll implement in the milestone project."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.5h</span><span class="badge b-video">Video</span></div><h4>Computerphile — How Blurs &amp; Filters Work / Convolution</h4><div class="resource-why">"Dr Mike Pound walks through spatial filtering on real images, giving intuition for the Gaussian/Sobel kernels you'll implement in the milestone project."</div><a class="resource-link" href="https://www.youtube.com/watch?v=C_zFhWdM4ic" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="szeliski — computer vision: algorithms and applications (2nd ed.), ch. 3 image processing author-hosted free pdf; ch. 3 is the modern, rigorous companion to gonzalez &amp; woods covering filtering, pyramids, and the fourier domain."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 5h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms and Applications (2nd ed.), Ch. 3 Image Processing</h4><div class="resource-why">"Author-hosted free PDF; Ch. 3 is the modern, rigorous companion to Gonzalez &amp; Woods covering filtering, pyramids, and the Fourier domain."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="first principles of computer vision — detectors &amp; descriptors monographs (nayar, columbia) free sift-detector monograph (pdf) plus the companion lecture videos for harris and hog — re-derive the feature math at your own pace."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-book">Book</span></div><h4>First Principles of Computer Vision — Detectors &amp; Descriptors Monographs (Nayar, Columbia)</h4><div class="resource-why">"Free SIFT-detector monograph (PDF) plus the companion lecture videos for Harris and HOG — re-derive the feature math at your own pace."</div><a class="resource-link" href="https://fpcv.cs.columbia.edu/Monographs" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="computerphile — canny edge detector (mike pound) the clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing canny."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 0.3h</span><span class="badge b-video">Video</span></div><h4>Computerphile — Canny Edge Detector (Mike Pound)</h4><div class="resource-why">"The clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing Canny."</div><a class="resource-link" href="https://www.youtube.com/watch?v=sRFM5IEqR2w" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="szeliski cv 2nd ed., ch. 7 — feature detection &amp; matching free pdf chapter unifying harris, sift, orb, ransac and feature matching with the geometry you&#x27;ll use in the panorama stitcher."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 4h</span><span class="badge b-book">Book</span></div><h4>Szeliski CV 2nd ed., Ch. 7 — Feature Detection &amp; Matching</h4><div class="resource-why">"Free PDF chapter unifying Harris, SIFT, ORB, RANSAC and feature matching with the geometry you'll use in the panorama stitcher."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="opencv — optical flow (lucas-kanade &amp; dense) official tutorial working calcopticalflowpyrlk code with the math behind it — the canonical reference for the optical-flow item in the roadmap."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Optical Flow (Lucas-Kanade &amp; Dense) Official Tutorial</h4><div class="resource-why">"Working calcOpticalFlowPyrLK code with the math behind it — the canonical reference for the optical-flow item in the roadmap."</div><a class="resource-link" href="https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="hartley &amp; zisserman — multiple view geometry in computer vision (2nd ed.) the definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the internet archive."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="cyrill stachniss — photogrammetry i &amp; ii (uni bonn, full lecture playlist) university-grade derivations of camera models, epipolar geometry, bundle adjustment, and sfm from a photogrammetry expert, all free on youtube."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 20h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry I &amp; II (Uni Bonn, full lecture playlist)</h4><div class="resource-why">"University-grade derivations of camera models, epipolar geometry, bundle adjustment, and SfM from a photogrammetry expert, all free on YouTube."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRYjqjdZxTEQPZuFHQa7O7Y" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — epipolar geometry (fundamental matrix &amp; epilines) official tutorial runnable findfundamentalmat + computecorrespondepilines code that turns the epipolar theory into a visualizable result."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines) Official Tutorial</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code that turns the epipolar theory into a visualizable result."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — depth map from stereo images official tutorial goes from rectified pairs to a disparity/depth map with stereobm — the practical follow-on to epipolar geometry for 3d reconstruction."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Depth Map from Stereo Images Official Tutorial</h4><div class="resource-why">"Goes from rectified pairs to a disparity/depth map with StereoBM — the practical follow-on to epipolar geometry for 3D reconstruction."</div><a class="resource-link" href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="colmap — structure-from-motion official tutorial the de-facto open-source sfm/mvs pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>COLMAP — Structure-from-Motion Official Tutorial</h4><div class="resource-why">"The de-facto open-source SfM/MVS pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."</div><a class="resource-link" href="https://colmap.github.io/tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="orb-slam2 — official open-source implementation (raulmur) real-time monocular/stereo/rgb-d slam with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 4h</span><span class="badge b-repo">Repo</span></div><h4>ORB-SLAM2 — Official Open-Source Implementation (raulmur)</h4><div class="resource-why">"Real-time monocular/stereo/RGB-D SLAM with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."</div><a class="resource-link" href="https://github.com/raulmur/ORB_SLAM2" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="4" data-text="andrej karpathy — neural networks: zero to hero build autograd and backprop from scratch in code so the cnn training loop is never a black box — the best free &#x27;why it works&#x27; companion to cs231n."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 12h</span><span class="badge b-course">Course</span></div><h4>Andrej Karpathy — Neural Networks: Zero to Hero</h4><div class="resource-why">"Build autograd and backprop from scratch in code so the CNN training loop is never a black box — the best free 'why it works' companion to CS231n."</div><a class="resource-link" href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="fast.ai — practical deep learning for coders top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 14h</span><span class="badge b-course">Course</span></div><h4>fast.ai — Practical Deep Learning for Coders</h4><div class="resource-why">"Top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."</div><a class="resource-link" href="https://course.fast.ai/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="pytorch — transfer learning for computer vision official tutorial canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on resnet — the exact pattern for the custom-detector milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>PyTorch — Transfer Learning for Computer Vision Official Tutorial</h4><div class="resource-why">"Canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on ResNet — the exact pattern for the custom-detector milestone."</div><a class="resource-link" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="cnn explainer — interactive visualization (georgia tech polo club) click through every conv/pool/relu activation of a live cnn to see how an image becomes a class score — best intuition tool for the deep-learning phase."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">⏱ 1h</span><span class="badge b-interactive">Interactive</span></div><h4>CNN Explainer — Interactive Visualization (Georgia Tech Polo Club)</h4><div class="resource-why">"Click through every conv/pool/ReLU activation of a live CNN to see how an image becomes a class score — best intuition tool for the deep-learning phase."</div><a class="resource-link" href="https://poloclub.github.io/cnn-explainer/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="4" data-text="distill — feature visualization (olah, mordvintsev, schubert) shows what cnn filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Distill — Feature Visualization (Olah, Mordvintsev, Schubert)</h4><div class="resource-why">"Shows what CNN filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."</div><a class="resource-link" href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="hugging face — community computer vision course free, hands-on course spanning cnns, detection, and segmentation with transformers/datasets code you can run for the segmentation milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 15h</span><span class="badge b-course">Course</span></div><h4>Hugging Face — Community Computer Vision Course</h4><div class="resource-why">"Free, hands-on course spanning CNNs, detection, and segmentation with Transformers/Datasets code you can run for the segmentation milestone."</div><a class="resource-link" href="https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="openai — clip: connecting text and images (official blog) authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 1h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenAI — CLIP: Connecting Text and Images (Official Blog)</h4><div class="resource-why">"Authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."</div><a class="resource-link" href="https://openai.com/index/clip/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kirillov et al. (2023) — segment anything (sam) paper introduces promptable segmentation and the sa-1b data engine; understanding the mask decoder is key to using sam as a labeling/foundation tool."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-paper">Paper</span></div><h4>Kirillov et al. (2023) — Segment Anything (SAM) Paper</h4><div class="resource-why">"Introduces promptable segmentation and the SA-1B data engine; understanding the mask decoder is key to using SAM as a labeling/foundation tool."</div><a class="resource-link" href="https://arxiv.org/abs/2304.02643" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="lilian weng — what are diffusion models? (lil&#x27;log) the clearest free derivation of ddpm forward/reverse processes and classifier-free guidance — the theory the hf diffusers tutorial assumes."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Lilian Weng — What Are Diffusion Models? (Lil'Log)</h4><div class="resource-why">"The clearest free derivation of DDPM forward/reverse processes and classifier-free guidance — the theory the HF Diffusers tutorial assumes."</div><a class="resource-link" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kerbl et al. (2023) — 3d gaussian splatting project page (inria graphdeco) the real-time successor to nerf; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">⏱ 2h</span><span class="badge b-interactive">Interactive</span></div><h4>Kerbl et al. (2023) — 3D Gaussian Splatting Project Page (Inria GraphDeco)</h4><div class="resource-why">"The real-time successor to NeRF; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."</div><a class="resource-link" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="5" data-text="onnx runtime — quantize onnx models (official docs) complements the tflite guide with the onnx path: static vs. dynamic int8 quantization apis for the real-time edge-ai deployment milestone."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">⏱ 2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>ONNX Runtime — Quantize ONNX Models (Official Docs)</h4><div class="resource-why">"Complements the TFLite guide with the ONNX path: static vs. dynamic INT8 quantization APIs for the real-time edge-AI deployment milestone."</div><a class="resource-link" href="https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
+    <div class="lib-grid"><div class="resource-card lib-item" data-phase="1" data-text="khan academy — multivariable calculus: partial derivatives &amp; the gradient free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">4h</span><span class="badge b-course">Course</span></div><h4>Khan Academy — Multivariable Calculus: Partial Derivatives &amp; The Gradient</h4><div class="resource-why">"Free guided lessons plus practice problems that cement gradients and the chain rule — the exact calculus backprop is built on."</div><a class="resource-link" href="https://www.khanacademy.org/math/multivariable-calculus/multivariable-derivatives" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="1" data-text="setosa — image kernels explained visually drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of numpy."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-interactive">Interactive</span></div><h4>Setosa — Image Kernels Explained Visually</h4><div class="resource-why">"Drag-and-drop kernel playground that makes convolution and edge filters click in minutes before you write a single line of NumPy."</div><a class="resource-link" href="https://setosa.io/ev/image-kernels/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="1" data-text="computerphile — how blurs &amp; filters work / convolution dr mike pound walks through spatial filtering on real images, giving intuition for the gaussian/sobel kernels you&#x27;ll implement in the milestone project."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.5h</span><span class="badge b-video">Video</span></div><h4>Computerphile — How Blurs &amp; Filters Work / Convolution</h4><div class="resource-why">"Dr Mike Pound walks through spatial filtering on real images, giving intuition for the Gaussian/Sobel kernels you'll implement in the milestone project."</div><a class="resource-link" href="https://www.youtube.com/watch?v=C_zFhWdM4ic" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="1" data-text="szeliski — computer vision: algorithms and applications (2nd ed.), ch. 3 image processing author-hosted free pdf; ch. 3 is the modern, rigorous companion to gonzalez &amp; woods covering filtering, pyramids, and the fourier domain."><div class="card-badges"><span class="badge b-time">Phase 1</span><span class="badge b-med">Intermediate</span><span class="badge b-time">5h</span><span class="badge b-book">Book</span></div><h4>Szeliski — Computer Vision: Algorithms and Applications (2nd ed.), Ch. 3 Image Processing</h4><div class="resource-why">"Author-hosted free PDF; Ch. 3 is the modern, rigorous companion to Gonzalez &amp; Woods covering filtering, pyramids, and the Fourier domain."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="first principles of computer vision — detectors &amp; descriptors monographs (nayar, columbia) free sift-detector monograph (pdf) plus the companion lecture videos for harris and hog — re-derive the feature math at your own pace."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>First Principles of Computer Vision — Detectors &amp; Descriptors Monographs (Nayar, Columbia)</h4><div class="resource-why">"Free SIFT-detector monograph (PDF) plus the companion lecture videos for Harris and HOG — re-derive the feature math at your own pace."</div><a class="resource-link" href="https://fpcv.cs.columbia.edu/Monographs" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="computerphile — canny edge detector (mike pound) the clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing canny."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-easy">Easy</span><span class="badge b-time">0.3h</span><span class="badge b-video">Video</span></div><h4>Computerphile — Canny Edge Detector (Mike Pound)</h4><div class="resource-why">"The clearest short explanation of non-max suppression and hysteresis thresholding — the two steps everyone gets wrong implementing Canny."</div><a class="resource-link" href="https://www.youtube.com/watch?v=sRFM5IEqR2w" target="_blank" rel="noopener">Watch →</a></div><div class="resource-card lib-item" data-phase="2" data-text="szeliski cv 2nd ed., ch. 7 — feature detection &amp; matching free pdf chapter unifying harris, sift, orb, ransac and feature matching with the geometry you&#x27;ll use in the panorama stitcher."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">4h</span><span class="badge b-book">Book</span></div><h4>Szeliski CV 2nd ed., Ch. 7 — Feature Detection &amp; Matching</h4><div class="resource-why">"Free PDF chapter unifying Harris, SIFT, ORB, RANSAC and feature matching with the geometry you'll use in the panorama stitcher."</div><a class="resource-link" href="https://szeliski.org/Book/" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="2" data-text="opencv — optical flow (lucas-kanade &amp; dense) official tutorial working calcopticalflowpyrlk code with the math behind it — the canonical reference for the optical-flow item in the roadmap."><div class="card-badges"><span class="badge b-time">Phase 2</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Optical Flow (Lucas-Kanade &amp; Dense) Official Tutorial</h4><div class="resource-why">"Working calcOpticalFlowPyrLK code with the math behind it — the canonical reference for the optical-flow item in the roadmap."</div><a class="resource-link" href="https://docs.opencv.org/4.x/d4/dee/tutorial_optical_flow.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="hartley &amp; zisserman — multiple view geometry in computer vision (2nd ed.) the definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the internet archive."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">12h</span><span class="badge b-book">Book</span></div><h4>Hartley &amp; Zisserman — Multiple View Geometry in Computer Vision (2nd ed.)</h4><div class="resource-why">"The definitive text on projective geometry, the fundamental/essential matrices, and triangulation — borrow free via the Internet Archive."</div><a class="resource-link" href="https://archive.org/details/multipleviewgeom0000hart" target="_blank" rel="noopener">Open (free) →</a></div><div class="resource-card lib-item" data-phase="3" data-text="cyrill stachniss — photogrammetry i &amp; ii (uni bonn, full lecture playlist) university-grade derivations of camera models, epipolar geometry, bundle adjustment, and sfm from a photogrammetry expert, all free on youtube."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">20h</span><span class="badge b-course">Course</span></div><h4>Cyrill Stachniss — Photogrammetry I &amp; II (Uni Bonn, full lecture playlist)</h4><div class="resource-why">"University-grade derivations of camera models, epipolar geometry, bundle adjustment, and SfM from a photogrammetry expert, all free on YouTube."</div><a class="resource-link" href="https://www.youtube.com/playlist?list=PLgnQpQtFTOGRYjqjdZxTEQPZuFHQa7O7Y" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — epipolar geometry (fundamental matrix &amp; epilines) official tutorial runnable findfundamentalmat + computecorrespondepilines code that turns the epipolar theory into a visualizable result."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Epipolar Geometry (Fundamental Matrix &amp; Epilines) Official Tutorial</h4><div class="resource-why">"Runnable findFundamentalMat + computeCorrespondEpilines code that turns the epipolar theory into a visualizable result."</div><a class="resource-link" href="https://docs.opencv.org/4.x/da/de9/tutorial_py_epipolar_geometry.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="opencv — depth map from stereo images official tutorial goes from rectified pairs to a disparity/depth map with stereobm — the practical follow-on to epipolar geometry for 3d reconstruction."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenCV — Depth Map from Stereo Images Official Tutorial</h4><div class="resource-why">"Goes from rectified pairs to a disparity/depth map with StereoBM — the practical follow-on to epipolar geometry for 3D reconstruction."</div><a class="resource-link" href="https://docs.opencv.org/4.x/dd/d53/tutorial_py_depthmap.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="colmap — structure-from-motion official tutorial the de-facto open-source sfm/mvs pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-med">Intermediate</span><span class="badge b-time">3h</span><span class="badge b-tutorial">Tutorial</span></div><h4>COLMAP — Structure-from-Motion Official Tutorial</h4><div class="resource-why">"The de-facto open-source SfM/MVS pipeline; running it on your own photos shows feature matching, bundle adjustment, and dense reconstruction end-to-end."</div><a class="resource-link" href="https://colmap.github.io/tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="3" data-text="orb-slam2 — official open-source implementation (raulmur) real-time monocular/stereo/rgb-d slam with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."><div class="card-badges"><span class="badge b-time">Phase 3</span><span class="badge b-hard">Hard</span><span class="badge b-time">4h</span><span class="badge b-repo">Repo</span></div><h4>ORB-SLAM2 — Official Open-Source Implementation (raulmur)</h4><div class="resource-why">"Real-time monocular/stereo/RGB-D SLAM with loop closure; reading and running it connects feature matching, pose estimation, and mapping into one system."</div><a class="resource-link" href="https://github.com/raulmur/ORB_SLAM2" target="_blank" rel="noopener">View repo →</a></div><div class="resource-card lib-item" data-phase="4" data-text="andrej karpathy — neural networks: zero to hero build autograd and backprop from scratch in code so the cnn training loop is never a black box — the best free &#x27;why it works&#x27; companion to cs231n."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">12h</span><span class="badge b-course">Course</span></div><h4>Andrej Karpathy — Neural Networks: Zero to Hero</h4><div class="resource-why">"Build autograd and backprop from scratch in code so the CNN training loop is never a black box — the best free 'why it works' companion to CS231n."</div><a class="resource-link" href="https://karpathy.ai/zero-to-hero.html" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="fast.ai — practical deep learning for coders top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">14h</span><span class="badge b-course">Course</span></div><h4>fast.ai — Practical Deep Learning for Coders</h4><div class="resource-why">"Top-down course that gets a working image classifier trained in lesson 1, then fills in transfer learning, augmentation, and training tricks."</div><a class="resource-link" href="https://course.fast.ai/" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="4" data-text="pytorch — transfer learning for computer vision official tutorial canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on resnet — the exact pattern for the custom-detector milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>PyTorch — Transfer Learning for Computer Vision Official Tutorial</h4><div class="resource-why">"Canonical, runnable fine-tuning vs. fixed-feature-extractor recipe on ResNet — the exact pattern for the custom-detector milestone."</div><a class="resource-link" href="https://docs.pytorch.org/tutorials/beginner/transfer_learning_tutorial.html" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="cnn explainer — interactive visualization (georgia tech polo club) click through every conv/pool/relu activation of a live cnn to see how an image becomes a class score — best intuition tool for the deep-learning phase."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-easy">Easy</span><span class="badge b-time">1h</span><span class="badge b-interactive">Interactive</span></div><h4>CNN Explainer — Interactive Visualization (Georgia Tech Polo Club)</h4><div class="resource-why">"Click through every conv/pool/ReLU activation of a live CNN to see how an image becomes a class score — best intuition tool for the deep-learning phase."</div><a class="resource-link" href="https://poloclub.github.io/cnn-explainer/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="4" data-text="distill — feature visualization (olah, mordvintsev, schubert) shows what cnn filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Distill — Feature Visualization (Olah, Mordvintsev, Schubert)</h4><div class="resource-why">"Shows what CNN filters actually learn at each layer, giving a mental model of hierarchical features that makes architecture choices less arbitrary."</div><a class="resource-link" href="https://distill.pub/2017/feature-visualization/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="4" data-text="hugging face — community computer vision course free, hands-on course spanning cnns, detection, and segmentation with transformers/datasets code you can run for the segmentation milestone."><div class="card-badges"><span class="badge b-time">Phase 4</span><span class="badge b-med">Intermediate</span><span class="badge b-time">15h</span><span class="badge b-course">Course</span></div><h4>Hugging Face — Community Computer Vision Course</h4><div class="resource-why">"Free, hands-on course spanning CNNs, detection, and segmentation with Transformers/Datasets code you can run for the segmentation milestone."</div><a class="resource-link" href="https://huggingface.co/learn/computer-vision-course/en/unit0/welcome/welcome" target="_blank" rel="noopener">Open course →</a></div><div class="resource-card lib-item" data-phase="5" data-text="openai — clip: connecting text and images (official blog) authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">1h</span><span class="badge b-tutorial">Tutorial</span></div><h4>OpenAI — CLIP: Connecting Text and Images (Official Blog)</h4><div class="resource-why">"Authoritative, approachable explanation of contrastive image-text pretraining and zero-shot transfer straight from the authors, with code links."</div><a class="resource-link" href="https://openai.com/index/clip/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kirillov et al. (2023) — segment anything (sam) paper introduces promptable segmentation and the sa-1b data engine; understanding the mask decoder is key to using sam as a labeling/foundation tool."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-paper">Paper</span></div><h4>Kirillov et al. (2023) — Segment Anything (SAM) Paper</h4><div class="resource-why">"Introduces promptable segmentation and the SA-1B data engine; understanding the mask decoder is key to using SAM as a labeling/foundation tool."</div><a class="resource-link" href="https://arxiv.org/abs/2304.02643" target="_blank" rel="noopener">Read paper →</a></div><div class="resource-card lib-item" data-phase="5" data-text="lilian weng — what are diffusion models? (lil&#x27;log) the clearest free derivation of ddpm forward/reverse processes and classifier-free guidance — the theory the hf diffusers tutorial assumes."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2.5h</span><span class="badge b-tutorial">Tutorial</span></div><h4>Lilian Weng — What Are Diffusion Models? (Lil'Log)</h4><div class="resource-why">"The clearest free derivation of DDPM forward/reverse processes and classifier-free guidance — the theory the HF Diffusers tutorial assumes."</div><a class="resource-link" href="https://lilianweng.github.io/posts/2021-07-11-diffusion-models/" target="_blank" rel="noopener">Read tutorial →</a></div><div class="resource-card lib-item" data-phase="5" data-text="kerbl et al. (2023) — 3d gaussian splatting project page (inria graphdeco) the real-time successor to nerf; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-hard">Hard</span><span class="badge b-time">2h</span><span class="badge b-interactive">Interactive</span></div><h4>Kerbl et al. (2023) — 3D Gaussian Splatting Project Page (Inria GraphDeco)</h4><div class="resource-why">"The real-time successor to NeRF; the project page bundles paper, videos, and the reference repo so you see why splatting beats volumetric rendering on speed."</div><a class="resource-link" href="https://repo-sam.inria.fr/fungraph/3d-gaussian-splatting/" target="_blank" rel="noopener">Try it →</a></div><div class="resource-card lib-item" data-phase="5" data-text="onnx runtime — quantize onnx models (official docs) complements the tflite guide with the onnx path: static vs. dynamic int8 quantization apis for the real-time edge-ai deployment milestone."><div class="card-badges"><span class="badge b-time">Phase 5</span><span class="badge b-med">Intermediate</span><span class="badge b-time">2h</span><span class="badge b-tutorial">Tutorial</span></div><h4>ONNX Runtime — Quantize ONNX Models (Official Docs)</h4><div class="resource-why">"Complements the TFLite guide with the ONNX path: static vs. dynamic INT8 quantization APIs for the real-time edge-AI deployment milestone."</div><a class="resource-link" href="https://onnxruntime.ai/docs/performance/model-optimizations/quantization.html" target="_blank" rel="noopener">Read tutorial →</a></div></div>
     <div class="no-results" id="libEmpty">No resources match your search.</div>
   </div>
 </section>
 
 <section class="extra-section" id="glossary">
-  <div class="extra-header blue"><h2>📖 Glossary</h2>
+  <div class="extra-header blue"><h2>Glossary</h2>
     <p>52 key terms across all five phases, in plain English</p></div>
   <div class="extra-body">
     <div class="filter-bar">
@@ -758,7 +740,7 @@ html[data-theme="dark"] .quiz-exp{ color:#cbd5e1; background:#222b3d; }
 </section>
 
 <section class="extra-section" id="faq">
-  <div class="extra-header teal"><h2>❓ Frequently Asked Questions</h2>
+  <div class="extra-header teal"><h2>Frequently Asked Questions</h2>
     <p>Prerequisites, math, hardware, timelines, and how to actually use this roadmap</p></div>
   <div class="extra-body"><details class="faq-item"><summary>What prerequisites do I need before starting this roadmap?</summary><p>Comfort with Python and basic programming, plus high-school-level math. Everything else (linear algebra, calculus, image processing) is built up in Phase 1, so you can start as a motivated beginner. Familiarity with NumPy helps but is taught as you go.</p></details><details class="faq-item"><summary>How much math do I really need?</summary><p>Less than people fear, but it is unavoidable. You need vectors, matrices, dot products, and eigenvectors (for PCA and corner/geometry math), partial derivatives and the chain rule (for backprop), and basic probability. Multi-view geometry leans hardest on linear algebra. You do not need to derive everything from scratch, but you should be able to read the equations.</p></details><details class="faq-item"><summary>Do I need a GPU?</summary><p>Not for Phases 1-3. Classical CV and multi-view geometry run fine on a CPU laptop. For Phase 4 (deep learning) a GPU helps a lot for training, but you can use free cloud GPUs (Google Colab, Kaggle Notebooks) instead of buying hardware. Inference and fine-tuning small models are often CPU-feasible.</p></details><details class="faq-item"><summary>How long does the whole roadmap take?</summary><p>Roughly 6-9 months part-time at a steady pace. The repo budgets about 4-6 weeks for Foundations, 4-5 for Classical CV, several weeks for Multi-View Geometry &amp; 3D Vision, 6-8 for Deep Learning, and 5-7 for Modern Frontiers. Going faster is possible full-time; going slower is fine if you build the milestone projects.</p></details><details class="faq-item"><summary>Should I learn PyTorch or TensorFlow?</summary><p>Start with PyTorch. It dominates research, most new CV papers and repos ship PyTorch code, and its eager execution is easier to debug while learning. TensorFlow/Keras is still common in production and edge (TFLite), so pick it up later if a job or deployment target needs it. The concepts transfer; the syntax is secondary.</p></details><details class="faq-item"><summary>Is classical computer vision still worth learning in the deep learning era?</summary><p>Yes. Multi-view geometry, calibration, feature matching, and filtering power SLAM, AR/VR, robotics, photogrammetry, and the data pipelines feeding neural nets. Classical methods are interpretable, run without GPUs, need no training data, and frequently outperform learned methods on geometric tasks. Interviewers also probe these fundamentals heavily.</p></details><details class="faq-item"><summary>How should I actually use this roadmap?</summary><p>Go phase by phase and treat the milestone project as the gate: do not advance until you have built it. Read or watch one curated resource per topic, code along, then implement the project from scratch (e.g. filters in NumPy before OpenCV). Use the quizzes for self-checks and the interview bank once you are job-hunting. Progress is saved in the interactive site via localStorage.</p></details><details class="faq-item"><summary>Do I need to memorize papers and architectures?</summary><p>No. Understand the key ideas (why ResNet uses skip connections, what attention computes, how RANSAC rejects outliers) rather than memorizing layer counts. Be able to explain trade-offs and implement core pieces (IoU, NMS, a convolution). Depth of understanding on a few things beats shallow recall of many.</p></details><details class="faq-item"><summary>What jobs does this roadmap lead to?</summary><p>Computer Vision Engineer, ML/Deep Learning Engineer (vision), Perception Engineer (robotics/autonomous vehicles), AR/VR or SLAM engineer, Research Engineer, and Edge/Embedded AI roles. The geometry phase opens robotics and AR doors; the deep learning and frontiers phases open detection, segmentation, and generative/multimodal roles. Many start adjacent (data/ML engineering) and specialize.</p></details><details class="faq-item"><summary>I already know some deep learning. Can I skip the early phases?</summary><p>Skim them, but do not fully skip. Many strong DL practitioners are weak on geometry and classical CV, which is exactly where interviews and real perception systems expose gaps. At minimum, do the Classical CV and Multi-View Geometry milestone projects; they teach intuition that pure DL courses omit.</p></details></div>
 </section>
@@ -943,7 +925,7 @@ function initEpipolar() {
   var scene = [
     { L:[110.0,150.0], R:[29.6,179.5],  c:'#0891b2' },
     { L:[192.0,104.0], R:[221.4,91.5],  c:'#22c55e' },
-    { L:[160.0,153.3], R:[185.6,171.7], c:'#7c3aed' },
+    { L:[160.0,153.3], R:[185.6,171.7], c:'#4F46E5' },
     { L:[133.3,84.4],  R:[101.9,55.1],  c:'#d97706' },
     { L:[203.6,149.1], R:[249.8,169.2], c:'#dc2626' },
     { L:[182.9,120.0], R:[137.8,120.0], c:'#0891b2' }
@@ -1306,7 +1288,7 @@ function initAttention() {
       if (state.mode === 'conv') {
         if (conv[idx]) {
           cell.classList.add('attn-field');
-          cell.style.background = isQuery ? '#7c3aed' : '#ede9fe';
+          cell.style.background = isQuery ? '#4F46E5' : '#ede9fe';
         }
       } else {
         var wv = weights[idx];
@@ -1470,7 +1452,7 @@ function initIouNms() {
       if (r.ix > 0 && r.iy > 0) {
         svg.appendChild(el('rect', {
           x: Math.max(boxes[0].x, boxes[1].x), y: Math.max(boxes[0].y, boxes[1].y),
-          width: r.ix, height: r.iy, fill: '#7c3aed', 'fill-opacity': '0.35', stroke: 'none'
+          width: r.ix, height: r.iy, fill: '#4F46E5', 'fill-opacity': '0.35', stroke: 'none'
         }));
       }
 

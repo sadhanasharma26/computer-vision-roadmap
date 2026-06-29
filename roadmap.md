@@ -21,7 +21,7 @@ _Math & Pixels — everything in CV reduces to these_
 - Morphological Ops (erosion / dilation)
 - NumPy image manipulation from scratch
 
-**🏆 Milestone — NumPy Image Filter Library:** Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.
+**Milestone — NumPy Image Filter Library:** Build Gaussian blur, Sobel edge detection, histogram equalization, and binary thresholding from scratch using only NumPy — zero OpenCV allowed. Test on BSDS500 sample images.
 
 ---
 
@@ -40,7 +40,7 @@ _The pre-deep-learning toolkit — still runs in every production pipeline_
 - Bag of Visual Words
 - Feature Matching: Brute-Force vs. FLANN
 
-**🏆 Milestone — Image Panorama Stitcher:** Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.
+**Milestone — Image Panorama Stitcher:** Stitch 3+ overlapping photos into a seamless panorama using SIFT keypoints, FLANN feature matching, RANSAC homography estimation, and perspective warping. No high-level stitching APIs allowed.
 
 ---
 
@@ -59,7 +59,7 @@ _From two flat images to metric 3D — the geometry deep learning skips over_
 - Structure-from-Motion (incremental SfM)
 - Bundle adjustment & intro to visual odometry / SLAM
 
-**🏆 Milestone — Two-View Structure-from-Motion (Sparse 3D Reconstruction):** Take two photos of a static scene and get the intrinsics K from calibration (Phase 2) or image EXIF. Match SIFT/ORB features, estimate the fundamental matrix with the normalized 8-point algorithm inside RANSAC, convert it to the essential matrix (E = K′ᵀ F K), and decompose E into its four candidate (R, t) solutions. Use the cheirality check — reconstructed points must lie in front of both cameras — to pick the correct pose, then triangulate the matches into a sparse 3D point cloud and visualize it. No high-level SfM pipelines (e.g. COLMAP) for the core estimation.
+**Milestone — Two-View Structure-from-Motion (Sparse 3D Reconstruction):** Take two photos of a static scene and get the intrinsics K from calibration (Phase 2) or image EXIF. Match SIFT/ORB features, estimate the fundamental matrix with the normalized 8-point algorithm inside RANSAC, convert it to the essential matrix (E = K′ᵀ F K), and decompose E into its four candidate (R, t) solutions. Use the cheirality check — reconstructed points must lie in front of both cameras — to pick the correct pose, then triangulate the matches into a sparse 3D point cloud and visualize it. No high-level SfM pipelines (e.g. COLMAP) for the core estimation.
 
 ---
 
@@ -78,7 +78,7 @@ _CNNs, detection, segmentation — the industry-standard stack_
 - Instance Segmentation: U-Net, Mask R-CNN
 - mAP, IoU, Precision-Recall for CV evaluation
 
-**🏆 Milestone — Custom Object Detector + Segmentation:** Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights & Biases.
+**Milestone — Custom Object Detector + Segmentation:** Label 300+ images with Roboflow (5 classes), train YOLOv8, then apply U-Net segmentation on detected regions. Log all metrics to Weights & Biases.
 
 ---
 
@@ -97,6 +97,6 @@ _Vision Transformers, generative models, and edge deployment_
 - TFLite & ONNX export + runtime
 - Edge deployment: Raspberry Pi / Jetson Nano
 
-**🏆 Milestone — Real-Time Edge AI Detector:** Export your Phase 4 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with <5% mAP drop from quantization.
+**Milestone — Real-Time Edge AI Detector:** Export your Phase 4 YOLOv8 model to ONNX/TFLite with INT8 quantization. Deploy on Raspberry Pi 4 or laptop webcam. Target ≥10 FPS with <5% mAP drop from quantization.
 
 ---
